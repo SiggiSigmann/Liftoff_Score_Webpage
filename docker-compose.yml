@@ -15,7 +15,7 @@ services:
 
     liftoff_web_server:
         depends_on:
-            - db
+            - liftoff_db
         restart: always
         networks:
             - test
