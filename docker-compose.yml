@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+    db:
+        networks:
+            - test
+        build: database/.
+        restart: always
+        volumes:
+            - /home/ubuntu/database/mount:/var/lib/mysql
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "10m"
+                max-file: "10"
+
+    server:
+        depends_on:
+            - db
+        restart: always
+        networks:
+            - test
+        build: flaskServer/.
+        ports:
+            - target: 80
+              published: 80
+              protocol: tcp
+              mode: host
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "10m"
+                max-file: "10"
+
+networks:
+    test:
+        driver: bridge
