@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-    db:
+    liftoff_db:
         networks:
             - test
         build: database/.
@@ -13,7 +13,7 @@ services:
                 max-size: "10m"
                 max-file: "10"
 
-    server:
+    liftoff_web_server:
         depends_on:
             - db
         restart: always
