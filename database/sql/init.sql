@@ -22,7 +22,7 @@ CREATE TABLE TRACKS(
     mapid int  NOT NULL,
     trackid int NOT NULL,
     trackname varchar(50)  NOT NULL,
-    hardness char Not Null,
+    hardness int Not Null,
     FOREIGN KEY (mapid) REFERENCES MAPS(mapid),
     PRIMARY KEY (mapid, trackid)
 );
