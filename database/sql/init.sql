@@ -12,6 +12,12 @@ CREATE TABLE USERS(
 );
 ALTER TABLE USERS AUTO_INCREMENT=0;
 
+CREATE TABLE DRONES(
+    droneid int PRIMARY KEY Not Null AUTO_INCREMENT,
+    dronename varchar(25)
+);
+ALTER TABLE DRONES AUTO_INCREMENT=0;
+
 CREATE TABLE MAPS(
     mapid int PRIMARY KEY AUTO_INCREMENT  NOT NULL,
     mapname varchar(50) NOT NULL
@@ -27,16 +33,18 @@ CREATE TABLE TRACKS(
     PRIMARY KEY (mapid, trackid)
 );
 
-CREATE TABLE RESULT(
+CREATE TABLE RESULTS(
     resultid int AUTO_INCREMENT NOT NULL PRIMARY KEY,
     mapid int  NOT NULL,
     trackid int  NOT NULL,
     userid int NOT NULL,
+    droneid int NOT NULL,
     FOREIGN KEY userref (userid) REFERENCES USERS(userid),
+    FOREIGN KEY droneref (droneid) REFERENCES DRONES(droneid),
     FOREIGN KEY trackref (trackid, mapid) REFERENCES TRACKS(mapid, trackid),
     resulttimestamp DATETIME NOT NULL
 );
-ALTER TABLE RESULT AUTO_INCREMENT=0;
+ALTER TABLE RESULTS AUTO_INCREMENT=0;
 
 INSERT INTO MAPS 
     (mapname) 
