@@ -20,7 +20,7 @@ ALTER TABLE MAPS AUTO_INCREMENT=0;
 
 CREATE TABLE TRACKS(
     mapid int  NOT NULL,
-    trackid int NOT NULL,
+    trackid int AUTO_INCREMENT NOT NULL,
     trackname varchar(50)  NOT NULL,
     hardness int Not Null,
     FOREIGN KEY (mapid) REFERENCES MAPS(mapid),
@@ -30,7 +30,7 @@ CREATE TABLE TRACKS(
 CREATE TABLE RESULT(
     resultid int AUTO_INCREMENT NOT NULL PRIMARY KEY,
     mapid int  NOT NULL,
-    trackid int  AUTO_INCREMENT NOT NULL,
+    trackid int  NOT NULL,
     userid int NOT NULL,
     FOREIGN KEY (userid) REFERENCES USERS(userid),
     FOREIGN KEY (trackid, mapid) REFERENCES TRACKS(mapid, trackid),
