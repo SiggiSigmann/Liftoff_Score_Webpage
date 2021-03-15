@@ -30,7 +30,7 @@ CREATE TABLE TRACKS(
 CREATE TABLE RESULT(
     resultid int AUTO_INCREMENT NOT NULL PRIMARY KEY,
     mapid int  NOT NULL,
-    trackid int NOT NULL,
+    trackid int  AUTO_INCREMENT NOT NULL,
     userid int NOT NULL,
     FOREIGN KEY (userid) REFERENCES USERS(userid),
     FOREIGN KEY (trackid, mapid) REFERENCES TRACKS(mapid, trackid),
