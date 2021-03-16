@@ -5,6 +5,7 @@ COPY startFlask.sh .
 COPY server.py .
 COPY dbconnector/* dbconnector/
 COPY html/* html/
+COPY static/* static/
 
 EXPOSE 80
 
