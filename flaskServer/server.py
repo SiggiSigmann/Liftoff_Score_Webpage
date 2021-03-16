@@ -45,7 +45,9 @@ def return_humans_txt():
 ### / ##########################################
 @app.route("/", methods=["GET"])
 def index_get():
-    tracks = db.getTracks();
+    tracks = db.getTracks()
+    print(track, file=std.err)
+
     return render_template('index.html', tracks=tracks)
 
 #start server
