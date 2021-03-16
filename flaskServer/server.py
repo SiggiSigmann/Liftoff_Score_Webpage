@@ -42,6 +42,15 @@ def return_humans_txt():
 #def return_manifest_txt():
 #    return app.send_static_file("manifest.webmanifest")
 
+
+### user #######################################
+@app.route("/users", methods=["GET"])
+def user_get():
+    users = db.getUsers()
+    print(users, file=sys.stderr)
+
+    return render_template('users.html', users=users)
+
 ### / ##########################################
 @app.route("/", methods=["GET"])
 def index_get():

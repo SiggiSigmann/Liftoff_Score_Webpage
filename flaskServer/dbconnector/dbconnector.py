@@ -48,3 +48,17 @@ class DBconnector:
         self._dissconect()
         self.lock.release()
         return tracks
+
+    #get Track
+    #read data out of DT
+    def getUsere(self):
+        self.lock.acquire()
+        self._connect()
+        
+        with self.db.cursor() as cur:
+            cur.execute('SELECT userid, username, usercolor From TRACKS INNER JOIN MAPS ON TRACKS.mapid = MAPS.mapid;')
+            users =  cur.fetchall()
+
+        self._dissconect()
+        self.lock.release()
+        return users

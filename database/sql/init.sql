@@ -195,3 +195,6 @@ INSERT INTO TRACKS
     (mapid, trackid, trackname, hardness)
 VALUES
     (15, 1, "1", 6);
+
+/* Todo: Remove user insertion*/
+INSERT INTO USERS VALUES (1, "ZebraFPV", "#FF0000");
