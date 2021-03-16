@@ -19,4 +19,10 @@
 			{% endfor %}
 		</table>
 	</body>
+
+	<form action="/users" method="POST">
+		Username <input type="text" id="username" name="username" required/><br>
+		Color <input type="color" id="color" name="color" ><br>
+		<button type="submit">Create User</button>
+	</form>
 </html>

@@ -62,3 +62,16 @@ class DBconnector:
         self._dissconect()
         self.lock.release()
         return users
+
+    def add_new_user(self, username, color):
+                self.lock.acquire()
+        self._connect()
+        
+        with self.db.cursor() as cur:
+            cur.execute('INSERT INTO USERS VALUES ( "'+username+'", "'+color+'");')
+            users =  cur.fetchall()
+
+        self._dissconect()
+        self.lock.release()
+        return users
+

@@ -51,6 +51,17 @@ def user_get():
 
     return render_template('users.html', users=users)
 
+@app.route("/users", methods=["POST"])
+def create_user():
+    response = request.form
+    username = response["username"]
+    usercolor = response["color"]
+    #todo check username and collor using regex
+    db.add_new_user();    
+
+    users = db.getUsers()
+    return render_template('users.html', users=users)
+
 ### / ##########################################
 @app.route("/", methods=["GET"])
 def index_get():
