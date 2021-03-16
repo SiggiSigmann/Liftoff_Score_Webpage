@@ -1,17 +1,17 @@
 /* TEAM */
 	Developer: Tobias Sigmann
-	Contact: sito1014 [at] hs-karlsruhe.de
+	Contact: siggisigmann@googlemail.com
 	Github:https://github.com/SiggiSigmann/
-	From:Karlsruhe, BW, Germany
+	From:Gundelsheim, BW, Germany
 
 
 /* THANKS */
-	(First) University: Hochschule Karlsruhe
-	From:Karlsruhe, BW, Germany
+	(First) LiftOff
+	WebPage: www.liftoff-game.com
 
 /* SITE */
-	Last update:2021/02/07
+	Last update:2021/03/16
 	Language: Eglish
-	Doctype:HTML
+	Doctype: HTML
 	IDE: VS-Code
 	Github: https://github.com/SiggiSigmann/Liftoff_Score_Webpage
