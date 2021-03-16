@@ -18,7 +18,22 @@
 				<tr>
 					<th>{{ track[0] }}</th>
 					<th>{{ track[1] }}</th>
-					<th>{{ track[2] }}</th>
+					{% if track[2] == 1 %}
+						<th style="background-color:  rgb(0, 255, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 2 %}
+						<th style="background-color:  rgb(36, 219, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 3 %}
+						<th style="background-color:  rgb(73, 182, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 4 %}
+						<th style="background-color:  rgb(109, 140, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 5 %}
+						<th style="background-color:  rgb(140, 109, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 6 %}
+						<th style="background-color:  rgb(182, 73, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 7 %}
+						<th style="background-color:  rgb(219, 36, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 8 %}
+						<th style="background-color:  rgb(255, 0, 0);">{{ track[2] }}</th>
 				</tr>
 			{% endfor %}
 		</table>
