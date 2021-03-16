@@ -17,8 +17,25 @@
 			</tr>
 			{% for user in users %}
 				<tr>
-					<th>{{ user[0] }}</th>
-					<th>{{ user[1] }}</th>
+					<th>{{ track[0] }}</th>
+					<th>{{ track[1] }}</th>
+					{% if track[2] == 1 %}
+						<th style="background-color:  rgb(0, 255, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 2 %}
+						<th style="background-color:  rgb(64, 255, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 3 %}
+						<th style="background-color:  rgb(128, 255, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 4 %}
+						<th style="background-color:  rgb(192, 255, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 5 %}
+						<th style="background-color:  rgb(255, 192, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 6 %}
+						<th style="background-color:  rgb(255, 128, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 7 %}
+						<th style="background-color:  rgb(255, 64, 0);">{{ track[2] }}</th>
+					{% elif track[2] == 8 %}
+						<th style="background-color:  rgb(255, 0, 0);">{{ track[2] }}</th>
+					{% endif %}
 				</tr>
 			{% endfor %}
 		</table>
