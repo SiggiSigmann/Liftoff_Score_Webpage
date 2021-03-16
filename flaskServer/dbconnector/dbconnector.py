@@ -34,3 +34,17 @@ class DBconnector:
         if self.db is not None:
             self.db.close()
             self.db = None
+
+    #get Track
+    #read data out of DT
+    def getTracks(self):
+        self.lock.acquire()
+        self._connect()
+
+        with self.db.cursor() as cur:
+            cur.execute('SELECT MAPS.mapname, TRACKS.trackname, TRACKS.hardness From TRACKS INNER JOIN MAPS ON TRACKS.mapid = MAPS.mapid;')
+            tracks =  cur.fetchall()
+
+        self._dissconect()
+        self.lock.release()
+        return tracks

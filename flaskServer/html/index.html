@@ -8,5 +8,19 @@
 	</head>
 	<body>
 		<p>Website in progress</p>
+		<table>
+			<tr>
+				<th>Map</th>
+				<th>Track</th>
+				<th>Hardness</th>
+			</tr>
+			{% for track in ptracks %}
+				<tr>
+					<th>{{ track.mapname }}</th>
+					<th>{{ track.trackname }}</th>
+					<th>{{ track.hardness }}</th>
+				</tr>
+			{% endfor %}
+		</table>
 	</body>
 </html>

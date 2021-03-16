@@ -21,7 +21,7 @@ import dbconnector.dbconnector as dbcon
 
 #init classes
 #connect to db
-datadb = dbcon.DBconnector(socket.gethostbyname('liftoff_db'),"LIFTOFF_DATA", "test", "1234567")
+db = dbcon.DBconnector(socket.gethostbyname('liftoff_db'),"LIFTOFF_DATA", "test", "1234567")
 
 ## Flask ##########################################################
 #create flask server
@@ -45,7 +45,8 @@ def return_humans_txt():
 ### / ##########################################
 @app.route("/", methods=["GET"])
 def index_get():
-    return render_template('index.html')
+    tracks = db.getTracks();
+    return render_template('index.html', tracks=tracks)
 
 #start server
 if __name__ == '__main__':
