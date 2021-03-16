@@ -21,7 +21,7 @@ import dbconnector.dbconnector as dbcon
 
 #init classes
 #connect to db
-datadb = dbcon.DBconnector(socket.gethostbyname('db'),"networkdata", "test", "1234567")
+datadb = dbcon.DBconnector(socket.gethostbyname('liftoff_db'),"LIFTOFF_DATA", "test", "1234567")
 
 ## Flask ##########################################################
 #create flask server
