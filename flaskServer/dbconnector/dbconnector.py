@@ -56,7 +56,7 @@ class DBconnector:
         self._connect()
         
         with self.db.cursor() as cur:
-            cur.execute('SELECT userid, username, usercolor From TRACKS INNER JOIN MAPS ON TRACKS.mapid = MAPS.mapid;')
+            cur.execute('SELECT userid, username, usercolor From USERS;')
             users =  cur.fetchall()
 
         self._dissconect()
