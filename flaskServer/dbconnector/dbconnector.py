@@ -68,7 +68,7 @@ class DBconnector:
         self._connect()
         
         with self.db.cursor() as cur:
-            cur.execute('INSERT INTO USERS VALUES ( "'+username+'", "'+color+'");')
+            cur.execute('INSERT INTO USERS (username ,usercolor) VALUES ( "'+username+'", "'+color+'");')
             users =  cur.fetchall()
 
         self._dissconect()
