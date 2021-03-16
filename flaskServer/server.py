@@ -57,7 +57,7 @@ def create_user():
     username = response["username"]
     usercolor = response["color"]
     #todo check username and collor using regex
-    db.add_new_user();    
+    db.add_new_user(username,usercolor);    
 
     users = db.getUsers()
     return render_template('users.html', users=users)
