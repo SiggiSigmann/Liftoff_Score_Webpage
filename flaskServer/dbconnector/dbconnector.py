@@ -40,7 +40,7 @@ class DBconnector:
     def getTracks(self):
         self.lock.acquire()
         self._connect()
-
+        
         with self.db.cursor() as cur:
             cur.execute('SELECT MAPS.mapname, TRACKS.trackname, TRACKS.hardness From TRACKS INNER JOIN MAPS ON TRACKS.mapid = MAPS.mapid;')
             tracks =  cur.fetchall()

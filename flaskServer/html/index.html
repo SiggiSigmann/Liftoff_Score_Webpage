@@ -14,11 +14,11 @@
 				<th>Track</th>
 				<th>Hardness</th>
 			</tr>
-			{% for track in ptracks %}
+			{% for track in tracks %}
 				<tr>
-					<th>{{ track.mapname }}</th>
-					<th>{{ track.trackname }}</th>
-					<th>{{ track.hardness }}</th>
+					<th>{{ track[0] }}</th>
+					<th>{{ track[1] }}</th>
+					<th>{{ track[2] }}</th>
 				</tr>
 			{% endfor %}
 		</table>
