@@ -44,7 +44,7 @@ def return_humans_txt():
 
 ### / ##########################################
 @app.route("/", methods=["GET"])
-def index_gett():
+def index_get():
     return render_template('index.html')
 
 #start server
