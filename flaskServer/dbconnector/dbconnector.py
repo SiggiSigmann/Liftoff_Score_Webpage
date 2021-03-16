@@ -51,7 +51,7 @@ class DBconnector:
 
     #get Track
     #read data out of DT
-    def getUsere(self):
+    def getUsers(self):
         self.lock.acquire()
         self._connect()
         
