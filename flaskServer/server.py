@@ -60,7 +60,7 @@ def create_drone():
 
 @app.route("/result", methods=["GET"])
 def get_result():
-    results = db.getDrones()
+    results = db.getResult()
     return render_template('result.html', results=results)
 
 @app.route("/result", methods=["POST"])
@@ -69,10 +69,11 @@ def create_result():
     mapid = response["mapid"]
     trackid = response["trackid"]
     userid = response["userid"]
-    dronid = response["dronid"]
-    time = response["time"]
+    droneid = response["droneid"]
+    resulttimestamp = response["resulttimestamp"]
+    print(resulttimestamp, file=sys.stderr)
     #todo check username and collor using regex
-    db.add_new_result(mapid, trackid, userid, dronid, time);    
+    db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp);    
     
     results = db.getDrones()
     return render_template('result.html', results=results)

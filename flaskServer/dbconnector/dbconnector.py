@@ -102,20 +102,20 @@ class DBconnector:
         self._connect()
         
         with self.db.cursor() as cur:
-            cur.execute('SELECT mapid, trackid, userid, dronid, time From RESULTS;')
+            cur.execute('SELECT mapid, trackid, userid, droneid, resulttimestamp From RESULTS;')
             users =  cur.fetchall()
 
         self._dissconect()
         self.lock.release()
         return users
 
-    def add_new_result(self, mapid, trackid, userid, dronid, time):
+    def add_new_result(self, mapid, trackid, userid, droneid, resulttimestamp):
         self.lock.acquire()
         self._connect()
         
         with self.db.cursor() as cur:
-            cur.execute('INSERT INTO RESULTS (mapid, trackid, userid, dronid, time) '+\
-                        'VALUES ( "'+mapid+'", "'+trackid+'", "'+userid+'", "'+dronid+'", "'+time+'");')
+            cur.execute('INSERT INTO RESULTS (mapid, trackid, userid, droneid, resulttimestamp) '+\
+                        'VALUES ( "'+mapid+'", "'+trackid+'", "'+userid+'", "'+droneid+'", "'+resulttimestamp+'");')
 
         self.db.commit()
         self._dissconect()
