@@ -129,7 +129,7 @@ VALUES
 INSERT INTO TRACKS
     (mapid, trackid, trackname, hardness)
 VALUES
-    (8, 1, "1", 0),
+    (8, 1, "1", 1),
     (8, 2, "2", 6),
     (8, 3, "3", 4),
     (8, 4, "4", 4),
