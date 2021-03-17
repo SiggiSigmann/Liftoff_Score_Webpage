@@ -63,13 +63,14 @@ class DBconnector:
         self.lock.release()
         return users
 
-    def add_new_user(self, username, color):
+    def add_new_user(self, username, usercolor):
         self.lock.acquire()
         self._connect()
         
         with self.db.cursor() as cur:
-            cur.execute('INSERT INTO USERS (username ,usercolor) VALUES ( "'+username+'", "'+color+'");')
+            cur.execute('INSERT INTO USERS (username ,usercolor) VALUES ( "'+username+'", "'+usercolor+'");')
 
+        self.db.commit()
         self._dissconect()
         self.lock.release()
 
