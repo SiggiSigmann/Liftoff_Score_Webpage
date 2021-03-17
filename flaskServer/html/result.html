@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>Liftoff Scores</title>
+		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
+		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="manifest" href="manifest.webmanifest">-->
+	</head>
+	<body>
+		<p>Website in progress</p>
+		<a href="/">home</a>
+		<table>
+			<tr>
+				<th>mapid</th>
+				<th>trackid</th>
+				<th>userid</th>
+				<th>dronid</th>
+				<th>time</th>
+		 	</tr>
+			{% for result in results %}
+				<tr>
+					<th>{{ result[0] }}</th>
+					<th>{{ result[1] }}</th>
+					<th>{{ result[2] }}</th>
+					<th>{{ result[3] }}</th>
+					<th>{{ result[4] }}</th>
+				</tr>
+			{% endfor %}
+		</table>
+
+		<form action="/result" method="POST">
+			mapid <input type="text" id="mapid" name="mapid" required/><br>
+			trackid <input type="text" id="trackid" name="trackid" required/><br>
+			userid <input type="text" id="userid" name="userid" required/><br>
+			dronid <input type="text" id="dronid" name="dronid" required/><br>
+			time <input type="text" id="resulttimestamp" name="resulttimestamp" ><br>
+	
+		</form>
+	</body>
+</html>

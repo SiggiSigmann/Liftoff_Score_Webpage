@@ -63,12 +63,59 @@ class DBconnector:
         self.lock.release()
         return users
 
-    def add_new_user(self, username, usercolor):
+    def add_new_user(self, dronename):
         self.lock.acquire()
         self._connect()
         
         with self.db.cursor() as cur:
             cur.execute('INSERT INTO USERS (username ,usercolor) VALUES ( "'+username+'", "'+usercolor+'");')
+
+        self.db.commit()
+        self._dissconect()
+        self.lock.release()
+
+    def getDrones(self):
+        self.lock.acquire()
+        self._connect()
+        
+        with self.db.cursor() as cur:
+            cur.execute('SELECT dronename From DRONES;')
+            users =  cur.fetchall()
+
+        self._dissconect()
+        self.lock.release()
+        return users
+
+    def add_new_drone(self, dronename):
+        self.lock.acquire()
+        self._connect()
+        
+        with self.db.cursor() as cur:
+            cur.execute('INSERT INTO DRONES (dronename) VALUES ( "'+dronename+'");')
+
+        self.db.commit()
+        self._dissconect()
+        self.lock.release()
+
+    def getResult(self):
+        self.lock.acquire()
+        self._connect()
+        
+        with self.db.cursor() as cur:
+            cur.execute('SELECT mapid, trackid, userid, dronid, time From RESULTS;')
+            users =  cur.fetchall()
+
+        self._dissconect()
+        self.lock.release()
+        return users
+
+    def add_new_result(self, mapid, trackid, userid, dronid, time):
+        self.lock.acquire()
+        self._connect()
+        
+        with self.db.cursor() as cur:
+            cur.execute('INSERT INTO RESULTS (mapid, trackid, userid, dronid, time) '+\
+                        'VALUES ( "'+mapid+'", "'+trackid+'", "'+userid+'", "'+dronid+'", "'+time+'");')
 
         self.db.commit()
         self._dissconect()

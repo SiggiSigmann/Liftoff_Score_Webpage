@@ -42,7 +42,41 @@ def return_humans_txt():
 #def return_manifest_txt():
 #    return app.send_static_file("manifest.webmanifest")
 
+### input #######################################
+@app.route("/drone", methods=["GET"])
+def get_drones():
+    drones = db.getDrones()
+    return render_template('drone.html' drones=drones)
 
+@app.route("/drone", methods=["POST"])
+def create_drone():
+    response = request.form
+    mapid = response["dronename"]
+    #todo check username and collor using regex
+    db.add_new_drone(dronename);    
+
+    drones = db.getDrones()
+    return render_template('drone.html' drones=drones)
+
+@app.route("/result", methods=["GET"])
+def get_drones():
+    results = db.getDrones()
+    return render_template('result.html' results=results)
+
+@app.route("/result", methods=["POST"])
+def create_result():
+    response = request.form
+    mapid = response["mapid"]
+    trackid = response["trackid"]
+    userid = response["userid"]
+    dronid = response["dronid"]
+    time = response["time"]
+    #todo check username and collor using regex
+    db.add_new_result(mapid, trackid, userid, dronid, time);    
+    
+    results = db.getDrones()
+    return render_template('result.html' results=results)
+    
 ### user #######################################
 @app.route("/users", methods=["GET"])
 def user_get():
