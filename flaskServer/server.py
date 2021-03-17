@@ -59,7 +59,7 @@ def create_drone():
     return render_template('drone.html', drones=drones)
 
 @app.route("/result", methods=["GET"])
-def get_drones():
+def get_result():
     results = db.getDrones()
     return render_template('result.html', results=results)
 
