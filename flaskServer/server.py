@@ -51,7 +51,7 @@ def get_drones():
 @app.route("/drone", methods=["POST"])
 def create_drone():
     response = request.form
-    mapid = response["dronename"]
+    dronename = response["dronename"]
     #todo check username and collor using regex
     db.add_new_drone(dronename);    
 
