@@ -46,7 +46,7 @@ def return_humans_txt():
 @app.route("/drone", methods=["GET"])
 def get_drones():
     drones = db.getDrones()
-    return render_template('drone.html' drones=drones)
+    return render_template('drone.html', drones=drones)
 
 @app.route("/drone", methods=["POST"])
 def create_drone():
@@ -56,12 +56,12 @@ def create_drone():
     db.add_new_drone(dronename);    
 
     drones = db.getDrones()
-    return render_template('drone.html' drones=drones)
+    return render_template('drone.html', drones=drones)
 
 @app.route("/result", methods=["GET"])
 def get_drones():
     results = db.getDrones()
-    return render_template('result.html' results=results)
+    return render_template('result.html', results=results)
 
 @app.route("/result", methods=["POST"])
 def create_result():
@@ -75,8 +75,8 @@ def create_result():
     db.add_new_result(mapid, trackid, userid, dronid, time);    
     
     results = db.getDrones()
-    return render_template('result.html' results=results)
-    
+    return render_template('result.html', results=results)
+
 ### user #######################################
 @app.route("/users", methods=["GET"])
 def user_get():
