@@ -25,7 +25,7 @@
 					<th>{{ result[4] }}</th>
 				</tr>
 			{% endfor %}
-		</table>b
+		</table>
 
 		<form action="/result" method="POST">
 			mapid <select  id="mapid" name="mapid">
@@ -33,7 +33,38 @@
 				<option value="{{ map[0] }}" >{{ map[1] }}</option>
 				{% endfor %}
 			</select><br>
-			trackid <input type="text" id="trackid" name="trackid" required/><br>
+			<script>
+				document.getElementById("mapid").onchange = updateTrackOptions;
+				
+				function updateTrackOptions(){
+					var value = this.value
+					var tracks = {{ tracks }}
+					console.log(tracks);
+					
+					var select = document.getElementById("trackid");
+					var length = select.options.length;
+					for (i = length-1; i >= 0; i--) {
+						select.options[i] = null;
+					}
+
+					switch(expression) {
+						case x:
+							// code block
+							break;
+						case y:
+							// code block
+							break;
+						default:
+							// code block
+					} 			
+				}
+			  
+			</script>
+			trackid <select  id="trackid" name="trackid">
+				
+				<option value="1" >1</option>
+				<option value="2" >2</option>
+			</select><br>
 			userid <select  id="userid" name="userid">
 				{% for user in users %}
 				<option value="{{ user[0] }}" style="background: {{ user[2] }};">{{ user[1] }}</option>

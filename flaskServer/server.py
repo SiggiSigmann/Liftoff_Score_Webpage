@@ -64,7 +64,8 @@ def get_result():
     users = db.getUsers()
     drones = db.getDrones()
     maps = db.getMaps()
-    return render_template('result.html', results=results, users=users, drones=drones, maps=maps)
+    tracks = db.getTracks()
+    return render_template('result.html', results=results, users=users, drones=drones, maps=maps, tracks=tracks)
 
 @app.route("/result", methods=["POST"])
 def create_result():

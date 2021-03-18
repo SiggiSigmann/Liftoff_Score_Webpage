@@ -42,7 +42,7 @@ class DBconnector:
         self._connect()
         
         with self.db.cursor() as cur:
-            cur.execute('SELECT MAPS.mapname, TRACKS.trackname, TRACKS.hardness From TRACKS INNER JOIN MAPS ON TRACKS.mapid = MAPS.mapid;')
+            cur.execute('SELECT MAPS.mapname, TRACKS.trackname, TRACKS.hardness, MAPS.mapid, TRACKS.trackid From TRACKS INNER JOIN MAPS ON TRACKS.mapid = MAPS.mapid;')
             tracks =  cur.fetchall()
 
         self._dissconect()
