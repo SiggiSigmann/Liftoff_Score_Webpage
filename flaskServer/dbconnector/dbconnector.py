@@ -121,3 +121,14 @@ class DBconnector:
         self._dissconect()
         self.lock.release()
 
+    def getMaps(self):
+        self.lock.acquire()
+        self._connect()
+        
+        with self.db.cursor() as cur:
+            cur.execute('SELECT mapid, mapname From MAPS;')
+            users =  cur.fetchall()
+
+        self._dissconect()
+        self.lock.release()
+        return users

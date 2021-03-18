@@ -53,7 +53,7 @@ def create_drone():
     response = request.form
     dronename = response["dronename"]
     #todo check username and collor using regex
-    db.add_new_drone(dronename);    
+    db.add_new_drone(dronename) 
 
     drones = db.getDrones()
     return render_template('drone.html', drones=drones)
@@ -63,7 +63,8 @@ def get_result():
     results = db.getResult()
     users = db.getUsers()
     drones = db.getDrones()
-    return render_template('result.html', results=results, users=users, drones=drones)
+    maps = db.getMaps()
+    return render_template('result.html', results=results, users=users, drones=drones, maps=maps)
 
 @app.route("/result", methods=["POST"])
 def create_result():
@@ -73,22 +74,21 @@ def create_result():
     userid = response["userid"]
     droneid = response["droneid"]
     resulttimestamp = response["resulttimestamp"]
-    print(resulttimestamp, file=sys.stderr)
     #todo check username and collor using regex
-    db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp);    
+    db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp)
     
     #todo:check ich input is creect
 
     results = db.getDrones()
     users = db.getUsers()
     drones = db.getDrones()
-    return render_template('result.html', results=results, users=users, drones=drones)
+    maps = db.getMaps()
+    return render_template('result.html', results=results, users=users, drones=drones, maps=maps)
 
 ### user #######################################
 @app.route("/users", methods=["GET"])
 def user_get():
     users = db.getUsers()
-    print(users, file=sys.stderr)
 
     return render_template('users.html', users=users)
 
@@ -98,7 +98,7 @@ def create_user():
     username = response["username"]
     usercolor = response["color"]
     #todo check username and collor using regex
-    db.add_new_user(username, usercolor);    
+    db.add_new_user(username, usercolor)
 
     users = db.getUsers()
     return render_template('users.html', users=users)

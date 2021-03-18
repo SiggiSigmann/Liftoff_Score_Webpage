@@ -28,7 +28,11 @@
 		</table>b
 
 		<form action="/result" method="POST">
-			mapid <input type="text" id="mapid" name="mapid" required/><br>
+			mapid <select  id="mapid" name="mapid">
+				{% for map in maps %}
+				<option value="{{ map[0] }}" >{{ map[1] }}</option>
+				{% endfor %}
+			</select><br>
 			trackid <input type="text" id="trackid" name="trackid" required/><br>
 			userid <select  id="userid" name="userid">
 				{% for user in users %}
