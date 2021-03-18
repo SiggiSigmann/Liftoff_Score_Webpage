@@ -63,7 +63,7 @@ class DBconnector:
         self.lock.release()
         return users
 
-    def add_new_user(self, dronename):
+    def add_new_user(self, username, usercolor):
         self.lock.acquire()
         self._connect()
         
@@ -79,7 +79,7 @@ class DBconnector:
         self._connect()
         
         with self.db.cursor() as cur:
-            cur.execute('SELECT dronename From DRONES;')
+            cur.execute('SELECT droneid, dronename From DRONES;')
             users =  cur.fetchall()
 
         self._dissconect()

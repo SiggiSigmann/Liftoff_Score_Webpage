@@ -25,13 +25,21 @@
 					<th>{{ result[4] }}</th>
 				</tr>
 			{% endfor %}
-		</table>
+		</table>b
 
 		<form action="/result" method="POST">
 			mapid <input type="text" id="mapid" name="mapid" required/><br>
 			trackid <input type="text" id="trackid" name="trackid" required/><br>
-			userid <input type="text" id="userid" name="userid" required/><br>
-			droneid <input type="text" id="droneid" name="droneid" required/><br>
+			userid <select  id="userid" name="userid">
+				{% for user in users %}
+				<option value="{{ user[0] }}" style="background: {{ user[2] }};">{{ user[1] }}</option>
+				{% endfor %}
+			</select><br>
+			droneid <select  id="droneid" name="droneid">
+				{% for drone in drones %}
+				<option value="{{ drone[0] }}">{{ drone[1] }}</option>
+				{% endfor %}
+			</select><br>
 			time <input type="text" id="resulttimestamp" name="resulttimestamp" ><br>
 			<button type="submit">Create Result</button>
 		</form>

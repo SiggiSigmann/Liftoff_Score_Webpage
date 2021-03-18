@@ -61,7 +61,9 @@ def create_drone():
 @app.route("/result", methods=["GET"])
 def get_result():
     results = db.getResult()
-    return render_template('result.html', results=results)
+    users = db.getUsers()
+    drones = db.getDrones()
+    return render_template('result.html', results=results, users=users, drones=drones)
 
 @app.route("/result", methods=["POST"])
 def create_result():
@@ -75,8 +77,12 @@ def create_result():
     #todo check username and collor using regex
     db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp);    
     
+    #todo:check ich input is creect
+
     results = db.getDrones()
-    return render_template('result.html', results=results)
+    users = db.getUsers()
+    drones = db.getDrones()
+    return render_template('result.html', results=results, users=users, drones=drones)
 
 ### user #######################################
 @app.route("/users", methods=["GET"])
