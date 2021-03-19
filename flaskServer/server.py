@@ -72,6 +72,7 @@ def get_result():
 
 @app.route("/result", methods=["POST"])
 def create_result():
+    results = db.getResult()
     response = request.form
     mapid = int(response["mapid"])
     trackid = int(response["trackid"])
@@ -85,7 +86,7 @@ def create_result():
         success = 0
 
     tracks = db.get_tracks()
-    if len(tracks["maps"][mapid-1]["tracks"]) <= trackid and 0 < trackid:
+    if not (len(tracks["maps"][mapid-1]["tracks"]) >= trackid and 0 < trackid):
         success = 0
 
     users = db.getUsers()
@@ -100,9 +101,9 @@ def create_result():
     if success == 1:
         db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp)
 
-    results = db.getResult()
-    return render_template('result.html', results=results, users=users, drones=drones, maps=maps, success=2)
-
+    
+    return render_template('result.html', results=results, users=users, drones=drones, maps=maps, tracks=tracks, success=success)
+#todo: change time type in db, try cach around insertion
 ### user #######################################
 @app.route("/users", methods=["GET"])
 def user_get():
