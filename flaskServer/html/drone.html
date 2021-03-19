@@ -17,8 +17,14 @@
 		</table>
 
 		<form action="/drone" method="POST">
-			dronename <input type="text" id="dronename" name="dronename" required/><br>
+			dronename <input type="text" id="dronename" name="dronename" pattern="[a-zA-z0-9]{3,25}" required/><br>
 			<button type="submit">Create Drone</button>
 		</form>
+
+		{% if success == 0 %}
+			<p style="color: red;">ERROR</p>
+		{% elif success == 1 %}
+			<p style="color: green;">Success</p>
+		{% endif %}
 	</body>
 </html>

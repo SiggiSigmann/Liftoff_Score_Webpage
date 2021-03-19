@@ -46,17 +46,20 @@ def return_humans_txt():
 @app.route("/drone", methods=["GET"])
 def get_drones():
     drones = db.getDrones()
-    return render_template('drone.html', drones=drones)
+    return render_template('drone.html', drones=drones, success = 2)
 
 @app.route("/drone", methods=["POST"])
 def create_drone():
     response = request.form
     dronename = response["dronename"]
     #todo check username and collor using regex
-    db.add_new_drone(dronename) 
+    success = 0
+    if len(dronename) < 26:
+        db.add_new_drone(dronename)
+        success = 1
 
     drones = db.getDrones()
-    return render_template('drone.html', drones=drones)
+    return render_template('drone.html', drones=drones, success=success)
 
 @app.route("/result", methods=["GET"])
 def get_result():
