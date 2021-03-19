@@ -28,11 +28,11 @@
 		</table>
 
 		<form action="/result" method="POST">
-			mapid <select  id="mapid" name="mapid">
+			mapid <select  id="mapid" name="mapid" required>
 				{% for map in maps %}
 				<option value="{{ map[0] }}" >{{ map[1] }}</option>
 				{% endfor %}
-			</select><br>
+			</select>
 			<script>
 				document.getElementById("mapid").onchange = updateTrackOptions;
 				
@@ -56,12 +56,9 @@
 						select.appendChild(opt);
 					});	
 				}
-			  
-			</script>
-			trackid <select  id="trackid" name="trackid">
-				
-				<option value="1" >1</option>
-				<option value="2" >2</option>
+			</script><br>
+
+			trackid <select  id="trackid" name="trackid" required>
 			</select>
 			<script>
 				var tracks = JSON.parse('{{ tracks | tojson | safe}}');
@@ -83,12 +80,14 @@
 				});
 			</script>
 			<br>
-			userid <select  id="userid" name="userid">
+
+			userid <select  id="userid" name="userid" required>
 				{% for user in users %}
 				<option value="{{ user[0] }}" style="background: {{ user[2] }};">{{ user[1] }}</option>
 				{% endfor %}
 			</select><br>
-			droneid <select  id="droneid" name="droneid">
+
+			droneid <select  id="droneid" name="droneid" required>
 				{% for drone in drones %}
 				<option value="{{ drone[0] }}">{{ drone[1] }}</option>
 				{% endfor %}
