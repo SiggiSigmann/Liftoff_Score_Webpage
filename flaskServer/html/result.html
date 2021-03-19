@@ -37,26 +37,19 @@
 				document.getElementById("mapid").onchange = updateTrackOptions;
 				
 				function updateTrackOptions(){
-					var value = this.value
-					var tracks = {{ tracks }}
+					var value = this.value;
+					var tracks = JSON.parse('{{ tracks | tojson | safe}}');
 					console.log(tracks);
 					
+					//empty track selection
 					var select = document.getElementById("trackid");
 					var length = select.options.length;
 					for (i = length-1; i >= 0; i--) {
 						select.options[i] = null;
 					}
 
-					switch(expression) {
-						case x:
-							// code block
-							break;
-						case y:
-							// code block
-							break;
-						default:
-							// code block
-					} 			
+					tracks["tracks"]
+						
 				}
 			  
 			</script>

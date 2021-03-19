@@ -16,28 +16,31 @@
 				<th>Track</th>
 				<th>Hardness</th>
 			</tr>
-			{% for track in tracks %}
-				<tr>
-					<th>{{ track[0] }}</th>
-					<th>{{ track[1] }}</th>
-					{% if track[2] == 1 %}
-						<th style="background-color:  rgb(0, 255, 0);">{{ track[2] }}</th>
-					{% elif track[2] == 2 %}
-						<th style="background-color:  rgb(64, 255, 0);">{{ track[2] }}</th>
-					{% elif track[2] == 3 %}
-						<th style="background-color:  rgb(128, 255, 0);">{{ track[2] }}</th>
-					{% elif track[2] == 4 %}
-						<th style="background-color:  rgb(192, 255, 0);">{{ track[2] }}</th>
-					{% elif track[2] == 5 %}
-						<th style="background-color:  rgb(255, 192, 0);">{{ track[2] }}</th>
-					{% elif track[2] == 6 %}
-						<th style="background-color:  rgb(255, 128, 0);">{{ track[2] }}</th>
-					{% elif track[2] == 7 %}
-						<th style="background-color:  rgb(255, 64, 0);">{{ track[2] }}</th>
-					{% elif track[2] == 8 %}
-						<th style="background-color:  rgb(255, 0, 0);">{{ track[2] }}</th>
-					{% endif %}
-				</tr>
+			
+			{% for map in tracks.maps %}
+				{% for track in map.tracks %}
+					<tr>
+						<th>{{ map.mapname }}</th>
+						<th>{{ track.trackname }}</th>
+						{% if track.hardness == 1 %}
+							<th style="background-color:  rgb(0, 255, 0);">{{ track.hardness  }}</th>
+						{% elif track.hardness  == 2 %}
+							<th style="background-color:  rgb(64, 255, 0);">{{ track.hardness  }}</th>
+						{% elif track.hardness  == 3 %}
+							<th style="background-color:  rgb(128, 255, 0);">{{ track.hardness  }}</th>
+						{% elif track.hardness  == 4 %}
+							<th style="background-color:  rgb(192, 255, 0);">{{ track.hardness  }}</th>
+						{% elif track.hardness  == 5 %}
+							<th style="background-color:  rgb(255, 192, 0);">{{ track.hardness  }}</th>
+						{% elif track.hardness  == 6 %}
+							<th style="background-color:  rgb(255, 128, 0);">{{ track.hardness  }}</th>
+						{% elif track.hardness  == 7 %}
+							<th style="background-color:  rgb(255, 64, 0);">{{ track.hardness  }}</th>
+						{% elif track.hardness  == 8 %}
+							<th style="background-color:  rgb(255, 0, 0);">{{ track.hardness  }}</th>
+						{% endif %}
+					</tr>
+				{% endfor %}
 			{% endfor %}
 		</table>
 	</body>

@@ -64,7 +64,7 @@ def get_result():
     users = db.getUsers()
     drones = db.getDrones()
     maps = db.getMaps()
-    tracks = db.getTracks()
+    tracks = db.get_tracks()
     return render_template('result.html', results=results, users=users, drones=drones, maps=maps, tracks=tracks)
 
 @app.route("/result", methods=["POST"])
@@ -107,7 +107,7 @@ def create_user():
 ### / ##########################################
 @app.route("/", methods=["GET"])
 def index_get():
-    tracks = db.getTracks()
+    tracks = db.get_tracks()
     print(tracks, file=sys.stderr)
 
     return render_template('index.html', tracks=tracks)

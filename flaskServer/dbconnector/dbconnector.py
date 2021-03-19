@@ -37,17 +37,45 @@ class DBconnector:
 
     #get Track
     #read data out of DT
-    def getTracks(self):
+    def get_tracks(self):
         self.lock.acquire()
         self._connect()
         
+        track_json = '{"maps":['
+        
+
         with self.db.cursor() as cur:
-            cur.execute('SELECT MAPS.mapname, TRACKS.trackname, TRACKS.hardness, MAPS.mapid, TRACKS.trackid From TRACKS INNER JOIN MAPS ON TRACKS.mapid = MAPS.mapid;')
+            cur.execute('SELECT MAPS.mapid, MAPS.mapname, TRACKS.trackid, TRACKS.trackname, TRACKS.hardness From TRACKS INNER JOIN MAPS ON TRACKS.mapid = MAPS.mapid;')
             tracks =  cur.fetchall()
+            sorted_tracks = {}
+
+            for track in tracks:
+                if (track[0],track[1]) not in sorted_tracks.keys():
+                    sorted_tracks[(track[0],track[1])] = []
+  
+                sorted_tracks[(track[0],track[1])].append(track[2:])
+
+
+            
+        for maps in sorted_tracks.keys():
+            track_json += '{"mapid":'+str(maps[0])+', "mapname":"'+maps[1] +'", "tracks":['
+
+            for track in sorted_tracks[maps]:
+                track_json += '{"trackid":'+str(track[0])+',"trackname":"'+str(track[1])+'","hardness":'+str(track[2])+"},"
+
+            track_json = track_json[:-1]
+            track_json += "]},"
+        track_json = track_json[:-1]
+
+        track_json += ']}'
+
+        print(track_json, file= sys.stderr)
 
         self._dissconect()
         self.lock.release()
-        return tracks
+        return json.loads(track_json)
+
+    
 
     #get Track
     #read data out of DT
