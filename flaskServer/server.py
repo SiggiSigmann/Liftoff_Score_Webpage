@@ -52,7 +52,7 @@ def get_drones():
 def create_drone():
     response = request.form
     dronename = response["dronename"]
-    #todo check username and collor using regex
+    
     success = 0
     if len(dronename) < 26:
         db.add_new_drone(dronename)
@@ -68,26 +68,41 @@ def get_result():
     drones = db.getDrones()
     maps = db.getMaps()
     tracks = db.get_tracks()
-    return render_template('result.html', results=results, users=users, drones=drones, maps=maps, tracks=tracks)
+    return render_template('result.html', results=results, users=users, drones=drones, maps=maps, tracks=tracks, success = 2)
 
 @app.route("/result", methods=["POST"])
 def create_result():
     response = request.form
-    mapid = response["mapid"]
-    trackid = response["trackid"]
-    userid = response["userid"]
-    droneid = response["droneid"]
+    mapid = int(response["mapid"])
+    trackid = int(response["trackid"])
+    userid = int(response["userid"])
+    droneid = int(response["droneid"])
     resulttimestamp = response["resulttimestamp"]
-    #todo check username and collor using regex
-    db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp)
+
+    maps = db.getMaps()
+    success = 1
+    if not (len(maps) >= mapid and 0 < mapid):
+        success = 0
+
+    tracks = db.get_tracks()
+    if len(tracks["maps"][mapid-1]["tracks"]) <= trackid and 0 < trackid:
+        success = 0
+
+    users = db.getUsers()
+    if not (len(users) >= int(userid) and 0 < userid):
+        success = 0
     
-    #todo:check ich input is creect
+    drones = db.getDrones()
+    if not (len(drones) >= droneid and 0 < droneid):
+        success = 0
+
+    #==>
+    if success == 1:
+        db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp)
+
 
     results = db.getDrones()
-    users = db.getUsers()
-    drones = db.getDrones()
-    maps = db.getMaps()
-    return render_template('result.html', results=results, users=users, drones=drones, maps=maps)
+    return render_template('result.html', results=results, users=users, drones=drones, maps=maps, success=2)
 
 ### user #######################################
 @app.route("/users", methods=["GET"])

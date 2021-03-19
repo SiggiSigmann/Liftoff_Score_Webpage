@@ -92,8 +92,16 @@
 				<option value="{{ drone[0] }}">{{ drone[1] }}</option>
 				{% endfor %}
 			</select><br>
-			time <input type="text" id="resulttimestamp" name="resulttimestamp" ><br>
+
+			time <input type="text" id="resulttimestamp" name="resulttimestamp"  pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}"  required><br>
+
 			<button type="submit">Create Result</button>
 		</form>
+
+		{% if success == 0 %}
+			<p style="color: red;">ERROR</p>
+		{% elif success == 1 %}
+			<p style="color: green;">Success</p>
+		{% endif %}
 	</body>
 </html>

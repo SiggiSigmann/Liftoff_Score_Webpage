@@ -36,7 +36,7 @@ class DBconnector:
             self.db = None
 
     #get Track
-    #read data out of DT
+    #read data out of DB
     def get_tracks(self):
         self.lock.acquire()
         self._connect()
@@ -96,7 +96,7 @@ class DBconnector:
         self._connect()
         
         with self.db.cursor() as cur:
-            cur.execute('INSERT INTO USERS (username ,usercolor) VALUES ( "'+username+'", "'+usercolor+'");')
+            cur.execute('INSERT INTO USERS (username ,usercolor) VALUES ( "'+str(username)+'", "'+str(usercolor)+'");')
 
         self.db.commit()
         self._dissconect()
@@ -119,7 +119,7 @@ class DBconnector:
         self._connect()
         
         with self.db.cursor() as cur:
-            cur.execute('INSERT INTO DRONES (dronename) VALUES ( "'+dronename+'");')
+            cur.execute('INSERT INTO DRONES (dronename) VALUES ( "'+str(dronename)+'");')
 
         self.db.commit()
         self._dissconect()
@@ -143,7 +143,7 @@ class DBconnector:
         
         with self.db.cursor() as cur:
             cur.execute('INSERT INTO RESULTS (mapid, trackid, userid, droneid, resulttimestamp) '+\
-                        'VALUES ( "'+mapid+'", "'+trackid+'", "'+userid+'", "'+droneid+'", "'+resulttimestamp+'");')
+                        'VALUES ( "'+str(mapid)+'", "'+str(trackid)+'", "'+str(userid)+'", "'+str(droneid)+'", "'+str(resulttimestamp)+'");')
 
         self.db.commit()
         self._dissconect()
