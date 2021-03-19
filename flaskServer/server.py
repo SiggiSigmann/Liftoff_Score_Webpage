@@ -79,8 +79,8 @@ def create_result():
     droneid = int(response["droneid"])
     resulttimestamp = response["resulttimestamp"]
 
-    maps = db.getMaps()
     success = 1
+    maps = db.getMaps()
     if not (len(maps) >= mapid and 0 < mapid):
         success = 0
 
@@ -100,8 +100,7 @@ def create_result():
     if success == 1:
         db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp)
 
-
-    results = db.getDrones()
+    results = db.getResult()
     return render_template('result.html', results=results, users=users, drones=drones, maps=maps, success=2)
 
 ### user #######################################
@@ -109,18 +108,20 @@ def create_result():
 def user_get():
     users = db.getUsers()
 
-    return render_template('users.html', users=users)
+    return render_template('users.html', users=users, success = 2)
 
 @app.route("/users", methods=["POST"])
 def create_user():
     response = request.form
     username = response["username"]
     usercolor = response["color"]
-    #todo check username and collor using regex
-    db.add_new_user(username, usercolor)
+    success = 0
+    if len(username) <=25 and len(username) > 0:
+        success = 1
+        db.add_new_user(username, usercolor)
 
     users = db.getUsers()
-    return render_template('users.html', users=users)
+    return render_template('users.html', users=users, success = success)
 
 ### / ##########################################
 @app.route("/", methods=["GET"])
