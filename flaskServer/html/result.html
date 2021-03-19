@@ -39,8 +39,7 @@
 				function updateTrackOptions(){
 					var value = this.value;
 					var tracks = JSON.parse('{{ tracks | tojson | safe}}');
-					console.log(tracks);
-					
+
 					//empty track selection
 					var select = document.getElementById("trackid");
 					var length = select.options.length;
@@ -48,8 +47,14 @@
 						select.options[i] = null;
 					}
 
-					tracks["tracks"]
-						
+					//insert new
+					select = document.getElementById('trackid');
+					tracks["maps"][value-1]["tracks"].forEach (function (track, index) {
+						var opt = document.createElement('option');
+						opt.value = track["trackid"];
+						opt.innerHTML = track["trackname"];
+						select.appendChild(opt);
+					});	
 				}
 			  
 			</script>
@@ -57,7 +62,27 @@
 				
 				<option value="1" >1</option>
 				<option value="2" >2</option>
-			</select><br>
+			</select>
+			<script>
+				var tracks = JSON.parse('{{ tracks | tojson | safe}}');
+				
+				//empty track selection
+				var select = document.getElementById("trackid");
+				var length = select.options.length;
+				for (i = length-1; i >= 0; i--) {
+					select.options[i] = null;
+				}
+
+				//insert new
+				select = document.getElementById('trackid');
+				tracks["maps"][0]["tracks"].forEach (function (track, index) {
+					var opt = document.createElement('option');
+					opt.value = track["trackid"];
+					opt.innerHTML = track["trackname"];
+					select.appendChild(opt);
+				});
+			</script>
+			<br>
 			userid <select  id="userid" name="userid">
 				{% for user in users %}
 				<option value="{{ user[0] }}" style="background: {{ user[2] }};">{{ user[1] }}</option>
