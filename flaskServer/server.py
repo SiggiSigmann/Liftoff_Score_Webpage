@@ -72,7 +72,6 @@ def get_result():
 
 @app.route("/result", methods=["POST"])
 def create_result():
-    results = db.getResult()
     response = request.form
     mapid = int(response["mapid"])
     trackid = int(response["trackid"])
@@ -98,12 +97,14 @@ def create_result():
         success = 0
 
     #==>
+    print(str(mapid) +" "+str( trackid), file=sys.stderr)
     if success == 1:
         db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp)
+        #foreig key error!!!!!
 
-    
+    results = db.getResult()
     return render_template('result.html', results=results, users=users, drones=drones, maps=maps, tracks=tracks, success=success)
-#todo: change time type in db, try cach around insertion
+#todo: change time type in db, try cach around insertion, regxcheck vor time
 ### user #######################################
 @app.route("/users", methods=["GET"])
 def user_get():
