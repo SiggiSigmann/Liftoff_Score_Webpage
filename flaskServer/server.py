@@ -105,6 +105,8 @@ def create_result():
     results = db.getResult()
     return render_template('result.html', results=results, users=users, drones=drones, maps=maps, tracks=tracks, success=success)
 #todo: change time type in db, try cach around insertion, regxcheck vor time
+#get only most reson results
+#display themn in combination wit the index page
 ### user #######################################
 @app.route("/users", methods=["GET"])
 def user_get():

@@ -42,7 +42,8 @@ CREATE TABLE RESULTS(
     FOREIGN KEY userref (userid) REFERENCES USERS(userid),
     FOREIGN KEY droneref (droneid) REFERENCES DRONES(droneid),
     /*FOREIGN KEY trackref (trackid, mapid) REFERENCES TRACKS(trackid, mapid),*/
-    resulttimestamp varchar(9) NOT NULL
+    resulttimestamp varchar(9) NOT NULL,
+    resultfrom DATETIME NOT NULL
 );
 ALTER TABLE RESULTS AUTO_INCREMENT=0;
 

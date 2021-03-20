@@ -141,9 +141,13 @@ class DBconnector:
         self.lock.acquire()
         self._connect()
         
+        #get Date and time  (2020-11-04 10:40:00)
+        now = datetime.datetime.now()
+        dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
+
         with self.db.cursor() as cur:
-            cur.execute('INSERT INTO RESULTS (mapid, trackid, userid, droneid, resulttimestamp) '+\
-                        'VALUES ( "'+str(mapid)+'", "'+str(trackid)+'", "'+str(userid)+'", "'+str(droneid)+'", "'+str(resulttimestamp)+'");')
+            cur.execute('INSERT INTO RESULTS (mapid, trackid, userid, droneid, resulttimestamp, resultfrom) '+\
+                        'VALUES ( "'+str(mapid)+'", "'+str(trackid)+'", "'+str(userid)+'", "'+str(droneid)+'", "'+str(resulttimestamp)+'", "'+dt_string+'";')
 
         self.db.commit()
         self._dissconect()
