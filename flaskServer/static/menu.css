@@ -4,8 +4,9 @@
 	
 	--menu_link_color: #FFFFFF;
 	--menu_link_hover_color: #FFFF00;
-
 	--menu_link_active: #00FF00;
+
+	--menu_head: #505050;
 }
 
 #mySidenav {
@@ -31,6 +32,16 @@
 	font-size: 25px;
 	color: var(--menu_link_color);
 	display: block;
+}
+
+.sidemenu p {
+	padding: 8px 8px 8px 15px;
+	color: var(--menu_head);
+	display: block;
+	position: absolute;
+	top: 0;
+	font-size: 36px;
+	margin-top: 0px;
 }
 
 .sidemenu a:hover {
