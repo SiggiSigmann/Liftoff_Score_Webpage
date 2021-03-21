@@ -2,10 +2,21 @@
 	<head>
 		<title>Liftoff Scores</title>
 		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
 		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 		<link rel="manifest" href="manifest.webmanifest">-->
 	</head>
 	<body>
+		<div id="mysidemenu" class="sidemenu">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<a href="/" {% if active == "overview" %} id="active"{% endif %}>Overview</a>
+			<a href="/users" {% if active == "users" %} id="active"{% endif %}>Users</a>
+			<a href="/drone" {% if active == "drone" %} id="active"{% endif %}>Drone</a>
+			<a href="/result" {% if active == "results" %} id="active"{% endif %}>Add Time</a>
+		</div>
+		<h1>Drones</h1>
+		<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
+		<br>
 		<p>Website in progress</p>
 		<a href="/">home</a>
 		<table>

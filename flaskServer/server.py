@@ -46,7 +46,7 @@ def return_humans_txt():
 @app.route("/drone", methods=["GET"])
 def get_drones():
     drones = db.getDrones()
-    return render_template('drone.html', drones=drones, success = 2)
+    return render_template('drone.html', active="drones", drones=drones, success = 2)
 
 @app.route("/drone", methods=["POST"])
 def create_drone():
@@ -59,7 +59,7 @@ def create_drone():
         success = 1
 
     drones = db.getDrones()
-    return render_template('drone.html', drones=drones, success=success)
+    return render_template('drone.html', active="drones", drones=drones, success=success)
 
 @app.route("/result", methods=["GET"])
 def get_result():
@@ -68,7 +68,7 @@ def get_result():
     drones = db.getDrones()
     maps = db.getMaps()
     tracks = db.get_tracks()
-    return render_template('result.html', results=results, users=users, drones=drones, maps=maps, tracks=tracks, success = 2)
+    return render_template('result.html', active="results", results=results, users=users, drones=drones, maps=maps, tracks=tracks, success = 2)
 
 @app.route("/result", methods=["POST"])
 def create_result():
@@ -103,7 +103,7 @@ def create_result():
         #foreig key error!!!!!
 
     results = db.getResult()
-    return render_template('result.html', results=results, users=users, drones=drones, maps=maps, tracks=tracks, success=success)
+    return render_template('result.html', active="results", results=results, users=users, drones=drones, maps=maps, tracks=tracks, success=success)
 #todo: change time type in db, try cach around insertion, regxcheck vor time
 #get only most reson results
 #display themn in combination wit the index page
@@ -112,7 +112,7 @@ def create_result():
 def user_get():
     users = db.getUsers()
 
-    return render_template('users.html', users=users, success = 2)
+    return render_template('users.html',active="users", users=users, success = 2)
 
 @app.route("/users", methods=["POST"])
 def create_user():
@@ -125,7 +125,7 @@ def create_user():
         db.add_new_user(username, usercolor)
 
     users = db.getUsers()
-    return render_template('users.html', active="users" users=users, success = success)
+    return render_template('users.html', active="users", users=users, success = success)
 
 ### / ##########################################
 @app.route("/", methods=["GET"])
@@ -133,7 +133,7 @@ def index_get():
     tracks = db.get_tracks()
     print(tracks, file=sys.stderr)
 
-    return render_template('index.html', active="Overview",tracks=tracks)
+    return render_template('index.html', active="overview",tracks=tracks)
 
 #start server
 if __name__ == '__main__':
