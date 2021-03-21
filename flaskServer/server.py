@@ -125,14 +125,7 @@ def create_user():
         db.add_new_user(username, usercolor)
 
     users = db.getUsers()
-    return render_template('users.html', users=users, success = success)
-
-### test ##########################################
-@app.route("/test", methods=["GET"])
-def test_get():
-    tracks = db.get_tracks()
-    return render_template('test.html')
-
+    return render_template('users.html', active="users" users=users, success = success)
 
 ### / ##########################################
 @app.route("/", methods=["GET"])
@@ -140,7 +133,7 @@ def index_get():
     tracks = db.get_tracks()
     print(tracks, file=sys.stderr)
 
-    return render_template('index.html', tracks=tracks)
+    return render_template('index.html', active="Overview",tracks=tracks)
 
 #start server
 if __name__ == '__main__':
