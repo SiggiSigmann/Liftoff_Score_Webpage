@@ -127,6 +127,13 @@ def create_user():
     users = db.getUsers()
     return render_template('users.html', users=users, success = success)
 
+### test ##########################################
+@app.route("/test", methods=["GET"])
+def test_get():
+    tracks = db.get_tracks()
+    return render_template('test.html')
+
+
 ### / ##########################################
 @app.route("/", methods=["GET"])
 def index_get():

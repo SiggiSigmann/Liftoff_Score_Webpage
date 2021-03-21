@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Liftoff Scores</title>
+		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
+		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="manifest" href="manifest.webmanifest">-->
+	</head>
+	<body>
+		<!--based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav-->
+		<div id="mysidemenu" class="sidemenu">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<a href="#" {% if active == "Overview" %} id="active"{% endif %}>Overview</a>
+			<a href="#" {% if active == "Users" %} id="active"{% endif %}>Users</a>
+			<a href="#" {% if active == "Drone" %} id="active"{% endif %}>Drone</a>
+			<a href="#" {% if active == "Add Time" %} id="active"{% endif %}>Add Time</a>
+		</div>
+		<script>
+			function openNav() {
+			document.getElementById("mysidemenu").style.width = "250px";
+			}
+	
+			function closeNav() {
+			document.getElementById("mysidemenu").style.width = "0";
+			}
+		</script>
+
+		<h1>Test</h1>
+		<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
+
+	</body>
+</html> 

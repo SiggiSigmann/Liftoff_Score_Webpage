@@ -1,0 +1,54 @@
+/*based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav*/
+:root {																					
+	--menu_background: #000000;
+	
+	--menu_link_color: #FFFFFF;
+	--menu_link_hover_color: #FFFF00;
+
+	--menu_link_active: #00FF00;
+}
+
+#mySidenav {
+	padding-top: 10px;
+}
+
+.sidemenu {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color:var(--menu_background);
+	overflow-x: hidden;
+	transition: 0.5s;									/*time to slide in navbar*/
+	padding-top: 60px;									/*disance from top for the first entry*/
+}
+
+.sidemenu a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;								/*remove link underline*/
+	font-size: 25px;
+	color: var(--menu_link_color);
+	display: block;
+}
+
+.sidemenu a:hover {
+	color: var(--menu_link_hover_color);
+}
+
+.sidemenu .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+}
+.sidemenu #active{
+	color: var(--menu_link_active);
+}
+
+@media screen and (max-height: 450px) {					/*what to change if window is too small*/
+	.sidemenu {padding-top: 15px;}
+	.sidemenu a {font-size: 18px;}
+}
