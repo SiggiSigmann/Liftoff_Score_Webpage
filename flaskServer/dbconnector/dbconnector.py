@@ -79,7 +79,7 @@ class DBconnector:
 
     #get Track
     #read data out of DT
-    def getUsers(self):
+    def get_users(self):
         self.lock.acquire()
         self._connect()
         
@@ -102,7 +102,7 @@ class DBconnector:
         self._dissconect()
         self.lock.release()
 
-    def getDrones(self):
+    def get_drones(self):
         self.lock.acquire()
         self._connect()
         
@@ -125,7 +125,7 @@ class DBconnector:
         self._dissconect()
         self.lock.release()
 
-    def getResult(self):
+    def get_results(self):
         self.lock.acquire()
         self._connect()
         
@@ -153,7 +153,7 @@ class DBconnector:
         self._dissconect()
         self.lock.release()
 
-    def getMaps(self):
+    def get_maps(self):
         self.lock.acquire()
         self._connect()
         

@@ -12,6 +12,7 @@ import socket
 import io
 import json
 import datetime
+import re
 
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -45,7 +46,7 @@ def return_humans_txt():
 ### input #######################################
 @app.route("/drone", methods=["GET"])
 def get_drones():
-    drones = db.getDrones()
+    drones = db.get_drones()
     return render_template('drone.html', active="drones", drones=drones, success = 2)
 
 @app.route("/drone", methods=["POST"])
@@ -55,18 +56,22 @@ def create_drone():
     
     success = 0
     if len(dronename) < 26:
-        db.add_new_drone(dronename)
         success = 1
+        try:
+            db.add_new_drone(dronename)
+        except err:
+            print(err, file=sxs.stderr)
+            success = 0
 
-    drones = db.getDrones()
+    drones = db.get_drones()
     return render_template('drone.html', active="drones", drones=drones, success=success)
 
 @app.route("/result", methods=["GET"])
 def get_result():
-    results = db.getResult()
-    users = db.getUsers()
-    drones = db.getDrones()
-    maps = db.getMaps()
+    results = db.get_results()
+    users = db.get_users()
+    drones = db.get_drones()
+    maps = db.get_maps()
     tracks = db.get_tracks()
     return render_template('result.html', active="results", results=results, users=users, drones=drones, maps=maps, tracks=tracks, success = 2)
 
@@ -80,7 +85,7 @@ def create_result():
     resulttimestamp = response["resulttimestamp"]
 
     success = 1
-    maps = db.getMaps()
+    maps = db.get_maps()
     if not (len(maps) >= mapid and 0 < mapid):
         success = 0
 
@@ -88,29 +93,36 @@ def create_result():
     if not (len(tracks["maps"][mapid-1]["tracks"]) >= trackid and 0 < trackid):
         success = 0
 
-    users = db.getUsers()
+    users = db.get_users()
     if not (len(users) >= int(userid) and 0 < userid):
         success = 0
     
-    drones = db.getDrones()
+    drones = db.get_drones()
     if not (len(drones) >= droneid and 0 < droneid):
         success = 0
 
+    matched = re.match("[0-9]{2}:[0-9]{2}:[0-9]{3}", resulttimestamp)
+    if not bool(matched):
+        success = 0
+    
     #==>
-    print(str(mapid) +" "+str( trackid), file=sys.stderr)
     if success == 1:
-        db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp)
-        #foreig key error!!!!!
+        try:
+            db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp)
+        except err:
+            print(err, file=sxs.stderr)
+            success = 0
 
-    results = db.getResult()
+    results = db.get_results()
     return render_template('result.html', active="results", results=results, users=users, drones=drones, maps=maps, tracks=tracks, success=success)
-#todo: change time type in db, try cach around insertion, regxcheck vor time
+
+#todo:
 #get only most reson results
 #display themn in combination wit the index page
 ### user #######################################
 @app.route("/users", methods=["GET"])
 def user_get():
-    users = db.getUsers()
+    users = db.get_users()
 
     return render_template('users.html',active="users", users=users, success = 2)
 
@@ -122,9 +134,14 @@ def create_user():
     success = 0
     if len(username) <=25 and len(username) > 0:
         success = 1
-        db.add_new_user(username, usercolor)
 
-    users = db.getUsers()
+        try:
+            db.add_new_user(username, usercolor)
+        except err:
+            print(err, file=sxs.stderr)
+            success = 0
+
+    users = db.get_users()
     return render_template('users.html', active="users", users=users, success = success)
 
 ### / ##########################################
