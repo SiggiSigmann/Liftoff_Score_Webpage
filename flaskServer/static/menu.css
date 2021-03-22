@@ -31,6 +31,7 @@
 	text-decoration: none;								/*remove link underline*/
 	font-size: 25px;
 	color: var(--menu_link_color);
+	transition: 0.5s;									/*time to slide in navbar*/
 	display: block;
 }
 
@@ -42,6 +43,7 @@
 	top: 0;
 	font-size: 36px;
 	margin-top: 0px;
+	transition: 0.5s;									/*time to slide in navbar*/
 }
 
 .sidemenu a:hover {
