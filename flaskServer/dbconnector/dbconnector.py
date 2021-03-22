@@ -69,8 +69,6 @@ class DBconnector:
 
         track_json += ']}'
 
-        print(track_json, file= sys.stderr)
-
         self._dissconect()
         self.lock.release()
         return json.loads(track_json)
@@ -137,6 +135,33 @@ class DBconnector:
         self.lock.release()
         return users
 
+    def get_best_reslt_per_user(self):
+        self.lock.acquire()
+        self._connect()
+
+        json_container = {}
+        
+        with self.db.cursor() as cur:
+            cur.execute('select mapid,trackid, userid,  min(resulttimestamp) from RESULTS group by mapid, trackid, userid;')
+            best_results =  cur.fetchall()
+
+            for result in best_results:
+                if not result[0] in json_container.keys():
+                    json_container[result[0]] = {}
+
+                if not result[1] in json_container[result[0]].keys():
+                    json_container[result[0]][result[1]] = {}
+
+                json_container[result[0]][result[1]][result[2]] = result[3]
+
+        print(json_container, file=sys.stderr)
+
+                
+
+        self._dissconect()
+        self.lock.release()
+        return json_container
+
     def add_new_result(self, mapid, trackid, userid, droneid, resulttimestamp):
         self.lock.acquire()
         self._connect()
@@ -147,7 +172,7 @@ class DBconnector:
 
         with self.db.cursor() as cur:
             cur.execute('INSERT INTO RESULTS (mapid, trackid, userid, droneid, resulttimestamp, resultfrom) '+\
-                        'VALUES ( "'+str(mapid)+'", "'+str(trackid)+'", "'+str(userid)+'", "'+str(droneid)+'", "'+str(resulttimestamp)+'", "'+dt_string+'";')
+                        'VALUES ( "'+str(mapid)+'", "'+str(trackid)+'", "'+str(userid)+'", "'+str(droneid)+'", "'+str(resulttimestamp)+'", "'+dt_string+'");')
 
         self.db.commit()
         self._dissconect()

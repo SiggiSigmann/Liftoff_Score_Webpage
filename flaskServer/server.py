@@ -59,8 +59,8 @@ def create_drone():
         success = 1
         try:
             db.add_new_drone(dronename)
-        except err:
-            print(err, file=sxs.stderr)
+        except:
+            print("drone error while insertion", file=sys.stderr)
             success = 0
 
     drones = db.get_drones()
@@ -101,16 +101,18 @@ def create_result():
     if not (len(drones) >= droneid and 0 < droneid):
         success = 0
 
-    matched = re.match("[0-9]{2}:[0-9]{2}:[0-9]{3}", resulttimestamp)
-    if not bool(matched):
-        success = 0
+    #print("check file", file=sys.stderr)
+    #matched = re.match("[0-9]{2}:[0-9]{2}:[0-9]{3}", resulttimestamp)
+    #if not bool(matched):
+    #    success = 0
     
     #==>
+    print("insert", file=sys.stderr)
     if success == 1:
         try:
             db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp)
-        except err:
-            print(err, file=sxs.stderr)
+        except:
+            print("result error whil insertion", file=sys.stderr)
             success = 0
 
     results = db.get_results()
@@ -137,8 +139,8 @@ def create_user():
 
         try:
             db.add_new_user(username, usercolor)
-        except err:
-            print(err, file=sxs.stderr)
+        except:
+            print("user error while insertion", file=sys.stderr)
             success = 0
 
     users = db.get_users()
@@ -148,9 +150,10 @@ def create_user():
 @app.route("/", methods=["GET"])
 def index_get():
     tracks = db.get_tracks()
-    print(tracks, file=sys.stderr)
+    best_results = db.get_best_reslt_per_user()
+    users = db.get_users()
 
-    return render_template('index.html', active="overview",tracks=tracks)
+    return render_template('index.html', active="overview",tracks=tracks, users=users, best_results=best_results)
 
 #start server
 if __name__ == '__main__':

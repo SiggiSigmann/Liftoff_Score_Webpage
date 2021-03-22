@@ -31,39 +31,65 @@
 		<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
 		<br>
 		<p>Website in progress</p>
+		<div id="best"></div>
 
-		<table>
-			<tr>
-				<th>Map</th>
-				<th>Track</th>
-				<th>Hardness</th>
-			</tr>
+		<script>
+			var tracks = JSON.parse('{{ tracks | tojson | safe}}');
+			var users = JSON.parse('{{ users | tojson | safe}}');
+			var best_results = JSON.parse('{{ best_results | tojson | safe}}');
 			
-			{% for map in tracks.maps %}
-				{% for track in map.tracks %}
-					<tr>
-						<th>{{ map.mapname }}</th>
-						<th>{{ track.trackname }}</th>
-						{% if track.hardness == 1 %}
-							<th style="background-color:  rgb(0, 255, 0);">{{ track.hardness  }}</th>
-						{% elif track.hardness  == 2 %}
-							<th style="background-color:  rgb(64, 255, 0);">{{ track.hardness  }}</th>
-						{% elif track.hardness  == 3 %}
-							<th style="background-color:  rgb(128, 255, 0);">{{ track.hardness  }}</th>
-						{% elif track.hardness  == 4 %}
-							<th style="background-color:  rgb(192, 255, 0);">{{ track.hardness  }}</th>
-						{% elif track.hardness  == 5 %}
-							<th style="background-color:  rgb(255, 192, 0);">{{ track.hardness  }}</th>
-						{% elif track.hardness  == 6 %}
-							<th style="background-color:  rgb(255, 128, 0);">{{ track.hardness  }}</th>
-						{% elif track.hardness  == 7 %}
-							<th style="background-color:  rgb(255, 64, 0);">{{ track.hardness  }}</th>
-						{% elif track.hardness  == 8 %}
-							<th style="background-color:  rgb(255, 0, 0);">{{ track.hardness  }}</th>
-						{% endif %}
-					</tr>
-				{% endfor %}
-			{% endfor %}
-		</table>
+			var best = document.getElementById("best");
+			var tbl = document.createElement('table');
+			var tabel = document.createElement('tbody');
+
+
+			
+
+			tracks["maps"].forEach (function (map, index) {
+
+				map["tracks"].forEach (function (track, index) {
+					var z1 =  document.createElement('tr');
+					var s1 =  document.createElement('th');
+					s1.innerHTML = map["mapname"];
+					z1.appendChild(s1);
+					var s1 =  document.createElement('th');
+					s1.innerHTML = track["trackname"];
+					z1.appendChild(s1);
+					var s1 =  document.createElement('th');
+					s1.innerHTML = track["hardness"];
+					z1.appendChild(s1);
+
+					if(best_results.hasOwnProperty(map["mapid"])){
+						if(best_results[map["mapid"]].hasOwnProperty(track["trackid"])){
+							users.forEach (function (user, index) {
+								if(best_results[map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
+									var s1 =  document.createElement('th');
+									s1.innerHTML = best_results[map["mapid"]][track["trackid"]][user[0]];
+									z1.appendChild(s1);
+								}else{
+									var s1 =  document.createElement('th');
+									z1.appendChild(s1);
+								}
+
+							});
+						}else{
+							users.forEach (function (user, index) {
+								var s1 =  document.createElement('th');
+								z1.appendChild(s1);
+							});
+						}
+					}
+					tabel.appendChild(z1);
+				});	
+			});	
+			
+			
+			
+			tbl.appendChild(tabel);
+			best.appendChild(tbl);
+			
+		</script>
+
+		
 	</body>
 </html>
