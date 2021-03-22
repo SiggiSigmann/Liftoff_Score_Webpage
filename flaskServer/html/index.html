@@ -56,7 +56,7 @@
 			users.forEach (function (user, index) {
 				var s1 =  document.createElement('th');
 					s1.innerHTML = user[1];
-					s1.setAttribute("style","background: "+user[2]+";");
+					s1.setAttribute("style","background: "+user[2]+";padding:0 50px 0 50px;");
 					z1.appendChild(s1);
 			});
 			tabel.appendChild(z1);
@@ -83,6 +83,7 @@
 								if(best_results[map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
 									var s1 =  document.createElement('th');
 									s1.innerHTML = best_results[map["mapid"]][track["trackid"]][user[0]];
+									s1.setAttribute("style","padding:0 50px 0 50px;");
 									z1.appendChild(s1);
 								}else{
 									var s1 =  document.createElement('th');
