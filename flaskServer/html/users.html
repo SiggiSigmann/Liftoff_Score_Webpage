@@ -10,31 +10,33 @@
 		<!--based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav-->
 		{% include "menu.html" %}
 
+		<div id="main">
+			<h1>Users</h1>
+			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
+			<br>
+			<p>Website in progress</p>
+			<table>
+				{% for user in users %}
+					<tr>
+						<th>{{ user[0] }}</th>
+						<th>{{ user[1] }}</th>
+						<th style="background-color: {{ user[2] }};">{{ user[2] }}</th>
+					</tr>
+				{% endfor %}
+			</table>
+		
 
-		<h1>Users</h1>
-		<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
-		<br>
-		<p>Website in progress</p>
-		<table>
-			{% for user in users %}
-				<tr>
-					<th>{{ user[0] }}</th>
-					<th>{{ user[1] }}</th>
-					<th style="background-color: {{ user[2] }};">{{ user[2] }}</th>
-				</tr>
-			{% endfor %}
-		</table>
+			<form action="/users" method="POST">
+				Username <input type="text" id="username" name="username"  pattern="[a-zA-z0-9]{3,25}" required/><br>
+				Color <input type="color" id="color" name="color" required><br>
+				<button type="submit">Create User</button>
+			</form>
+
+			{% if success == 0 %}
+				<p style="color: red;">ERROR</p>
+			{% elif success == 1 %}
+				<p style="color: green;">Success</p>
+			{% endif %}
+		</div>
 	</body>
-
-	<form action="/users" method="POST">
-		Username <input type="text" id="username" name="username"  pattern="[a-zA-z0-9]{3,25}" required/><br>
-		Color <input type="color" id="color" name="color" required><br>
-		<button type="submit">Create User</button>
-	</form>
-
-	{% if success == 0 %}
-		<p style="color: red;">ERROR</p>
-	{% elif success == 1 %}
-		<p style="color: green;">Success</p>
-	{% endif %}
 </html>

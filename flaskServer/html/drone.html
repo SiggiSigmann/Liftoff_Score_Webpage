@@ -10,28 +10,29 @@
 		<!--based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav-->
 		{% include "menu.html" %}
 
+		<div id="main">
+			<h1>Drones</h1>
+			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
+			<br>
+			<p>Website in progress</p>
+			<table>
+				{% for drone in drones %}
+					<tr>
+						<th>{{ drone[1] }}</th>
+					</tr>
+				{% endfor %}
+			</table>
 
-		<h1>Drones</h1>
-		<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
-		<br>
-		<p>Website in progress</p>
-		<table>
-			{% for drone in drones %}
-				<tr>
-					<th>{{ drone[1] }}</th>
-				</tr>
-			{% endfor %}
-		</table>
+			<form action="/drone" method="POST">
+				dronename <input type="text" id="dronename" name="dronename" pattern="[a-zA-z0-9]{3,25}" required/><br>
+				<button type="submit">Create Drone</button>
+			</form>
 
-		<form action="/drone" method="POST">
-			dronename <input type="text" id="dronename" name="dronename" pattern="[a-zA-z0-9]{3,25}" required/><br>
-			<button type="submit">Create Drone</button>
-		</form>
-
-		{% if success == 0 %}
-			<p style="color: red;">ERROR</p>
-		{% elif success == 1 %}
-			<p style="color: green;">Success</p>
-		{% endif %}
+			{% if success == 0 %}
+				<p style="color: red;">ERROR</p>
+			{% elif success == 1 %}
+				<p style="color: green;">Success</p>
+			{% endif %}
+		</biv>
 	</body>
 </html>

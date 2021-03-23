@@ -61,6 +61,11 @@
 	color: var(--menu_link_active);
 }
 
+#main {
+	transition: 0.5s;
+	padding: 16px;
+}
+
 @media screen and (max-height: 450px) {					/*what to change if window is too small*/
 	.sidemenu {padding-top: 15px;}
 	.sidemenu a {font-size: 18px;}
