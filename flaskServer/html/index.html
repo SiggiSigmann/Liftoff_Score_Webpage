@@ -16,18 +16,21 @@
 			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
 			<br>
 			<p>Website in progress</p>
-			<div id="best"></div>
+			<table id="best"></table>
 
 			<script>
+				//get values form flask
 				var tracks = JSON.parse('{{ tracks | tojson | safe}}');
 				var users = JSON.parse('{{ users | tojson | safe}}');
 				var best_results = JSON.parse('{{ best_results | tojson | safe}}');
+				
+				//color gradient
 				var color = ['rgb(0,255,0)', 'rgb(64,255,0)','rgb(128,255,0)','rgb(192,255,0)','rgb(255,192,0)','rgb(255,128,0)','rgb(255,64,0)','rgb(255,0,0)' ];
 				
+				//create tabel
 				var best = document.getElementById("best");
-				var tbl = document.createElement('table');
-				var tabel = document.createElement('tbody');
 
+				//create header
 				var z1 =  document.createElement('tr');
 				var s1 =  document.createElement('th');
 				s1.innerHTML = "MAP";
@@ -41,10 +44,10 @@
 				users.forEach (function (user, index) {
 					var s1 =  document.createElement('th');
 						s1.innerHTML = user[1];
-						s1.setAttribute("style","background: "+user[2]+";padding:0 50px 0 50px;");
+						s1.setAttribute("style","background: "+user[2]+";padding:0 50px 0 50px;color: "+invertColor(user[2])+";");
 						z1.appendChild(s1);
 				});
-				tabel.appendChild(z1);
+				best.appendChild(z1);
 				
 
 				tracks["maps"].forEach (function (map, index) {
@@ -64,11 +67,11 @@
 
 						if(best_results.hasOwnProperty(map["mapid"])){
 							if(best_results[map["mapid"]].hasOwnProperty(track["trackid"])){
-								var best = "99:99:999";
+								var best_result = "99:99:999";
 								users.forEach (function (user, index) {
 									if(best_results[map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
 										var userhas = best_results[map["mapid"]][track["trackid"]][user[0]];
-										if(userhas < best ){best = userhas}
+										if(userhas < best_result ){best_result = userhas}
 									}
 
 								});
@@ -78,7 +81,7 @@
 									if(best_results[map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
 										var s1 =  document.createElement('th');
 										s1.innerHTML = best_results[map["mapid"]][track["trackid"]][user[0]];
-										if(best === best_results[map["mapid"]][track["trackid"]][user[0]]){
+										if(best_result === best_results[map["mapid"]][track["trackid"]][user[0]]){
 											s1.setAttribute("style","padding:0 50px 0 50px;color: green;");
 										}else{
 											s1.setAttribute("style","padding:0 50px 0 50px;");
@@ -98,14 +101,34 @@
 								});
 							}
 						}
-						tabel.appendChild(z1);
+						best.appendChild(z1);
 					});	
 				});	
 				
-				
-				
-				tbl.appendChild(tabel);
-				best.appendChild(tbl);
+				function invertColor(hex) {
+					if (hex.indexOf('#') === 0) {
+						hex = hex.slice(1);
+					}
+					// convert 3-digit hex to 6-digits.
+					if (hex.length === 3) {
+						hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+					}
+					if (hex.length !== 6) {
+						throw new Error('Invalid HEX color.');
+					}
+					// invert color components
+					var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
+						g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
+						b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+					// pad each with zeros and return
+					return '#' + padZero(r) + padZero(g) + padZero(b);
+				}
+
+				function padZero(str, len) {
+					len = len || 2;
+					var zeros = new Array(len).join('0');
+					return (zeros + str).slice(-len);
+				}
 				
 			</script>
 		</div>
