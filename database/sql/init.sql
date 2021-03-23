@@ -41,7 +41,7 @@ CREATE TABLE RESULTS(
     droneid int NOT NULL,
     FOREIGN KEY userref (userid) REFERENCES USERS(userid),
     FOREIGN KEY droneref (droneid) REFERENCES DRONES(droneid),
-    /*FOREIGN KEY trackref (trackid, mapid) REFERENCES TRACKS(trackid, mapid),*/
+    FOREIGN KEY trackref (trackid, mapid) REFERENCES TRACKS(trackid, mapid),
     resulttimestamp varchar(9) NOT NULL,
     resultfrom DATETIME NOT NULL
 );

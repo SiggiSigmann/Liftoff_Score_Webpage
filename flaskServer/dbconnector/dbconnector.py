@@ -172,7 +172,7 @@ class DBconnector:
 
         with self.db.cursor() as cur:
             cur.execute('INSERT INTO RESULTS (mapid, trackid, userid, droneid, resulttimestamp, resultfrom) '+\
-                        'VALUES ( "'+str(mapid)+'", "'+str(trackid)+'", "'+str(userid)+'", "'+str(droneid)+'", "'+str(resulttimestamp)+'", "'+dt_string+'");')
+                        'VALUES ( '+str(mapid)+', '+str(trackid)+', '+str(userid)+', '+str(droneid)+', "'+str(resulttimestamp)+'", "'+dt_string+'");')
 
         self.db.commit()
         self._dissconect()
