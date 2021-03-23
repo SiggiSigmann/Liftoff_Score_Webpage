@@ -79,11 +79,26 @@
 
 					if(best_results.hasOwnProperty(map["mapid"])){
 						if(best_results[map["mapid"]].hasOwnProperty(track["trackid"])){
+							var best = "99:99:999";
+							users.forEach (function (user, index) {
+								if(best_results[map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
+									var userhas = best_results[map["mapid"]][track["trackid"]][user[0]];
+									if(userhas < best ){best = userhas}
+								}
+
+							});
+
+
 							users.forEach (function (user, index) {
 								if(best_results[map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
 									var s1 =  document.createElement('th');
 									s1.innerHTML = best_results[map["mapid"]][track["trackid"]][user[0]];
-									s1.setAttribute("style","padding:0 50px 0 50px;");
+									if(best === best_results[map["mapid"]][track["trackid"]][user[0]]){
+										s1.setAttribute("style","padding:0 50px 0 50px;color: green;");
+									}else{
+										s1.setAttribute("style","padding:0 50px 0 50px;");
+									}
+									
 									z1.appendChild(s1);
 								}else{
 									var s1 =  document.createElement('th');
