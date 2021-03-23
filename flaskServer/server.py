@@ -146,6 +146,11 @@ def create_user():
     users = db.get_users()
     return render_template('users.html', active="users", users=users, success = success)
 
+@app.route("/imex", methods=["GET"])
+def imex_get():
+
+    return render_template('imex.html', active="imex")
+
 ### / ##########################################
 @app.route("/", methods=["GET"])
 def index_get():
