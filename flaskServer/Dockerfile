@@ -6,6 +6,7 @@ COPY server.py .
 COPY dbconnector/* dbconnector/
 COPY html/* html/
 COPY static/* static/
+COPY temp/ temp/
 
 EXPOSE 80
 

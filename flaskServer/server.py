@@ -5,6 +5,7 @@ from flask import render_template
 from flask import Response
 from flask import make_response
 from flask import send_from_directory
+from flask import url_for
 
 import sys
 import os
@@ -13,6 +14,7 @@ import io
 import json
 import datetime
 import re
+from werkzeug.utils import secure_filename
 
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -27,6 +29,9 @@ db = dbcon.DBconnector(socket.gethostbyname('liftoff_db'),"LIFTOFF_DATA", "test"
 ## Flask ##########################################################
 #create flask server
 app = Flask(__name__, template_folder=os.path.abspath('/html/'), static_folder=os.path.abspath('/static/'))
+UPLOAD_FOLDER = './temp'
+ALLOWED_EXTENSIONS = {'csv'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ### robot.txt ####################
 @app.route('/robots.txt')
@@ -146,10 +151,41 @@ def create_user():
     users = db.get_users()
     return render_template('users.html', active="users", users=users, success = success)
 
+### imex ########################################
 @app.route("/imex", methods=["GET"])
 def imex_get():
-
     return render_template('imex.html', active="imex")
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/imex', methods=['POST'])
+def upload_file():
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    # if user does not select file, browser also
+    # submit an empty part without filename
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return redirect(url_for('upload_file',
+                                filename=filename))
+    return '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+    '''
 
 ### / ##########################################
 @app.route("/", methods=["GET"])

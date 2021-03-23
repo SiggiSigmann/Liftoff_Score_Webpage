@@ -49,14 +49,18 @@
 				});
 				best.appendChild(z1);
 				
-
+				//iterate over tracks
+				var oldMap = "old";
 				tracks["maps"].forEach (function (map, index) {
-
 					map["tracks"].forEach (function (track, index) {
 						var z1 =  document.createElement('tr');
-						var s1 =  document.createElement('th');
-						s1.innerHTML = map["mapname"];
-						z1.appendChild(s1);
+						if(oldMap !== map["mapname"]){
+							var s1 =  document.createElement('th');
+							s1.innerHTML = map["mapname"];
+							s1.setAttribute("rowspan",map["tracks"].length);
+							z1.appendChild(s1);
+							oldMap = map["mapname"]
+						}
 						var s1 =  document.createElement('th');
 						s1.innerHTML = track["trackname"];
 						z1.appendChild(s1);
