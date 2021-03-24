@@ -20,11 +20,15 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from flask_weasyprint import HTML, render_pdf
 
+from excleLoader import ExcelLoader
+
 import dbconnector.dbconnector as dbcon
 
 #init classes
 #connect to db
 db = dbcon.DBconnector(socket.gethostbyname('liftoff_db'),"LIFTOFF_DATA", "test", "1234567")
+
+loader = ExcelLoader(db)
 
 ## Flask ##########################################################
 #create flask server
@@ -154,6 +158,8 @@ def create_user():
 ### imex ########################################
 @app.route("/imex", methods=["GET"])
 def imex_get():
+    loader.loadFile(os.path.join(app.config['UPLOAD_FOLDER'], "sam.xlsx"))
+
     return render_template('imex.html', active="imex")
 
 def allowed_file(filename):
@@ -175,8 +181,11 @@ def upload_file():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+       
         return redirect(url_for('upload_file',
                                 filename=filename))
+    
     return '''
     <!doctype html>
     <title>Upload new File</title>
