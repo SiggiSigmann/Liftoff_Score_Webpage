@@ -6,6 +6,7 @@ import sys
 class ExcelLoader():
 	user_list = []
 	drone_list = []
+
 	excluded_headder=["Map","Track","Race","Level",None]
 
 	user_id = {}
@@ -26,6 +27,7 @@ class ExcelLoader():
 		workbook = load_workbook(filename=filename)
 
 		for dronename in workbook.sheetnames:
+			self._make_shure_drone_exists(dronename)
 			sheet = workbook[dronename]
 			firstrow = sheet[1]
 
@@ -36,7 +38,7 @@ class ExcelLoader():
 			for cell in firstrow:
 				if not cell.value in self.excluded_headder:
 					user = cell.value.rstrip()
-					color = "#"+cell.fill.start_color.index[:6].rstrip()
+					color = "#"+cell.fill.start_color.index[2:].rstrip()
 					self._make_shure_user_exists(user, color)
 					username_idx[index] = user
 					user_count += 1
@@ -68,25 +70,15 @@ class ExcelLoader():
 								time = user.value.rstrip()
 								username = username_idx[index]
 
+								ids = self.db.get_map_track_id(map_name, track_name)
+								if len(ids) < 1:
+									continue
+								print(ids, file=sys.stderr)
 
-
-								print(drone_id[dronename] + " " + map_name +" "+ track_name+" "+user_id[username]+ " "+time)
+								print(str(self.drone_id[dronename]) + " " + str(ids[0]) +" "+ str(ids[1])+" "+str(self.user_id[username])+ " "+time)
+								self.db.add_new_result(ids[0], ids[1], str(self.user_id[username]), self.drone_id[dronename], time)
 						index += 1
 
-
-	def _add_score_to_db(self, to_add, droneid, part_index):
-		mapid = -1
-		trackid = -1
-		droneid = -1
-		userid = -1
-		for i in to_add.keys():
-			if not part_index[i] in self.user_list:
-				if part_index[i] == "Map":
-					mapid = to_add[i]
-				elif part_index[i] == "Track":
-					trackid = to_add[i]
-			else:
-				print(mapid+ "-"+ trackid + " " + "User: " +part_index[i] + "->" + to_add[i] )
 		#self.db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp):
 		#return
 
@@ -98,18 +90,18 @@ class ExcelLoader():
 			self.user_list.append(username)
 
 	def _make_shure_drone_exists(self, dronename):
-		if not username in self.drone_list:
+		if not dronename in self.drone_list:
 			print("drone not exis: " + dronename, file=sys.stderr)
 			self.db.add_new_drone(dronename)
 			self.drone_list.append(dronename)
 
 	def _load_user_id(self):
-		users self.db.get_users()
+		users =  self.db.get_users()
 		for user in users:
 			self.user_id[user[1]] = user[0]
 
 	def _load_drone_id(self):
-		drones self.db.get_drones()
+		drones = self.db.get_drones()
 		for drone in drones:
 			self.drone_id[drone[1]] = drone[0]
 		

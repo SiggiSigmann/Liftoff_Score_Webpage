@@ -189,3 +189,20 @@ class DBconnector:
         self._dissconect()
         self.lock.release()
         return users
+
+    def get_map_track_id(self, mapname, trackname):
+        self.lock.acquire()
+        self._connect()
+        
+        with self.db.cursor() as cur:
+            cur.execute('SELECT MAPS.mapid, TRACKS.trackid From TRACKS INNER JOIN MAPS ON TRACKS.mapid = MAPS.mapid '+\
+                        'where MAPS.mapname = "'+mapname+'" and TRACKS.trackname ="'+trackname+'";')
+            tracks =  cur.fetchall()
+            if len(tracks) == 0:
+                print(mapname+' and TRACKS.trackname ="'+trackname , file=sys.stderr)
+                tracks = [[]]
+        
+
+        self._dissconect()
+        self.lock.release()
+        return tracks[0]
