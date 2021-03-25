@@ -75,7 +75,7 @@ class ExcelLoader():
 									continue
 								print(ids, file=sys.stderr)
 
-								print(str(self.drone_id[dronename]) + " " + str(ids[0]) +" "+ str(ids[1])+" "+str(self.user_id[username])+ " "+time)
+								print(str(self.drone_id[dronename]) + " " + str(ids[0]) +" "+ str(ids[1])+" "+str(self.user_id[username])+ " "+time, file=sys.stderr)
 								self.db.add_new_result(ids[0], ids[1], str(self.user_id[username]), self.drone_id[dronename], time)
 						index += 1
 
