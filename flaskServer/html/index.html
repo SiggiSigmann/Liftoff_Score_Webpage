@@ -1,27 +1,41 @@
 <!DOCTYPE html>
-<html>
-	<head>
+<html><link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><style type="text/css" id="dark-mode-custom-style" lang="en"></style><style type="text/css" id="dark-mode-native-style" lang="en"></style><head><link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><style type="text/css" id="dark-mode-custom-style" lang="en"></style><style type="text/css" id="dark-mode-native-style" lang="en"></style>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<title>Liftoff Scores</title>
-		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
+		<link rel="shortcut icon" href="http://193.196.39.116/static/logo.jpg" type="image/x-icon">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='footer.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tabel.css') }}">
+
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+		<!--<link rel="stylesheet" type="text/css" href="/static/style.css">
 		<link rel="manifest" href="manifest.webmanifest">-->
 	</head>
-	<body>
+	<body data-new-gr-c-s-check-loaded="8.872.0" data-gr-ext-installed="">
 		<!--based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav-->
 		{% include "menu.html" %}
 
 		
 		<div id="main">
-			<h1>Overview</h1>
-			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
-			<br>
-			<p>Website in progress</p>
-			<select id="drone_selection"></select>
 			<center>
-				<table id="best"></table>
+			<h1>Overview</h1>
+			</center>
+			<span style="font-size:30px;cursor:pointer" onclick="openNav()" align="left">☰ Open Menu</span>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<center>
+			<p>Reults for: 
+			<select id="drone_selection" style="width: 200px;"><option value="1">GremlinBoa</option><option value="2">AK Mistral</option><option value="3" selected="selected">BQR</option><option value="1">GremlinBoa</option><option value="2">AK Mistral</option><option value="3">BQR</option></select>
+		</p>
+			<br>
+			<br>
+			<table id="best"></table>
 			</center>
 			
 
@@ -31,7 +45,7 @@
 				var users = JSON.parse('{{ users | tojson | safe}}');
 				var best_results = JSON.parse('{{ best_results | tojson | safe}}');
 				var drone_list = JSON.parse('{{ drone_list | tojson | safe}}');
-				var drone_id = 1;
+				var drone_id = drone_list.length;
 				
 				//color gradient
 				var color = ['rgb(0,255,0)', 'rgb(64,255,0)','rgb(128,255,0)','rgb(192,255,0)','rgb(255,192,0)','rgb(255,128,0)','rgb(255,64,0)','rgb(255,0,0)' ];
@@ -75,7 +89,7 @@
 					users.forEach (function (user, index) {
 						var s1 =  document.createElement('th');
 							s1.innerHTML = user[1];
-							s1.setAttribute("style","background: "+user[2]+";padding:0 50px 0 50px;color: "+invertColor(user[2])+";");
+							s1.setAttribute("style","background: "+user[2]+";color: "+invertColor(user[2])+";");
 							z1.appendChild(s1);
 					});
 					best.appendChild(z1);
@@ -83,22 +97,42 @@
 					//iterate over tracks
 					var oldMap = "old";
 					tracks["maps"].forEach (function (map, index) {
-						map["tracks"].forEach (function (track, index) {
+						var numb = map["tracks"].length
+						map["tracks"].forEach (function (track, index_track) {
+							last_str = ""
+							
+
+							if(numb == index_track+1){
+								last_str = "last_class"
+							}
+							if(index_track == 0){
+								if(numb == index_track+1){
+									last_str += " "
+								}
+								last_str += "first_class"
+							}
+
+
 							var z1 =  document.createElement('tr');
 							if(oldMap !== map["mapname"]){
 								var s1 =  document.createElement('th');
 								s1.innerHTML = map["mapname"];
 								s1.setAttribute("rowspan",map["tracks"].length);
+								s1.setAttribute("class","exc")
 								z1.appendChild(s1);
 								oldMap = map["mapname"]
 							}
 							var s1 =  document.createElement('th');
+							s1.setAttribute("class", last_str)
 							s1.innerHTML = track["trackname"];
 							z1.appendChild(s1);
 							var s1 =  document.createElement('th');
+							s1.setAttribute("class", last_str)
 							s1.innerHTML = track["hardness"];
 							s1.setAttribute("style","background: "+color[track["hardness"]-1]+";");
 							z1.appendChild(s1);
+
+
 
 							if(best_results[drone_id].hasOwnProperty(map["mapid"])){
 								if(best_results[drone_id][map["mapid"]].hasOwnProperty(track["trackid"])){
@@ -113,26 +147,38 @@
 
 
 									users.forEach (function (user, index) {
+										last_str_neu = last_str
+										if(users.length-1 == index){
+											last_str_neu += " end_tabel"
+										}
 										if(best_results[drone_id][map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
 											var s1 =  document.createElement('th');
 											s1.innerHTML = best_results[drone_id][map["mapid"]][track["trackid"]][user[0]];
 											if(best_result === best_results[drone_id][map["mapid"]][track["trackid"]][user[0]]){
 												win_count[index]++;
 												s1.setAttribute("style","padding:0 50px 0 50px;color: green;");
+												s1.setAttribute("class",last_str_neu)
 											}else{
 												s1.setAttribute("style","padding:0 50px 0 50px;");
+												s1.setAttribute("class",last_str_neu)
 											}
 											
 											z1.appendChild(s1);
 										}else{
 											var s1 =  document.createElement('th');
+											s1.setAttribute("class",last_str_neu)
 											z1.appendChild(s1);
 										}
 
 									});
 								}else{
 									users.forEach (function (user, index) {
+										last_str_neu = last_str
+										if(users.length-1 == index){
+											last_str_neu += " end_tabel"
+										}
 										var s1 =  document.createElement('th');
+										s1.setAttribute("class",last_str_neu)
 										z1.appendChild(s1);
 									});
 								}
@@ -141,13 +187,21 @@
 						});	
 					});
 
+					//win
 					var z1 =  document.createElement('tr');
 					var s1 =  document.createElement('th');
 					s1.innerHTML = "Winns";
 					s1.setAttribute("colspan",3)
+					s1.setAttribute("class","exc end_tabel")
 					z1.appendChild(s1);
 					win_count.forEach(function (user, index) {
 						var s1 =  document.createElement('th');
+						if(index == users.length-1){
+							s1.setAttribute("class","first_class last_class end_tabel")
+						}else{
+							s1.setAttribute("class","first_class last_class")
+						}
+						
 						s1.innerHTML = user;
 						z1.appendChild(s1);
 					});
@@ -186,5 +240,5 @@
 		</div>
 
 		{% include "footer.html" %}
-	</body>
-</html>
+	
+</body></html>
