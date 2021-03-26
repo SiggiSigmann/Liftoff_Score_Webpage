@@ -54,9 +54,13 @@
 
 				createResultTabel();
 				function createResultTabel(){
+					//remove old tabel
 					while(best.hasChildNodes()){
 						best.removeChild(best.firstChild);
 					}
+
+					var win_count = Array(users.length).fill(0)
+
 					//create header
 					var z1 =  document.createElement('tr');
 					var s1 =  document.createElement('th');
@@ -113,6 +117,7 @@
 											var s1 =  document.createElement('th');
 											s1.innerHTML = best_results[drone_id][map["mapid"]][track["trackid"]][user[0]];
 											if(best_result === best_results[drone_id][map["mapid"]][track["trackid"]][user[0]]){
+												win_count[index]++;
 												s1.setAttribute("style","padding:0 50px 0 50px;color: green;");
 											}else{
 												s1.setAttribute("style","padding:0 50px 0 50px;");
@@ -134,7 +139,22 @@
 							}
 							best.appendChild(z1);
 						});	
-					});	
+					});
+
+					var z1 =  document.createElement('tr');
+					var s1 =  document.createElement('th');
+					s1.innerHTML = "Winns";
+					s1.setAttribute("colspan",3)
+					z1.appendChild(s1);
+					win_count.forEach(function (user, index) {
+						var s1 =  document.createElement('th');
+						s1.innerHTML = user;
+						z1.appendChild(s1);
+					});
+				
+
+					best.appendChild(z1);
+					console.log(win_count)
 				}
 
 				function invertColor(hex) {

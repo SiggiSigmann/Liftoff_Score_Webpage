@@ -1,4 +1,3 @@
 Todo:
 	change appeance to black
 	reandomly get track and show imput form for each user
-	count how good
