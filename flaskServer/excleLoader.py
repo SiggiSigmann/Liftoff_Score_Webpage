@@ -103,7 +103,7 @@ class ExcelLoader():
 		if not dronename in self.drone_list:
 			matched = re.match("[a-zA-z0-9]{3,25}", dronename)
 			if not bool(matched):
-				continue
+				return
 			print("drone not exis: " + dronename, file=sys.stderr)
 			self.db.add_new_drone(dronename)
 			self.drone_list.append(dronename)
