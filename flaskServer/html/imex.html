@@ -24,5 +24,14 @@
 			</form>
 		</div>
 		{% include "footer.html" %}
+
+		{% if error == -1 %}
+			<p style="color: red;">Error while import, try again later</p>
+		{% elif error == -2 %}
+			<p style="color: red;">No file selected</p>
+		{% elif error == 0 %}
+			<p style="color: green;">Success</p>
+
+		{%endif}
 	</body>
 </html>
