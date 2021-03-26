@@ -3,5 +3,4 @@ Todo:
 	delte file after import
 	show error while read file and where
 	rolback if entire file if error occures
-	Impressum
 	
