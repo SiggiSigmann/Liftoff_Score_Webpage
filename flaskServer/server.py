@@ -196,8 +196,9 @@ def index_get():
     tracks = db.get_tracks()
     best_results = db.get_best_reslt_per_user()
     users = db.get_users()
+    drone_list = db.get_drones()
 
-    return render_template('index.html', active="overview",tracks=tracks, users=users, best_results=best_results)
+    return render_template('index.html', active="overview",tracks=tracks, users=users, best_results=best_results, drone_list= drone_list)
 
 #start server
 if __name__ == '__main__':

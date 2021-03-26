@@ -19,6 +19,7 @@
 			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
 			<br>
 			<p>Website in progress</p>
+			<select id="drone_selection"></select>
 			<table id="best"></table>
 
 			<script>
@@ -26,92 +27,113 @@
 				var tracks = JSON.parse('{{ tracks | tojson | safe}}');
 				var users = JSON.parse('{{ users | tojson | safe}}');
 				var best_results = JSON.parse('{{ best_results | tojson | safe}}');
+				var drone_list = JSON.parse('{{ drone_list | tojson | safe}}');
+				var drone_id = 1;
 				
 				//color gradient
 				var color = ['rgb(0,255,0)', 'rgb(64,255,0)','rgb(128,255,0)','rgb(192,255,0)','rgb(255,192,0)','rgb(255,128,0)','rgb(255,64,0)','rgb(255,0,0)' ];
 				
 				//create tabel
-				var best = document.getElementById("best");
-
-				//create header
-				var z1 =  document.createElement('tr');
-				var s1 =  document.createElement('th');
-				s1.innerHTML = "MAP";
-				z1.appendChild(s1);
-				var s1 =  document.createElement('th');
-				s1.innerHTML = "TRACK";
-				z1.appendChild(s1);
-				var s1 =  document.createElement('th');
-				s1.innerHTML = "HARDNESS";
-				z1.appendChild(s1);
-				users.forEach (function (user, index) {
-					var s1 =  document.createElement('th');
-						s1.innerHTML = user[1];
-						s1.setAttribute("style","background: "+user[2]+";padding:0 50px 0 50px;color: "+invertColor(user[2])+";");
-						z1.appendChild(s1);
+				var drone_option = document.getElementById("drone_selection");
+				drone_list.forEach (function (drone) {
+					var opt = document.createElement('option');
+					opt.value = drone[0];
+					opt.innerHTML = drone[1];
+					drone_option.appendChild(opt);
 				});
-				best.appendChild(z1);
-				
-				//iterate over tracks
-				var oldMap = "old";
-				tracks["maps"].forEach (function (map, index) {
-					map["tracks"].forEach (function (track, index) {
-						var z1 =  document.createElement('tr');
-						if(oldMap !== map["mapname"]){
-							var s1 =  document.createElement('th');
-							s1.innerHTML = map["mapname"];
-							s1.setAttribute("rowspan",map["tracks"].length);
+
+				//drone selection
+				document.getElementById("drone_selection").onchange = udate_result_tabel;
+				function udate_result_tabel(){
+					drone_id = this.value;
+					createResultTabel();
+				}
+
+				createResultTabel();
+				function createResultTabel(){
+					while(best.hasChildNodes()){
+						best.removeChild(best.firstChild);
+					}
+					//create header
+					var z1 =  document.createElement('tr');
+					var s1 =  document.createElement('th');
+					s1.innerHTML = "MAP";
+					z1.appendChild(s1);
+					var s1 =  document.createElement('th');
+					s1.innerHTML = "TRACK";
+					z1.appendChild(s1);
+					var s1 =  document.createElement('th');
+					s1.innerHTML = "HARDNESS";
+					z1.appendChild(s1);
+					users.forEach (function (user, index) {
+						var s1 =  document.createElement('th');
+							s1.innerHTML = user[1];
+							s1.setAttribute("style","background: "+user[2]+";padding:0 50px 0 50px;color: "+invertColor(user[2])+";");
 							z1.appendChild(s1);
-							oldMap = map["mapname"]
-						}
-						var s1 =  document.createElement('th');
-						s1.innerHTML = track["trackname"];
-						z1.appendChild(s1);
-						var s1 =  document.createElement('th');
-						s1.innerHTML = track["hardness"];
-						s1.setAttribute("style","background: "+color[track["hardness"]-1]+";");
-						z1.appendChild(s1);
-
-						if(best_results.hasOwnProperty(map["mapid"])){
-							if(best_results[map["mapid"]].hasOwnProperty(track["trackid"])){
-								var best_result = "99:99:999";
-								users.forEach (function (user, index) {
-									if(best_results[map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
-										var userhas = best_results[map["mapid"]][track["trackid"]][user[0]];
-										if(userhas < best_result ){best_result = userhas}
-									}
-
-								});
-
-
-								users.forEach (function (user, index) {
-									if(best_results[map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
-										var s1 =  document.createElement('th');
-										s1.innerHTML = best_results[map["mapid"]][track["trackid"]][user[0]];
-										if(best_result === best_results[map["mapid"]][track["trackid"]][user[0]]){
-											s1.setAttribute("style","padding:0 50px 0 50px;color: green;");
-										}else{
-											s1.setAttribute("style","padding:0 50px 0 50px;");
-										}
-										
-										z1.appendChild(s1);
-									}else{
-										var s1 =  document.createElement('th');
-										z1.appendChild(s1);
-									}
-
-								});
-							}else{
-								users.forEach (function (user, index) {
-									var s1 =  document.createElement('th');
-									z1.appendChild(s1);
-								});
+					});
+					best.appendChild(z1);
+					
+					//iterate over tracks
+					var oldMap = "old";
+					tracks["maps"].forEach (function (map, index) {
+						map["tracks"].forEach (function (track, index) {
+							var z1 =  document.createElement('tr');
+							if(oldMap !== map["mapname"]){
+								var s1 =  document.createElement('th');
+								s1.innerHTML = map["mapname"];
+								s1.setAttribute("rowspan",map["tracks"].length);
+								z1.appendChild(s1);
+								oldMap = map["mapname"]
 							}
-						}
-						best.appendChild(z1);
+							var s1 =  document.createElement('th');
+							s1.innerHTML = track["trackname"];
+							z1.appendChild(s1);
+							var s1 =  document.createElement('th');
+							s1.innerHTML = track["hardness"];
+							s1.setAttribute("style","background: "+color[track["hardness"]-1]+";");
+							z1.appendChild(s1);
+
+							if(best_results[drone_id].hasOwnProperty(map["mapid"])){
+								if(best_results[drone_id][map["mapid"]].hasOwnProperty(track["trackid"])){
+									var best_result = "99:99:999";
+									users.forEach (function (user, index) {
+										if(best_results[drone_id][map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
+											var userhas = best_results[drone_id][map["mapid"]][track["trackid"]][user[0]];
+											if(userhas < best_result ){best_result = userhas}
+										}
+
+									});
+
+
+									users.forEach (function (user, index) {
+										if(best_results[drone_id][map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
+											var s1 =  document.createElement('th');
+											s1.innerHTML = best_results[drone_id][map["mapid"]][track["trackid"]][user[0]];
+											if(best_result === best_results[drone_id][map["mapid"]][track["trackid"]][user[0]]){
+												s1.setAttribute("style","padding:0 50px 0 50px;color: green;");
+											}else{
+												s1.setAttribute("style","padding:0 50px 0 50px;");
+											}
+											
+											z1.appendChild(s1);
+										}else{
+											var s1 =  document.createElement('th');
+											z1.appendChild(s1);
+										}
+
+									});
+								}else{
+									users.forEach (function (user, index) {
+										var s1 =  document.createElement('th');
+										z1.appendChild(s1);
+									});
+								}
+							}
+							best.appendChild(z1);
+						});	
 					});	
-				});	
-				
+				}
+
 				function invertColor(hex) {
 					if (hex.indexOf('#') === 0) {
 						hex = hex.slice(1);

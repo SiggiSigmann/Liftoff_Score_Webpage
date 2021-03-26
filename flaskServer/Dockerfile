@@ -7,7 +7,7 @@ COPY excleLoader.py .
 COPY dbconnector/* dbconnector/
 COPY html/* html/
 COPY static/* static/
-COPY temp/* temp/
+COPY temp/ temp/
 
 EXPOSE 80
 

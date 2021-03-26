@@ -75,8 +75,6 @@ class DBconnector:
         self.lock.release()
         return json.loads(track_json)
 
-    
-
     #get Track
     #read data out of DT
     def get_users(self):
@@ -144,17 +142,21 @@ class DBconnector:
         json_container = {}
         
         with self.db.cursor() as cur:
-            cur.execute('select mapid,trackid, userid,  min(resulttimestamp) from RESULTS group by mapid, trackid, userid;')
+            cur.execute('select droneid, mapid, trackid, userid,  min(resulttimestamp) from RESULTS group by mapid, trackid, userid, droneid;')
             best_results =  cur.fetchall()
 
             for result in best_results:
+                #for maps
                 if not result[0] in json_container.keys():
                     json_container[result[0]] = {}
 
                 if not result[1] in json_container[result[0]].keys():
                     json_container[result[0]][result[1]] = {}
 
-                json_container[result[0]][result[1]][result[2]] = result[3]
+                if not result[2] in json_container[result[0]][result[1]].keys():
+                    json_container[result[0]][result[1]][result[2]] = {}
+
+                json_container[result[0]][result[1]][result[2]][result[3]] = result[4]
 
         print(json_container, file=sys.stderr)
 
