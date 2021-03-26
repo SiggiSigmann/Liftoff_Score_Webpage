@@ -17,14 +17,7 @@
 			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
 			<br>
 			<p>Website in progress</p>
-			<table>
-				{% for drone in drones %}
-					<tr>
-						<th>{{ drone[1] }}</th>
-					</tr>
-				{% endfor %}
-			</table>
-
+			
 			<form action="/drone" method="POST">
 				dronename <input type="text" id="dronename" name="dronename" pattern="[a-zA-z0-9 ]{3,25}" required/><br>
 				<button type="submit">Create Drone</button>
@@ -35,6 +28,16 @@
 			{% elif success == 1 %}
 				<p style="color: green;">Success</p>
 			{% endif %}
+
+			<center>
+				<table>
+					{% for drone in drones %}
+						<tr>
+							<th>{{ drone[1] }}</th>
+						</tr>
+					{% endfor %}
+				</table>
+			</center>
 		</biv>
 		{% include "footer.html" %}
 	</body>

@@ -17,24 +17,7 @@
 			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
 			<br>
 			<p>Website in progress</p>
-			<table>
-				<tr>
-					<th>mapid</th>
-					<th>trackid</th>
-					<th>userid</th>
-					<th>dronid</th>
-					<th>time</th>
-				</tr>
-				{% for result in results %}
-					<tr>
-						<th>{{ result[0] }}</th>
-						<th>{{ result[1] }}</th>
-						<th>{{ result[2] }}</th>
-						<th>{{ result[3] }}</th>
-						<th>{{ result[4] }}</th>
-					</tr>
-				{% endfor %}
-			</table>
+			
 
 			<form action="/result" method="POST">
 				mapid <select  id="mapid" name="mapid" required>
@@ -112,6 +95,27 @@
 			{% elif success == 1 %}
 				<p style="color: green;">Success</p>
 			{% endif %}
+
+			<center>
+			<table>
+				<tr>
+					<th>mapid</th>
+					<th>trackid</th>
+					<th>userid</th>
+					<th>dronid</th>
+					<th>time</th>
+				</tr>
+				{% for result in results %}
+					<tr>
+						<th>{{ result[0] }}</th>
+						<th>{{ result[1] }}</th>
+						<th>{{ result[2] }}</th>
+						<th>{{ result[3] }}</th>
+						<th>{{ result[4] }}</th>
+					</tr>
+				{% endfor %}
+			</table>
+		</center>
 		</div>
 		{% include "footer.html" %}
 	</body>

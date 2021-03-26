@@ -1,6 +1,4 @@
 Todo:
 	change appeance to black
-	center elements
 	reandomly get track and show imput form for each user
-	filter overview by drone
 	count how good
