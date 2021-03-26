@@ -1,4 +1,3 @@
 Todo:
-	show error while read file and where
 	rolback if entire file if error occures
 	

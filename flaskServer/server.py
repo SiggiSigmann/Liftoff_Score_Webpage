@@ -179,12 +179,12 @@ def upload_file():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        loader.loadFile(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        success = loader.loadFile(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
        
-        return render_template('imex.html', active="imex", error=0)
+        return render_template('imex.html', active="imex", error=success)
 
 ### / ##########################################
 @app.route("/", methods=["GET"])
