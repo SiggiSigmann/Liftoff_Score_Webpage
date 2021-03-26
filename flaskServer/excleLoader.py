@@ -1,6 +1,7 @@
 import dbconnector.dbconnector as dbcon
 from openpyxl import load_workbook
 import sys
+import re
 
 
 class ExcelLoader():
@@ -20,7 +21,6 @@ class ExcelLoader():
 		for drone in db.get_drones():
 			self.drone_list.append(drone[1])
 
-
 	def loadFile(self, filename):
 		workbook = load_workbook(filename=filename)
 
@@ -28,7 +28,7 @@ class ExcelLoader():
 		for dronename in workbook.sheetnames:
 			#check drone
 			success = self._make_shure_drone_exists(dronename)
-			if success != 0
+			if success != 0:
 				return success
 
 			#get sheet
@@ -46,7 +46,7 @@ class ExcelLoader():
 					user = cell.value.rstrip()
 					color = "#"+cell.fill.start_color.index[2:].rstrip()
 					success = self._make_shure_user_exists(user, color)
-					if success != 0
+					if success != 0:
 						return success
 
 					#stres which row correleates to which user
@@ -82,9 +82,13 @@ class ExcelLoader():
 								time = user.value.rstrip()
 								username = username_idx[index]
 
+								
+
 								#check value from file
 								matched = re.match("[0-9]{2}:[0-9]{2}:[0-9]{3}", time)
 								if not bool(matched):
+									print(time, file = sys.stderr)
+									print(username + " "+dronename+" "+map_name+" "+track_name, file = sys.stderr)
 									return -5
 
 								#get map and track id from db 
@@ -99,7 +103,7 @@ class ExcelLoader():
 
 	def _make_shure_user_exists(self, username, color):
 		if not username in self.user_list:
-			matched = re.match("[a-zA-z0-9]{3,25}", username)
+			matched = re.match("[a-zA-z0-9 ]{3,25}", username)
 			if not bool(matched):
 				return -4
 			print("user not exis: " + username + " ("+color+")", file=sys.stderr)
@@ -109,7 +113,7 @@ class ExcelLoader():
 
 	def _make_shure_drone_exists(self, dronename):
 		if not dronename in self.drone_list:
-			matched = re.match("[a-zA-z0-9]{3,25}", dronename)
+			matched = re.match("[a-zA-z0-9 ]{3,25}", dronename)
 			if not bool(matched):	
 				return -3
 			print("drone not exis: " + dronename, file=sys.stderr)

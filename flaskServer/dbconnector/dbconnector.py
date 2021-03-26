@@ -11,6 +11,8 @@ import sys
 
 # Database connector
 class DBconnector:
+    transaction = 0
+
     def __init__(self, address, database, user, pwd):
         self._address = address
         self._database = database

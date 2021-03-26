@@ -34,7 +34,7 @@ loader = ExcelLoader(db)
 #create flask server
 app = Flask(__name__, template_folder=os.path.abspath('/html/'), static_folder=os.path.abspath('/static/'))
 UPLOAD_FOLDER = './temp'
-ALLOWED_EXTENSIONS = {'csv'}
+ALLOWED_EXTENSIONS = {'xlsx'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ### robot.txt ####################
@@ -166,6 +166,7 @@ def allowed_file(filename):
 
 @app.route('/imex', methods=['POST'])
 def upload_file():
+    print("upload", file=sys.stderr)
     # check if the post request has the file part
     if 'file' not in request.files:
         return render_template('imex.html', active="imex", error=-1)
@@ -177,6 +178,7 @@ def upload_file():
     if file and allowed_file(file.filename):
         #file was uploaded
         filename = secure_filename(file.filename)
+        print(filename, file=sys.stderr)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         success = loader.loadFile(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -185,6 +187,8 @@ def upload_file():
 
        
         return render_template('imex.html', active="imex", error=success)
+
+    return render_template('imex.html', active="imex", error=105)
 
 ### / ##########################################
 @app.route("/", methods=["GET"])
