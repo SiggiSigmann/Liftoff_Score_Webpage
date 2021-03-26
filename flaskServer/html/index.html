@@ -3,6 +3,7 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<title>Liftoff Scores</title>
 		<link rel="shortcut icon" href="http://193.196.39.116/static/logo.jpg" type="image/x-icon">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='footer.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tabel.css') }}">
@@ -79,15 +80,12 @@
 					var z1 =  document.createElement('tr');
 					var s1 =  document.createElement('th');
 					s1.innerHTML = "MAP";
-					s1.setAttribute("style","background:white;")
 					z1.appendChild(s1);
 					var s1 =  document.createElement('th');
 					s1.innerHTML = "TRACK";
-					s1.setAttribute("style","background:white;")
 					z1.appendChild(s1);
 					var s1 =  document.createElement('th');
 					s1.innerHTML = "HARDNESS";
-					s1.setAttribute("style","background:white;")
 					z1.appendChild(s1);
 					users.forEach (function (user, index) {
 						var s1 =  document.createElement('th');

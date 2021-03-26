@@ -3,40 +3,40 @@
 }
 
 .exc{
-	background-color:white;
+	background-color:black;
 }
 
 #best .exc{
-	border-top: 1px solid #000;
-	border-left: 1px solid #000;
-	border-bottom: 1px solid #000;
+	border-top: 1px solid white;
+	border-left: 1px solid white;
+	border-bottom: 1px solid white;
 }
 
 .last_class{
-	border-bottom: 1px solid #000;
+	border-bottom: 1px solid white;
 }
 
 .first_class{
-	border-top: 1px solid #000;
+	border-top: 1px solid white;
 }
 
 .end_tabel{
-	border-right: 1px solid #000;
+	border-right: 1px solid white;
 }
 
 .first_class.end_tabel{
-	border-right: 1px solid #000;
-	border-top: 1px solid #000;
+	border-right: 1px solid white;
+	border-top: 1px solid white;
 }
 
 
 .last_class.end_tabel{
-	border-right: 1px solid #000;
-	border-bottom: 1px solid #000;
+	border-right: 1px solid white;
+	border-bottom: 1px solid white;
 }
 
 #best{
-	border: 1px solid #000;
+	border: 1px solid white;
 }
 
 tr, th{
