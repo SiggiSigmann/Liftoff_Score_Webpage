@@ -4,6 +4,7 @@
 		<title>Liftoff Scores</title>
 		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='footer.css') }}">
 		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 		<link rel="manifest" href="manifest.webmanifest">-->
 	</head>
@@ -35,5 +36,6 @@
 				<p style="color: green;">Success</p>
 			{% endif %}
 		</biv>
+		{% include "footer.html" %}
 	</body>
 </html>

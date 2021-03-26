@@ -4,6 +4,7 @@
 		<title>Liftoff Scores</title>
 		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='footer.css') }}">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 		<link rel="manifest" href="manifest.webmanifest">-->
@@ -12,6 +13,7 @@
 		<!--based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav-->
 		{% include "menu.html" %}
 
+		
 		<div id="main">
 			<h1>Overview</h1>
 			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
@@ -138,6 +140,6 @@
 			</script>
 		</div>
 
-		
+		{% include "footer.html" %}
 	</body>
 </html>
