@@ -79,12 +79,15 @@
 					var z1 =  document.createElement('tr');
 					var s1 =  document.createElement('th');
 					s1.innerHTML = "MAP";
+					s1.setAttribute("style","background:white;")
 					z1.appendChild(s1);
 					var s1 =  document.createElement('th');
 					s1.innerHTML = "TRACK";
+					s1.setAttribute("style","background:white;")
 					z1.appendChild(s1);
 					var s1 =  document.createElement('th');
 					s1.innerHTML = "HARDNESS";
+					s1.setAttribute("style","background:white;")
 					z1.appendChild(s1);
 					users.forEach (function (user, index) {
 						var s1 =  document.createElement('th');
@@ -115,18 +118,18 @@
 
 							var z1 =  document.createElement('tr');
 							if(oldMap !== map["mapname"]){
-								var s1 =  document.createElement('th');
+								var s1 =  document.createElement('td');
 								s1.innerHTML = map["mapname"];
 								s1.setAttribute("rowspan",map["tracks"].length);
 								s1.setAttribute("class","exc")
 								z1.appendChild(s1);
 								oldMap = map["mapname"]
 							}
-							var s1 =  document.createElement('th');
+							var s1 =  document.createElement('td');
 							s1.setAttribute("class", last_str)
 							s1.innerHTML = track["trackname"];
 							z1.appendChild(s1);
-							var s1 =  document.createElement('th');
+							var s1 =  document.createElement('td');
 							s1.setAttribute("class", last_str)
 							s1.innerHTML = track["hardness"];
 							s1.setAttribute("style","background: "+color[track["hardness"]-1]+";");
@@ -152,7 +155,7 @@
 											last_str_neu += " end_tabel"
 										}
 										if(best_results[drone_id][map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
-											var s1 =  document.createElement('th');
+											var s1 =  document.createElement('td');
 											s1.innerHTML = best_results[drone_id][map["mapid"]][track["trackid"]][user[0]];
 											if(best_result === best_results[drone_id][map["mapid"]][track["trackid"]][user[0]]){
 												win_count[index]++;
@@ -165,7 +168,7 @@
 											
 											z1.appendChild(s1);
 										}else{
-											var s1 =  document.createElement('th');
+											var s1 =  document.createElement('td');
 											s1.setAttribute("class",last_str_neu)
 											z1.appendChild(s1);
 										}
@@ -177,7 +180,7 @@
 										if(users.length-1 == index){
 											last_str_neu += " end_tabel"
 										}
-										var s1 =  document.createElement('th');
+										var s1 =  document.createElement('td');
 										s1.setAttribute("class",last_str_neu)
 										z1.appendChild(s1);
 									});
@@ -189,13 +192,13 @@
 
 					//win
 					var z1 =  document.createElement('tr');
-					var s1 =  document.createElement('th');
+					var s1 =  document.createElement('td');
 					s1.innerHTML = "Winns";
 					s1.setAttribute("colspan",3)
 					s1.setAttribute("class","exc end_tabel")
 					z1.appendChild(s1);
 					win_count.forEach(function (user, index) {
-						var s1 =  document.createElement('th');
+						var s1 =  document.createElement('td');
 						if(index == users.length-1){
 							s1.setAttribute("class","first_class last_class end_tabel")
 						}else{
