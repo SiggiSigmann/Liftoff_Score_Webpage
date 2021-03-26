@@ -37,6 +37,7 @@
 
 #best{
 	border: 1px solid white;
+	text-align: center;
 }
 
 tr, th{
@@ -53,6 +54,7 @@ table {
 th {
 	position: -webkit-sticky;
 	position: sticky;
+	background-color:black;
 	top: 0;
 	z-index: 2;
 }
@@ -60,6 +62,11 @@ th {
 th[scope=row] {
 	position: -webkit-sticky;
 	position: sticky;
+	background-color:black;
 	left: 0;
 	z-index: 1;
+}
+
+.tabel_level{
+	color:black
 }
