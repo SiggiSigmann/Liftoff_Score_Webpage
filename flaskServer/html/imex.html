@@ -5,41 +5,70 @@
 		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='footer.css') }}">
-		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-		<link rel="manifest" href="manifest.webmanifest">-->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 	</head>
 	<body>
 		<!--based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav-->
 		{% include "menu.html" %}
 
 		<div id="main">
-			<h1>Import / Export Data</h1>
+			<center>
+				<h1>Import / Export Data</h1>
+			</center>
 			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
-			<br>
-			<p>Website in progress</p>
+			<center>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				
+				<div id="fancy_from">
 
-			<form method="POST" action="/imex" enctype="multipart/form-data">
-				<p><input type="file" name="file"></p>
-				<p><input type="submit" value="Submit"></p>
-			</form>
+					<form method="POST" action="/imex" enctype="multipart/form-data">
+						<table>
+							<tr>
+								<td>Excel File:</td>
+								<td><input type="file" name="file"></td>
+							</tr>
+							<tr>
+								<td colspan="2"><button type="submit">Import File</button></td>
+							</tr>
+
+						</table>
+						
+					</form>
+					<br>
+
+					{% if error == -1 %}
+						<p style="color: red;">Error while import, try again later</p>
+					{% elif error == -2 %}
+						<p style="color: red;">No file selected</p>
+					{% elif error == -3 %}
+						<p style="color: red;">Error in Dronename</p>
+					{% elif error == -4 %}
+						<p style="color: red;">Error in Username</p>
+					{% elif error == -5 %}
+						<p style="color: red;">Value don't match form xx:xx:xxx</p>
+					{% elif error == -6 %}
+						<p style="color: red;">Map and Track don't exists</p>
+					{% elif error == 0 %}
+						<p style="color: green;">Success</p>
+					{% else %}
+						<br>
+					{% endif %}
+
+				</div>
+
+			
+				
+
+				
+			</center>
 		</div>
 		{% include "footer.html" %}
-
-		{% if error == -1 %}
-			<p style="color: red;">Error while import, try again later</p>
-		{% elif error == -2 %}
-			<p style="color: red;">No file selected</p>
-		{% elif error == -3 %}
-			<p style="color: red;">Error in Dronename</p>
-		{% elif error == -4 %}
-			<p style="color: red;">Error in Username</p>
-		{% elif error == -5 %}
-			<p style="color: red;">Value don't match form xx:xx:xxx</p>
-		{% elif error == -6 %}
-			<p style="color: red;">Map and Track don't exists</p>
-		{% elif error == 0 %}
-			<p style="color: green;">Success</p>
-
-		{% endif %}
 	</body>
 </html>

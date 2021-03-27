@@ -5,117 +5,151 @@
 		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='footer.css') }}">
-		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-		<link rel="manifest" href="manifest.webmanifest">-->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 	</head>
 	<body>
 		<!--based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav-->
 		{% include "menu.html" %}
 
 		<div id="main">
+			<center>
 			<h1>Add Time</h1>
+			</center>
 			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
-			<br>
-			<p>Website in progress</p>
-			
-
-			<form action="/result" method="POST">
-				mapid <select  id="mapid" name="mapid" required>
-					{% for map in maps %}
-					<option value="{{ map[0] }}" >{{ map[1] }}</option>
-					{% endfor %}
-				</select>
-				<script>
-					document.getElementById("mapid").onchange = updateTrackOptions;
-					
-					function updateTrackOptions(){
-						var value = this.value;
-						var tracks = JSON.parse('{{ tracks | tojson | safe}}');
-
-						//empty track selection
-						var select = document.getElementById("trackid");
-						var length = select.options.length;
-						for (i = length-1; i >= 0; i--) {
-							select.options[i] = null;
-						}
-
-						//insert new
-						select = document.getElementById('trackid');
-						tracks["maps"][value-1]["tracks"].forEach (function (track, index) {
-							var opt = document.createElement('option');
-							opt.value = track["trackid"];
-							opt.innerHTML = track["trackname"];
-							select.appendChild(opt);
-						});	
-					}
-				</script><br>
-
-				trackid <select  id="trackid" name="trackid" required>
-				</select>
-				<script>
-					var tracks = JSON.parse('{{ tracks | tojson | safe}}');
-					
-					//empty track selection
-					var select = document.getElementById("trackid");
-					var length = select.options.length;
-					for (i = length-1; i >= 0; i--) {
-						select.options[i] = null;
-					}
-
-					//insert new
-					select = document.getElementById('trackid');
-					tracks["maps"][0]["tracks"].forEach (function (track, index) {
-						var opt = document.createElement('option');
-						opt.value = track["trackid"];
-						opt.innerHTML = track["trackname"];
-						select.appendChild(opt);
-					});
-				</script>
+			<center>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
 				<br>
 
-				userid <select  id="userid" name="userid" required>
-					{% for user in users %}
-					<option value="{{ user[0] }}" style="background: {{ user[2] }};">{{ user[1] }}</option>
-					{% endfor %}
-				</select><br>
+				<div id="fancy_from">
+					<form action="/result" method="POST">
+						<table>
+							<tr>
+								<td>Mapid</td>
+								<td>
+									<select  id="mapid" name="mapid" required>
+										{% for map in maps %}
+											<option value="{{ map[0] }}" >{{ map[1] }}</option>
+										{% endfor %}
+									</select>
+									<script>
+										document.getElementById("mapid").onchange = updateTrackOptions;
+										
+										function updateTrackOptions(){
+											var value = this.value;
+											var tracks = JSON.parse('{{ tracks | tojson | safe}}');
+			
+											//empty track selection
+											var select = document.getElementById("trackid");
+											var length = select.options.length;
+											for (i = length-1; i >= 0; i--) {
+												select.options[i] = null;
+											}
+			
+											//insert new
+											select = document.getElementById('trackid');
+											tracks["maps"][value-1]["tracks"].forEach (function (track, index) {
+												var opt = document.createElement('option');
+												opt.value = track["trackid"];
+												opt.innerHTML = track["trackname"];
+												select.appendChild(opt);
+											});	
+										}
+									</script><br>
+								</td>
+							</tr>
+							<tr>
+								<td>Trackid</td>
+								<td>
+									<select  id="trackid" name="trackid" required></select>
+									<script>
+										var tracks = JSON.parse('{{ tracks | tojson | safe}}');
+										
+										//empty track selection
+										var select = document.getElementById("trackid");
+										var length = select.options.length;
+										for (i = length-1; i >= 0; i--) {
+											select.options[i] = null;
+										}
+			
+										//insert new
+										select = document.getElementById('trackid');
+										tracks["maps"][0]["tracks"].forEach (function (track, index) {
+											var opt = document.createElement('option');
+											opt.value = track["trackid"];
+											opt.innerHTML = track["trackname"];
+											select.appendChild(opt);
+										});
+									</script>
+								</td>
+							</tr>
+							<tr>
+								<td>User</td>
+								<td>
+									<select  id="userid" name="userid" required>
+										{% for user in users %}
+											<option value="{{ user[0] }}" style="background: {{ user[2] }};">{{ user[1] }}</option>
+										{% endfor %}
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>Drone</td>
+								<td>
+									<select  id="droneid" name="droneid" required>
+										{% for drone in drones %}
+											<option value="{{ drone[0] }}">{{ drone[1] }}</option>
+										{% endfor %}
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>Time</td>
+								<td><input type="text" id="resulttimestamp" name="resulttimestamp"  pattern="[0-9]{2}:[0-9]{2}:[0-9]{3}" placeholder="00:00:000" required></td>
+							</tr>
+							<tr>
+								<td colspan="2"><button type="submit">Add Result</button></td>
+							</tr>
+						</table>
+					</form>
+					<br>
+					{% if success == 0 %}
+						<p style="color: red;">ERROR</p>
+					{% elif success == 1 %}
+						<p style="color: green;">Success</p>
+					{% else %}
+						<br>
+					{% endif %}
+				</div>
 
-				droneid <select  id="droneid" name="droneid" required>
-					{% for drone in drones %}
-					<option value="{{ drone[0] }}">{{ drone[1] }}</option>
-					{% endfor %}
-				</select><br>
+				<br>
+				<br>
+				<br>
 
-				time <input type="text" id="resulttimestamp" name="resulttimestamp"  pattern="[0-9]{2}:[0-9]{2}:[0-9]{3}"  required><br>
-
-				<button type="submit">Create Result</button>
-			</form>
-
-			{% if success == 0 %}
-				<p style="color: red;">ERROR</p>
-			{% elif success == 1 %}
-				<p style="color: green;">Success</p>
-			{% endif %}
-
-			<center>
-			<table>
-				<tr>
-					<th>mapid</th>
-					<th>trackid</th>
-					<th>userid</th>
-					<th>dronid</th>
-					<th>time</th>
-				</tr>
-				{% for result in results %}
+				<table>
 					<tr>
-						<th>{{ result[0] }}</th>
-						<th>{{ result[1] }}</th>
-						<th>{{ result[2] }}</th>
-						<th>{{ result[3] }}</th>
-						<th>{{ result[4] }}</th>
+						<th>mapid</th>
+						<th>trackid</th>
+						<th>userid</th>
+						<th>dronid</th>
+						<th>time</th>
 					</tr>
-				{% endfor %}
-			</table>
-		</center>
+					{% for result in results %}
+						<tr>
+							<th>{{ result[0] }}</th>
+							<th>{{ result[1] }}</th>
+							<th>{{ result[2] }}</th>
+							<th>{{ result[3] }}</th>
+							<th>{{ result[4] }}</th>
+						</tr>
+					{% endfor %}
+				</table>
+			</center>
 		</div>
 		{% include "footer.html" %}
 	</body>

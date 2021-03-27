@@ -4,7 +4,7 @@ body{
 }
 
 #drone_selection{
-	width: 200px;
+	width: 300px;
 }
 
 #fancy_from{
@@ -17,7 +17,11 @@ body{
 }
 
 #fancy_from input{
-	width: 200px;
+	width: 300px;
+}
+
+#fancy_from select{
+	width: 300px;
 }
 
 #fancy_from button{
