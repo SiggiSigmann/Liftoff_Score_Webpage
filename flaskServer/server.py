@@ -190,6 +190,11 @@ def upload_file():
 
     return render_template('imex.html', active="imex", error=105)
 
+@app.route("/random", methods=["GET"])
+def random_get():
+    tracks = db.get_tracks()
+    return render_template('random.html', active="random", tracks=tracks)
+
 ### / ##########################################
 @app.route("/", methods=["GET"])
 def index_get():

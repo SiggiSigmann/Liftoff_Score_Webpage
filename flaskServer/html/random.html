@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Liftoff Scores</title>
+		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='footer.css') }}">
+		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tabel.css') }}">
+		<link rel="manifest" href="manifest.webmanifest">-->
+	</head>
+	<body>
+		<!--based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav-->
+		{% include "menu.html" %}
+
+		<div id="main">
+			<center>
+				<h1>Random Track</h1>
+			</center>
+			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
+			<center>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<div id="fancy_from">
+					<button class="other" onclick="showRandomTrack()">New Random Track</button>
+					<script>
+						showRandomTrack()
+						function showRandomTrack(){
+							var tracks = JSON.parse('{{ tracks | tojson | safe}}');
+
+							//random Map
+							var rand_map_id=Math.floor(Math.random() * tracks["maps"].length)+1;
+							document.getElementById("mapid").value = rand_map_id
+
+							//random track
+							var rand_track_id=Math.floor(Math.random() * tracks["maps"][rand_map_id-1]["tracks"].length)+1;
+							document.getElementById("trackid").value = rand_track_id
+							
+							var naming = document.getElementById("naming");
+							var name = tracks["maps"][rand_map_id-1]["mapname"] + " "
+							name += tracks["maps"][rand_map_id-1]["tracks"][rand_track_id-1]["trackname"]
+							naming.innerHTML = name
+						}
+
+					</script>
+					<br>
+					<p id="naming"></p>
+				</div>
+
+				<br>
+				<br>
+
+				<div id="fancy_from">
+
+					<form action="/random" method="POST">
+						<input type="hidden" id="mapid" name="mapid" required>
+						<input type="hidden" id="trackid" name="trackid"  required>
+						<table>
+							
+							<tr>
+								<td colspan="2"><button type="submit">Add Times</button></td>
+							</tr>
+
+						</table>
+						
+					</form>
+					<br>
+
+					{% if success == 0 %}
+						<p style="color: red;">ERROR</p>
+					{% elif success == 1 %}
+						<p style="color: green;">Success</p>
+					{% else %}
+						<br>
+					{% endif %}
+
+				</div>
+
+		
+				
+			</center>
+		</div>
+		{% include "footer.html" %}
+	</body>
+</html>

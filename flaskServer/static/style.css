@@ -24,6 +24,10 @@ body{
 	width: 300px;
 }
 
+#fancy_from .other{
+	width: 300px;
+}
+
 #fancy_from button{
 	display: block;
 	width: 100%;
