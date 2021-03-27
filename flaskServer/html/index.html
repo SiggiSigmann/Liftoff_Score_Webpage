@@ -32,8 +32,8 @@
 			<br>
 			<center>
 			<p>Reults for: 
-			<select id="drone_selection" style="width: 200px;"></select>
-		</p>
+				<select id="drone_selection" style="width: 200px;"></select>
+			</p>
 			<br>
 			<br>
 			<table id="best"></table>
@@ -46,7 +46,6 @@
 				var users = JSON.parse('{{ users | tojson | safe}}');
 				var best_results = JSON.parse('{{ best_results | tojson | safe}}');
 				var drone_list = JSON.parse('{{ drone_list | tojson | safe}}');
-				var drone_id = drone_list.length;
 				
 				//color gradient
 				var color = ['rgb(0,255,0)', 'rgb(64,255,0)','rgb(128,255,0)','rgb(192,255,0)','rgb(255,192,0)','rgb(255,128,0)','rgb(255,64,0)','rgb(255,0,0)' ];
@@ -60,21 +59,27 @@
 					drone_option.appendChild(opt);
 				});
 
-				//drone selection
+				//change tabel when a new drone is selected
 				document.getElementById("drone_selection").onchange = udate_result_tabel;
 				function udate_result_tabel(){
 					drone_id = this.value;
 					createResultTabel();
 				}
 
+				//initial tabel creation
+				var drone_id = drone_list.length;
 				createResultTabel();
+
 				function createResultTabel(){
+					best = document.getElementById("best");
+
 					//remove old tabel
 					while(best.hasChildNodes()){
 						best.removeChild(best.firstChild);
 					}
 
 					var win_count = Array(users.length).fill(0)
+					var loos_count = Array(users.length).fill(0)
 
 					//create header
 					var z1 =  document.createElement('tr');
@@ -87,33 +92,42 @@
 					var s1 =  document.createElement('th');
 					s1.innerHTML = "HARDNESS";
 					z1.appendChild(s1);
+					
+					//create headder for userS
 					users.forEach (function (user, index) {
 						var s1 =  document.createElement('th');
-							s1.innerHTML = user[1];
-							s1.setAttribute("style","background: "+user[2]+";color: "+invertColor(user[2])+";");
-							z1.appendChild(s1);
+						s1.innerHTML = user[1];
+						s1.setAttribute("style","background: "+user[2]+";color: "+invertColor(user[2])+";");	
+						if(index+1 == users.length){
+							s1.setAttribute("style","background: "+user[2]+";color: "+invertColor(user[2])+";border-right: 1px solid white;");
+						}
+						z1.appendChild(s1);
 					});
 					best.appendChild(z1);
 					
-					//iterate over tracks
+					//iterate over maps / tracks
 					var oldMap = "old";
 					tracks["maps"].forEach (function (map, index) {
 						var numb = map["tracks"].length
 						map["tracks"].forEach (function (track, index_track) {
-							last_str = ""
-							
+							//contain css class names
+							class_str = ""
 
+							//check if element is at most right
 							if(numb == index_track+1){
-								last_str = "last_class"
+								class_str = "last_class"
 							}
+
+							//check if element is at most left
 							if(index_track == 0){
+								//if map contains only one track
 								if(numb == index_track+1){
-									last_str += " "
+									class_str += " "
 								}
-								last_str += "first_class"
+								class_str += "first_class"
 							}
 
-
+							//create cell for each map
 							var z1 =  document.createElement('tr');
 							if(oldMap !== map["mapname"]){
 								var s1 =  document.createElement('td');
@@ -123,96 +137,174 @@
 								z1.appendChild(s1);
 								oldMap = map["mapname"]
 							}
+
+							//create cell for trackname
 							var s1 =  document.createElement('td');
-							s1.setAttribute("class", last_str)
+							s1.setAttribute("class", class_str)
 							s1.innerHTML = track["trackname"];
 							z1.appendChild(s1);
+
+							//ceate cell for hardness
 							var s1 =  document.createElement('td');
-							s1.setAttribute("class", last_str)
+							s1.setAttribute("class", class_str)
 							s1.innerHTML = track["hardness"];
 							s1.setAttribute("style","background: "+color[track["hardness"]-1]+";");
 							s1.setAttribute("class","tabel_level");
 							z1.appendChild(s1);
 
-
-
+							//check if entry for map and track exists
 							if(best_results[drone_id].hasOwnProperty(map["mapid"])){
 								if(best_results[drone_id][map["mapid"]].hasOwnProperty(track["trackid"])){
+
+									//calculate best and worst
 									var best_result = "99:99:999";
+									var worst_result = "00:00:000";
 									users.forEach (function (user, index) {
 										if(best_results[drone_id][map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
 											var userhas = best_results[drone_id][map["mapid"]][track["trackid"]][user[0]];
 											if(userhas < best_result ){best_result = userhas}
+											if(userhas > worst_result ){worst_result = userhas}
 										}
 
 									});
 
-
+									//create time entry
 									users.forEach (function (user, index) {
-										last_str_neu = last_str
+
+										//check if entry is last in tabel 
+										class_str_neu = class_str
 										if(users.length-1 == index){
-											last_str_neu += " end_tabel"
+											class_str_neu += " end_tabel"
 										}
+
+										//check if user has an entry
 										if(best_results[drone_id][map["mapid"]][track["trackid"]].hasOwnProperty(user[0])){
 											var s1 =  document.createElement('td');
 											s1.innerHTML = best_results[drone_id][map["mapid"]][track["trackid"]][user[0]];
+											
+											//check if best or worst result
 											if(best_result === best_results[drone_id][map["mapid"]][track["trackid"]][user[0]]){
 												win_count[index]++;
 												s1.setAttribute("style","padding:0 50px 0 50px;color: green;");
-												s1.setAttribute("class",last_str_neu)
+												s1.setAttribute("class",class_str_neu)
+											}else if(worst_result === best_results[drone_id][map["mapid"]][track["trackid"]][user[0]]){
+												loos_count[index]++;
+												s1.setAttribute("style","padding:0 50px 0 50px;color: red;");
+												s1.setAttribute("class",class_str_neu)
 											}else{
 												s1.setAttribute("style","padding:0 50px 0 50px;");
-												s1.setAttribute("class",last_str_neu)
+												s1.setAttribute("class",class_str_neu)
 											}
 											
 											z1.appendChild(s1);
 										}else{
+											//user has no entry
 											var s1 =  document.createElement('td');
-											s1.setAttribute("class",last_str_neu)
+											s1.setAttribute("class",class_str_neu)
 											z1.appendChild(s1);
 										}
 
 									});
 								}else{
+									//track for this map bon't exists in best list
 									users.forEach (function (user, index) {
-										last_str_neu = last_str
+										//check if the end of the tabel
+										class_str_neu = class_str
 										if(users.length-1 == index){
-											last_str_neu += " end_tabel"
+											class_str_neu += " end_tabel"
 										}
 										var s1 =  document.createElement('td');
-										s1.setAttribute("class",last_str_neu)
+										s1.setAttribute("class",class_str_neu)
 										z1.appendChild(s1);
 									});
 								}
+							}else{
+								//no entry in best list
+								users.forEach (function (user, index) {
+									//check if the end of the tabel
+									class_str_neu = class_str
+									if(users.length-1 == index){
+										class_str_neu += " end_tabel"
+									}
+									var s1 =  document.createElement('td');
+									s1.setAttribute("class",class_str_neu)
+									z1.appendChild(s1);
+								});
 							}
 							best.appendChild(z1);
 						});	
 					});
 
-					//win
+					//create win entry
+					//calculate best and worst
+					var most_win = "0";
+					var leas_win = "99999";
+					win_count.forEach (function (wins, index) {
+						if(wins < leas_win ){leas_win = wins}
+						if(wins > most_win ){most_win = wins}
+
+					})
+
 					var z1 =  document.createElement('tr');
 					var s1 =  document.createElement('td');
 					s1.innerHTML = "Winns";
 					s1.setAttribute("colspan",3)
 					s1.setAttribute("class","exc end_tabel")
 					z1.appendChild(s1);
-					win_count.forEach(function (user, index) {
+					win_count.forEach(function (wins, index) {
 						var s1 =  document.createElement('td');
+						s1.innerHTML = wins;
 						if(index == users.length-1){
 							s1.setAttribute("class","first_class last_class end_tabel")
 						}else{
 							s1.setAttribute("class","first_class last_class")
 						}
 						
-						s1.innerHTML = user;
+						if(wins == most_win){
+							s1.setAttribute("style","color:green;")
+						}else if(wins == leas_win){
+							s1.setAttribute("style","color:red;")
+						}
 						z1.appendChild(s1);
 					});
-				
-
 					best.appendChild(z1);
-					console.log(win_count)
+
+					//create entry for looses
+					//calculate best and worst
+					var most_looses = "0";
+					var leas_looses = "99999";
+					loos_count.forEach (function (wins, index) {
+						if(wins < leas_looses ){leas_looses = wins}
+						if(wins > most_looses ){most_looses = wins}
+
+					})
+
+					var z1 =  document.createElement('tr');
+					var s1 =  document.createElement('td');
+					s1.innerHTML = "Looses";
+					s1.setAttribute("colspan",3)
+					s1.setAttribute("class","exc end_tabel")
+					z1.appendChild(s1);
+					loos_count.forEach(function (looses, index) {
+						var s1 =  document.createElement('td');
+						s1.innerHTML = looses;
+						if(index == users.length-1){
+							s1.setAttribute("class","first_class last_class end_tabel")
+						}else{
+							s1.setAttribute("class","first_class last_class")
+						}
+						
+						if(looses == leas_looses){
+							s1.setAttribute("style","color:green;")
+						}else if(looses == most_looses){
+							s1.setAttribute("style","color:red;")
+						}
+						z1.appendChild(s1);
+					});
+					best.appendChild(z1);
 				}
 
+				//inverte color
 				function invertColor(hex) {
 					if (hex.indexOf('#') === 0) {
 						hex = hex.slice(1);
@@ -237,10 +329,9 @@
 					var zeros = new Array(len).join('0');
 					return (zeros + str).slice(-len);
 				}
-				
 			</script>
 		</div>
 
 		{% include "footer.html" %}
-	
-</body></html>
+	</body>
+</html>
