@@ -5,40 +5,71 @@
 		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='footer.css') }}">
-		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-		<link rel="manifest" href="manifest.webmanifest">-->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 	</head>
 	<body>
 		<!--based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav-->
 		{% include "menu.html" %}
 
 		<div id="main">
-			<h1>Drones</h1>
-			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
-			<br>
-			<p>Website in progress</p>
-			
-			<form action="/drone" method="POST">
-				dronename <input type="text" id="dronename" name="dronename" pattern="[a-zA-z0-9 ]{3,25}" required/><br>
-				<button type="submit">Create Drone</button>
-			</form>
-
-			{% if success == 0 %}
-				<p style="color: red;">ERROR</p>
-			{% elif success == 1 %}
-				<p style="color: green;">Success</p>
-			{% endif %}
-
 			<center>
-				<table>
+				<h1>Drones</h1>
+			</center>
+			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
+			<center>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+
+				<div id="fancy_from">
+			
+					<form action="/drone" method="POST">
+						<table>
+							<tr>
+								<td>Dronename</td>
+								<td><input type="text" id="dronename" name="dronename" pattern="[a-zA-z0-9 ]{3,25}" required/></td>
+							</tr>
+							<tr>
+								<td colspan="2"><button type="submit">Create Drone</button></td>
+							</tr>
+						</table>
+						
+					</form>
+					<br>
+
+					{% if success == 0 %}
+						<p style="color: red;">ERROR</p>
+					{% elif success == 1 %}
+						<p style="color: green;">Success</p>
+					{% else %}
+						<br>
+					{% endif %}
+
+				</div>
+				<br>
+				<br>
+				<br>
+
+
+				<table id="fancy_tabel">
+					<tr>
+						<th>Dronename</th>
+					</tr>
 					{% for drone in drones %}
 						<tr>
-							<th>{{ drone[1] }}</th>
+							<td>{{ drone[1] }}</td>
 						</tr>
 					{% endfor %}
 				</table>
-			</center>
-		</biv>
+
+			</biv>
+		</center>
 		{% include "footer.html" %}
 	</body>
 </html>
