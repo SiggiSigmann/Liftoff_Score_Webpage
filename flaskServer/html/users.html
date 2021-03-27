@@ -3,9 +3,10 @@
 	<head>
 		<title>Liftoff Scores</title>
 		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='footer.css') }}">
-		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tabel.css') }}">
 		<link rel="manifest" href="manifest.webmanifest">-->
 	</head>
 	<body>
@@ -13,37 +14,109 @@
 		{% include "menu.html" %}
 
 		<div id="main">
-			<h1>Users</h1>
-			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
-			<br>
-			<p>Website in progress</p>
-
-		
-
-			<form action="/users" method="POST">
-				Username <input type="text" id="username" name="username"  pattern="[a-zA-z0-9 ]{3,25}" required/><br>
-				Color <input type="color" id="color" name="color" required><br>
-				<button type="submit">Create User</button>
-			</form>
-
-			{% if success == 0 %}
-				<p style="color: red;">ERROR</p>
-			{% elif success == 1 %}
-				<p style="color: green;">Success</p>
-			{% endif %}
-
 			<center>
-			<table>
-				{% for user in users %}
-					<tr>
-						<th>{{ user[0] }}</th>
-						<th>{{ user[1] }}</th>
+				<h1>Users</h1>
+			</center>
+			<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Open Menu</span>
+			<center>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+		
+				<div id="fancy_from">
 
-						<th style="background-color: {{ user[2] }};">{{ user[2] }}</th>
+					<form action="/users" method="POST">
+						<table>
+							<tr>
+								<td>Username</td>
+								<td><input type="text" id="username" name="username"  pattern="[a-zA-z0-9 ]{3,25}" required></td>
+							</tr>
+							<tr>
+								<td>Color</td>
+								<td><input type="color" id="color" name="color" required></td>
+							</tr>
+							<tr>
+								<td colspan="2"><button type="submit">Create User</button></td>
+							</tr>
+
+						</table>
+						
+					</form>
+					<br>
+
+					{% if success == 0 %}
+						<p style="color: red;">ERROR</p>
+					{% elif success == 1 %}
+						<p style="color: green;">Success</p>
+					{% else %}
+						<br>
+					{% endif %}
+
+				</div>
+				
+
+				<br>
+				<br>
+				<br>
+				<table id="fancy_tabel">
+					<tr>
+						<th>Username</th>
+						<th>Usercolor</th>
 					</tr>
-				{% endfor %}
-			</table>
-		</center>
+
+				</table>
+				<script>
+					var users = JSON.parse('{{ users | tojson | safe}}');
+
+					best = document.getElementById("fancy_tabel");
+					var z1 =  document.createElement('tr');
+					users.forEach (function (user, index) {
+						var z1 =  document.createElement('tr');
+						var s1 =  document.createElement('td');
+						s1.innerHTML = user[1];
+						s1.setAttribute("class","most_left");
+							
+						z1.appendChild(s1);
+						var s1 =  document.createElement('td');
+						s1.innerHTML = user[2];
+						s1.setAttribute("style","background: "+user[2]+";color: "+invertColor(user[2])+";");
+							
+						z1.appendChild(s1);
+						best.appendChild(z1);
+					});
+					
+
+					function invertColor(hex) {
+						if (hex.indexOf('#') === 0) {
+							hex = hex.slice(1);
+						}
+						// convert 3-digit hex to 6-digits.
+						if (hex.length === 3) {
+							hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+						}
+						if (hex.length !== 6) {
+							throw new Error('Invalid HEX color.');
+						}
+						// invert color components
+						var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
+							g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
+							b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+						// pad each with zeros and return
+						return '#' + padZero(r) + padZero(g) + padZero(b);
+					}
+
+					function padZero(str, len) {
+						len = len || 2;
+						var zeros = new Array(len).join('0');
+						return (zeros + str).slice(-len);
+					}
+				</script>
+			</center>
 		</div>
 		{% include "footer.html" %}
 	</body>

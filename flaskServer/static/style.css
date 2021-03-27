@@ -2,3 +2,48 @@ body{
 	background: black;
 	color: white;
 }
+
+#drone_selection{
+	width: 200px;
+}
+
+#fancy_from{
+	display: inline-block;
+	border: 1px solid white;
+}
+
+#fancy_from table{
+	text-align: left;
+}
+
+#fancy_from input{
+	width: 200px;
+}
+
+#fancy_from button{
+	display: block;
+	width: 100%;
+}
+
+#fancy_tabel{
+	border: 1px solid white;
+}
+
+#fancy_tabel th{
+	border-bottom: 1px solid white;
+}
+
+#fancy_tabel .most_left{
+	border-right: 1px solid white;
+}
+
+tr, th{
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
