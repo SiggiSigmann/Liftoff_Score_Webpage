@@ -87,8 +87,8 @@ class ExcelLoader():
 								#check value from file
 								matched = re.match("[0-9]{2}:[0-9]{2}:[0-9]{3}", time)
 								if not bool(matched):
-									print(time, file = sys.stderr)
-									print(username + " "+dronename+" "+map_name+" "+track_name, file = sys.stderr)
+									#print(time, file = sys.stderr)
+									#print(username + " "+dronename+" "+map_name+" "+track_name, file = sys.stderr)
 									return -5
 
 								#get map and track id from db 
@@ -106,7 +106,7 @@ class ExcelLoader():
 			matched = re.match("[a-zA-z0-9 ]{3,25}", username)
 			if not bool(matched):
 				return -4
-			print("user not exis: " + username + " ("+color+")", file=sys.stderr)
+			#print("user not exis: " + username + " ("+color+")", file=sys.stderr)
 			self.db.add_new_user(username,color)
 			self.user_list.append(username)
 		return 0
@@ -116,7 +116,7 @@ class ExcelLoader():
 			matched = re.match("[a-zA-z0-9 ]{3,25}", dronename)
 			if not bool(matched):	
 				return -3
-			print("drone not exis: " + dronename, file=sys.stderr)
+			#print("drone not exis: " + dronename, file=sys.stderr)
 			self.db.add_new_drone(dronename)
 			self.drone_list.append(dronename)
 		return 0

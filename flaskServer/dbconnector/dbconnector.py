@@ -158,7 +158,7 @@ class DBconnector:
 
                 json_container[result[0]][result[1]][result[2]][result[3]] = result[4]
 
-        print(json_container, file=sys.stderr)
+       # print(json_container, file=sys.stderr)
 
                 
 
@@ -203,7 +203,7 @@ class DBconnector:
                         'where MAPS.mapname = "'+mapname+'" and TRACKS.trackname ="'+trackname+'";')
             tracks =  cur.fetchall()
             if len(tracks) == 0:
-                print(mapname+' and TRACKS.trackname ="'+trackname , file=sys.stderr)
+                #print(mapname+' and TRACKS.trackname ="'+trackname , file=sys.stderr)
                 tracks = [[]]
         
 

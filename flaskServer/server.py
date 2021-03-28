@@ -69,7 +69,7 @@ def create_drone():
         try:
             db.add_new_drone(dronename)
         except:
-            print("drone error while insertion", file=sys.stderr)
+            #print("drone error while insertion", file=sys.stderr)
             success = 0
 
     drones = db.get_drones()
@@ -116,12 +116,12 @@ def create_result():
         success = 0
     
     #==>
-    print("insert", file=sys.stderr)
+    #print("insert", file=sys.stderr)
     if success == 1:
         try:
             db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp)
         except:
-            print("result error whil insertion", file=sys.stderr)
+           # print("result error whil insertion", file=sys.stderr)
             success = 0
 
     results = db.get_results()
@@ -149,7 +149,7 @@ def create_user():
         try:
             db.add_new_user(username, usercolor)
         except:
-            print("user error while insertion", file=sys.stderr)
+           # print("user error while insertion", file=sys.stderr)
             success = 0
 
     users = db.get_users()
@@ -166,7 +166,7 @@ def allowed_file(filename):
 
 @app.route('/imex', methods=['POST'])
 def upload_file():
-    print("upload", file=sys.stderr)
+    #print("upload", file=sys.stderr)
     # check if the post request has the file part
     if 'file' not in request.files:
         return render_template('imex.html', active="imex", error=-1)
@@ -178,7 +178,7 @@ def upload_file():
     if file and allowed_file(file.filename):
         #file was uploaded
         filename = secure_filename(file.filename)
-        print(filename, file=sys.stderr)
+        #print(filename, file=sys.stderr)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         success = loader.loadFile(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -193,7 +193,39 @@ def upload_file():
 @app.route("/random", methods=["GET"])
 def random_get():
     tracks = db.get_tracks()
-    return render_template('random.html', active="random", tracks=tracks)
+    users = db.get_users()
+    best_results = db.get_best_reslt_per_user()
+    return render_template('random.html', active="random", tracks=tracks, users=users, best_results=best_results)
+
+@app.route("/random", methods=["POST"])
+def random_add():
+    print(request.form, file=sys.stderr)
+    
+    mapid = request.form["mapid"]
+    trackid = request.form["trackid"]
+    droneid = request.form["droneid"]
+
+    success = 1
+    users = db.get_users()
+    for user in users:
+        userid = user[0]
+    
+        resulttimestamp = request.form[str(userid)]
+
+        if resulttimestamp != None and resulttimestamp != '':
+
+            matched = re.match("[0-9]{2}:[0-9]{2}:[0-9]{3}", resulttimestamp)
+            if not bool(matched):
+                success = 0
+
+            if success == 1:
+                db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp)
+
+
+    tracks = db.get_tracks()
+
+    best_results = db.get_best_reslt_per_user()
+    return render_template('random.html', active="random", tracks=tracks, users=users, best_results=best_results, success=success)
 
 ### / ##########################################
 @app.route("/", methods=["GET"])
