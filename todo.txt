@@ -5,3 +5,5 @@ Todo:
 	create diagrams for track and user
 	create mean and standartabwechung
 	add username to braking pilot page
+	show how many races
+	show win /loos win/race loos/race
