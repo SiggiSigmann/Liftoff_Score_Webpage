@@ -30,14 +30,16 @@
 				<div id="fancy_from">
 					<button class="other" onclick="showRandomTrack()">New Random Track</button>
 					<script>
+						var rand_map_id;
+						var rand_track_id;
 						function showRandomTrack(){
 							var tracks = JSON.parse('{{ tracks | tojson | safe}}');
 
 							//random Map
-							var rand_map_id=Math.floor(Math.random() * tracks["maps"].length)+1;
+							rand_map_id=Math.floor(Math.random() * tracks["maps"].length)+1;
 
 							//random track
-							var rand_track_id=Math.floor(Math.random() * tracks["maps"][rand_map_id-1]["tracks"].length)+1;
+							rand_track_id=Math.floor(Math.random() * tracks["maps"][rand_map_id-1]["tracks"].length)+1;
 							
 							//create name for track
 							var track_name = document.getElementById("track_name");
@@ -57,8 +59,30 @@
 
 					</script>
 					<p id="track_name"></p>
+					<select id="drone_selection"></select>
 				</div>
 
+				<br>
+				<br>
+				
+				<script>
+					var drone_list = JSON.parse('{{ drone_list | tojson | safe}}');
+					//create tabel
+					var drone_option = document.getElementById("drone_selection");
+					drone_list.forEach (function (drone) {
+						var opt = document.createElement('option');
+						opt.value = drone[0];
+						opt.innerHTML = drone[1];
+						drone_option.appendChild(opt);
+					});
+
+					//change tabel when a new drone is selected
+					document.getElementById("drone_selection").onchange = udate_result_tabel;
+					function udate_result_tabel(){
+						drone_id = this.value;
+						updateResults(this.value);
+					}
+				</script>
 				<br>
 				<br>
 
@@ -70,6 +94,14 @@
 						<input type="hidden" id="droneid" name="droneid"  required>
 						<table id="userinput"></table>
 						<script>
+							var drone_id = "1";
+
+							function updateResults(value){
+
+								document.getElementById("droneid").value = value;
+								updateForm(rand_map_id, rand_track_id)
+							}
+
 							function updateForm(rand_map_id, rand_track_id){
 								var users = JSON.parse('{{ users | tojson | safe}}');
 								var best_results = JSON.parse('{{ best_results | tojson | safe}}');
@@ -93,9 +125,10 @@
 								best.appendChild(z1);
 
 
-								var drone_id = "1";
+								
 								var hidden = document.getElementById("droneid");
 								hidden.value = drone_id
+
 								var z1 =  document.createElement('tr');
 								//check if entry for map and track exists
 								if(best_results[drone_id].hasOwnProperty(rand_map_id)){
@@ -135,7 +168,19 @@
 											}
 
 										});
+									}else{
+										users.forEach (function (user, index) {
+											var s1 =  document.createElement('td');
+											s1.setAttribute("style","height: 20px;")
+											z1.appendChild(s1);
+										});
 									}
+								}else{
+									users.forEach (function (user, index) {
+										var s1 =  document.createElement('td');
+										s1.setAttribute("style","height: 20px;")
+										z1.appendChild(s1);
+									});
 								}
 								best.appendChild(z1);
 

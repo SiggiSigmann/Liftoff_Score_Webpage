@@ -195,7 +195,8 @@ def random_get():
     tracks = db.get_tracks()
     users = db.get_users()
     best_results = db.get_best_reslt_per_user()
-    return render_template('random.html', active="random", tracks=tracks, users=users, best_results=best_results)
+    drone_list = db.get_drones()
+    return render_template('random.html', active="random", tracks=tracks, users=users, best_results=best_results, drone_list=drone_list)
 
 @app.route("/random", methods=["POST"])
 def random_add():
