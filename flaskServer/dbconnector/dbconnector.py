@@ -210,3 +210,31 @@ class DBconnector:
         self._dissconect()
         self.lock.release()
         return tracks[0]
+
+    def get_breaking(self):
+        self.lock.acquire()
+        self._connect()
+        
+        with self.db.cursor() as cur:
+            cur.execute('SELECT userid, brakingtime, mode From BREAKINPILOT;')
+            tracks =  cur.fetchall()
+
+        self._dissconect()
+        self.lock.release()
+        return tracks
+
+    def add_breaking(self, userid, mode):
+        self.lock.acquire()
+        self._connect()
+        
+        #get Date and time  (2020-11-04 10:40:00)
+        now = datetime.datetime.now()
+        dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
+
+        with self.db.cursor() as cur:
+            cur.execute('INSERT INTO BREAKINPILOT ( userid, brakingtime, mode) '+\
+                        'VALUES ( "'+str(userid)+'", "'+dt_string+'", "'+str(mode)+'");')
+
+        self.db.commit()
+        self._dissconect()
+        self.lock.release()

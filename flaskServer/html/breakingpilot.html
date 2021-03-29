@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title>Liftoff Scores</title>
+		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='footer.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tabel.css') }}">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+		<!--based on https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav-->
+		{% include "menu.html" %}
+		
+		<div id="main">
+			<center>
+				<h1>Breaking Pilot</h1>
+			</center>
+			<span style="font-size:30px;cursor:pointer" onclick="openNav()" align="left">☰ Open Menu</span>
+			<center>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<div id="fancy_from">
+					<form action="/breakingpilot" method="POST">
+						<table>
+							<tr>
+								<td>User</td>
+								<td>
+									<select  id="userid" name="userid" required>
+										{% for user in users %}
+											<option value="{{ user[0] }}" style="background: {{ user[2] }};">{{ user[1] }}</option>
+										{% endfor %}
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Ehrenhalber<input type="radio" id="mode" name="mode" value="e">
+								</td><td>
+									Verdientermaßen <input type="radio" id="mode" name="mode" value="v">
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2"><button type="submit">Add Breaking Pilot</button></td>
+							</tr>
+						</table>
+					</form>
+					<br>
+					{% if success == 0 %}
+						<p style="color: red;">ERROR</p>
+					{% elif success == 1 %}
+						<p style="color: green;">Success</p>
+					{% else %}
+						<br>
+					{% endif %}
+				</div>
+				<br>
+				<br>
+				<table>
+					<tr>
+						<th>UserID</th>
+						<th>Time</th>
+						<th>Mode</th>
+					</tr>
+					{% for break in breaking %}
+						<tr>
+							<td>{{ break[0] }}</td>
+							<td>{{ break[1] }}</td>
+							<td>{{ break[2] }}</td>
+						</tr>
+
+					{% endfor %}
+				</table>
+			</center>
+		</div>
+		{% include "footer.html" %}
+	</body>
+</html>

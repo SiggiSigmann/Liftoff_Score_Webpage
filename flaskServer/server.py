@@ -200,7 +200,6 @@ def random_get():
 
 @app.route("/random", methods=["POST"])
 def random_add():
-    print(request.form, file=sys.stderr)
     
     mapid = request.form["mapid"]
     trackid = request.form["trackid"]
@@ -227,6 +226,24 @@ def random_add():
 
     best_results = db.get_best_reslt_per_user()
     return render_template('random.html', active="random", tracks=tracks, users=users, best_results=best_results, success=success)
+
+@app.route("/breakingpilot", methods=["GET"])
+def breakingpilot_get():
+    breaking = db.get_breaking()
+    users = db.get_users()
+    return render_template('breakingpilot.html', active="breakingpilot", breaking=breaking, users=users, success=-1)
+
+@app.route("/breakingpilot", methods=["POST"])
+def breakingpilot_post():
+    userid = request.form["userid"]
+    mode = request.form["mode"]
+
+    db.add_breaking(userid, mode)
+
+    breaking = db.get_breaking()
+    users = db.get_users()
+    return render_template('breakingpilot.html', active="breakingpilot", breaking=breaking, users=users, success=1)
+
 
 ### / ##########################################
 @app.route("/", methods=["GET"])
