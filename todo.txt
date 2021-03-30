@@ -7,3 +7,6 @@ Todo:
 	add username to braking pilot page
 	show how many races
 	show win /loos win/race loos/race
+	add breaking pilot in a row
+	add most in a row
+	add which typ of breaking pilot into accont => sorce for ech user e = 1, v = 2
