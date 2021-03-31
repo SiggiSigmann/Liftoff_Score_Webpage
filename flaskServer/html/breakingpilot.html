@@ -31,6 +31,7 @@
 				<br>
 				<br>
 				<p id="current"></p>
+				<p id="inARow"></p>
 				<br>
 				<br>
 				<div id="fancy_from">
@@ -48,7 +49,7 @@
 							</tr>
 							<tr>
 								<td>
-									Ehrenhalber<input type="radio" id="mode" name="mode" value="e">
+									Ehrenhalber<input type="radio" id="mode" name="mode" value="e" checked="checked">
 								</td><td>
 									Verdientermaßen <input type="radio" id="mode" name="mode" value="v">
 								</td>
@@ -82,13 +83,13 @@
 					var users = JSON.parse('{{ users | tojson | safe}}');
 
 					var label = document.getElementById("current");
-					label.innerText = "Current Breaking Pilot is "+users[breaking[0][0]][1]+" "+ (breaking[0][2] === 'e' ? 'Ehrenhalber' : 'Verdientermaßen');
+					label.innerText = "Current Breaking Pilot is "+users[breaking[breaking.length-1][0]-1][1]+" ("+ (breaking[breaking.length-1][2] === 'e' ? 'Ehrenhalber' : 'Verdientermaßen') + ")";
 				
 					var tabel = document.getElementById("tabelbreakingpilot");
 					breaking.forEach(element => {
 						var z1 =  document.createElement('tr');
 						var s1 =  document.createElement('th');
-						s1.innerText = users[element[0]][1]
+						s1.innerText = users[element[0]-1][1]
 						z1.appendChild(s1)
 						var s1 =  document.createElement('th');
 						s1.innerText = element[1];
@@ -98,6 +99,23 @@
 						z1.appendChild(s1)
 						tabel.appendChild(z1)
 					});
+
+					var inARowCount = Array(users.length+1).fill(0)
+					var oldUser = 0
+					breaking.forEach(element => {
+						if(oldUser == element[0]-1){
+							inARowCount[oldUser]++;
+						}else{
+							oldUser = element[0]-1;
+						}
+					})
+
+					var most = inARowCount.indexOf(Math.max(...inARowCount));
+
+					var mostInRow = document.getElementById("inARow");
+					mostInRow.innerText = "Most in a row: " + users[most][1] + " " + inARowCount[most] + " times";
+
+
 				
 				</script>
 			</center>

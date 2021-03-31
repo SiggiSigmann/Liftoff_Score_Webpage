@@ -5,6 +5,4 @@ Todo:
 	create diagrams for track and user
 	create mean and standartabwechung
 	show win /loos win/race loos/race
-	add breaking pilot in a row
-	add most in a row
 	add which typ of breaking pilot into accont => sorce for ech user e = 1, v = 2
