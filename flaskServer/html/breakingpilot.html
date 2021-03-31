@@ -102,13 +102,21 @@
 
 					var inARowCount = Array(users.length+1).fill(0)
 					var oldUser = 0
+					var counter = 1
 					breaking.forEach(element => {
 						if(oldUser == element[0]-1){
-							inARowCount[oldUser]++;
+							counter++;
 						}else{
+							if(counter > inARowCount[oldUser]){
+								inARowCount[oldUser] = counter;
+							}
 							oldUser = element[0]-1;
+							counter = 1;
 						}
 					})
+					if(counter > inARowCount[oldUser]){
+						inARowCount[oldUser] = counter;
+					}
 
 					var most = inARowCount.indexOf(Math.max(...inARowCount));
 
