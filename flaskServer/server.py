@@ -223,9 +223,9 @@ def random_add():
 
 
     tracks = db.get_tracks()
-
+    drone_list = db.get_drones()
     best_results = db.get_best_reslt_per_user()
-    return render_template('random.html', active="random", tracks=tracks, users=users, best_results=best_results, success=success)
+    return render_template('random.html', active="random", tracks=tracks, users=users, best_results=best_results, success=success, drone_list=drone_list)
 
 @app.route("/breakingpilot", methods=["GET"])
 def breakingpilot_get():
