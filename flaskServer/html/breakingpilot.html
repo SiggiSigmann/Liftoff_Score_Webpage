@@ -30,7 +30,7 @@
 				<br>
 				<br>
 				<br>
-				<p>Current Breaking Pilot is {{ breaking[0][0] }} ({{ breaking[0][2] }})</p>
+				<p id="current"></p>
 				<br>
 				<br>
 				<div id="fancy_from">
@@ -69,21 +69,37 @@
 				</div>
 				<br>
 				<br>
-				<table>
+				<table id="tabelbreakingpilot">
 					<tr>
 						<th>UserID</th>
 						<th>Time</th>
 						<th>Mode</th>
 					</tr>
-					{% for break in breaking %}
-						<tr>
-							<td>{{ break[0] }}</td>
-							<td>{{ break[1] }}</td>
-							<td>{{ break[2] }}</td>
-						</tr>
 
-					{% endfor %}
 				</table>
+				<script>
+					var breaking = JSON.parse('{{ breaking | tojson | safe}}');
+					var users = JSON.parse('{{ users | tojson | safe}}');
+
+					var label = document.getElementById("current");
+					label.innerText = "Current Breaking Pilot is "+users[breaking[0][0]][1]+" "+ (breaking[0][2] === 'e' ? 'Ehrenhalber' : 'Verdientermaßen');
+				
+					var tabel = document.getElementById("tabelbreakingpilot");
+					breaking.forEach(element => {
+						var z1 =  document.createElement('tr');
+						var s1 =  document.createElement('th');
+						s1.innerText = users[element[0]][1]
+						z1.appendChild(s1)
+						var s1 =  document.createElement('th');
+						s1.innerText = element[1];
+						z1.appendChild(s1)
+						var s1 =  document.createElement('th');
+						s1.innerText = (element[2] === 'e' ? 'Ehrenhalber' : 'Verdientermaßen')
+						z1.appendChild(s1)
+						tabel.appendChild(z1)
+					});
+				
+				</script>
 			</center>
 		</div>
 		{% include "footer.html" %}
