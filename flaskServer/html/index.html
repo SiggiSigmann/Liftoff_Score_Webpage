@@ -65,6 +65,7 @@
 
 					//initial tabel creation
 					var drone_id = 1;
+					
 					createResultTabel();
 
 					function createResultTabel(){
@@ -77,6 +78,7 @@
 
 						var win_count = Array(users.length).fill(0)
 						var loos_count = Array(users.length).fill(0)
+						var race_count = Array(users.length).fill(0);
 
 						//create header
 						var z1 =  document.createElement('tr');
@@ -179,6 +181,8 @@
 												var s1 =  document.createElement('td');
 												s1.innerHTML = best_results[drone_id][map["mapid"]][track["trackid"]][user[0]];
 												
+												race_count[index]++;
+
 												//check if best or worst result
 												if(best_result === best_results[drone_id][map["mapid"]][track["trackid"]][user[0]]){
 													win_count[index]++;
@@ -294,6 +298,42 @@
 							if(looses == leas_looses){
 								s1.setAttribute("style","color:green;")
 							}else if(looses == most_looses){
+								s1.setAttribute("style","color:red;")
+							}
+							z1.appendChild(s1);
+						});
+						best.appendChild(z1);
+
+						//create entry for looses
+						//calculate best and worst
+						var most_races = 0;
+						var leas_races = 99999;
+						race_count.forEach (function (races, index) {
+							if(races < leas_races ){leas_races = races}
+							if(races > most_races ){most_races = races}
+
+						})
+						console.log(most_races)
+						console.log(leas_races)
+
+						var z1 =  document.createElement('tr');
+						var s1 =  document.createElement('td');
+						s1.innerHTML = "Races";
+						s1.setAttribute("colspan",3)
+						s1.setAttribute("class","exc end_tabel")
+						z1.appendChild(s1);
+						race_count.forEach(function (race, index) {
+							var s1 =  document.createElement('td');
+							s1.innerHTML = race;
+							if(index == users.length-1){
+								s1.setAttribute("class","first_class last_class end_tabel")
+							}else{
+								s1.setAttribute("class","first_class last_class")
+							}
+							
+							if(race == most_races){
+								s1.setAttribute("style","color:green;")
+							}else if(race == leas_races){
 								s1.setAttribute("style","color:red;")
 							}
 							z1.appendChild(s1);
