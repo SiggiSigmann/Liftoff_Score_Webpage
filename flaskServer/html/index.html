@@ -92,7 +92,7 @@
 						s1.innerHTML = "HARDNESS";
 						z1.appendChild(s1);
 						
-						//create headder for userS
+						//create headder for user
 						users.forEach (function (user, index) {
 							var s1 =  document.createElement('th');
 							s1.innerHTML = user[1];
@@ -264,6 +264,7 @@
 							
 							if(wins == most_win){
 								s1.setAttribute("style","color:green;")
+								s1.innerHTML = wins+  " 👑";
 							}else if(wins == leas_win){
 								s1.setAttribute("style","color:red;")
 							}
@@ -300,6 +301,7 @@
 								s1.setAttribute("style","color:green;")
 							}else if(looses == most_looses){
 								s1.setAttribute("style","color:red;")
+								s1.innerHTML = looses+  " 😭";
 							}
 							z1.appendChild(s1);
 						});
