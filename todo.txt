@@ -6,3 +6,6 @@ Todo:
 	create mean and standartabwechung
 	show win /loos win/race loos/race
 	export
+	bug: random track, handel no input
+	show hardness on add reandom page
+	filter on hardness on random page
