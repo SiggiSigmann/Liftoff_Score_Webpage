@@ -7,7 +7,8 @@ Todo:
 	show win /loos win/race loos/race
 	export
 	bug: random track, handel no input
-	show hardness on add reandom page
-	filter on hardness on random page
 	save selected item and restor ofter submit   ord mayby reload
 	add tracks -> for all users
+	options set text color
+	add descritpion to breaking pilot page
+	add part ranking to breaking pilot page an evaluate braking pilor per day ( not last one)

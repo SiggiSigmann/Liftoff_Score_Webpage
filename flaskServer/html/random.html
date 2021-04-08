@@ -29,23 +29,58 @@
 				<br>
 				<div id="fancy_from">
 					<button class="other" onclick="showRandomTrack()">New Random Track</button>
+					Filter by hardness: <br>
+					<label for="1"><input type="checkbox" id="1" name="1" checked>1</label><br>
+					<label for="2"><input type="checkbox" id="2" name="2" checked>2</label><br>
+					<label for="2"><input type="checkbox" id="3" name="3" checked>3</label><br>
+					<label for="2"><input type="checkbox" id="4" name="4" checked>4</label><br>
+					<label for="2"><input type="checkbox" id="5" name="5" checked>5</label><br>
+					<label for="2"><input type="checkbox" id="6" name="6" checked>6</label><br>
+					<label for="2"><input type="checkbox" id="7" name="7" checked>7</label><br>
+					<label for="2"><input type="checkbox" id="8" name="8" checked>8</label>
 					<script>
 						var rand_map_id;
 						var rand_track_id;
 						function showRandomTrack(){
 							var tracks = JSON.parse('{{ tracks | tojson | safe}}');
+							//color gradient
+							var color = ['rgb(0,255,0)', 'rgb(64,255,0)','rgb(128,255,0)','rgb(192,255,0)','rgb(255,192,0)','rgb(255,128,0)','rgb(255,64,0)','rgb(255,0,0)' ];
+					
+							var difficulty = []
+							for (let index = 1; index < 9; index++) {
+								if(document.getElementById(index.toString()).checked) difficulty.push(index)
+							}
 
+							var tracksArray = {}
+
+							tracks["maps"].forEach(function (maps, index) {
+								maps["tracks"].forEach(function (track, index_track) {
+									if(difficulty.includes(track.hardness)){
+										if (!tracksArray.hasOwnProperty(index+1)) {
+											tracksArray[index+1] = []
+										}
+										tracksArray[index+1].push(index_track+1);
+									}
+								});
+							});
+					
 							//random Map
-							rand_map_id=Math.floor(Math.random() * tracks["maps"].length)+1;
+							var keys = Object.keys(tracksArray);
+    						rand_map_id=keys[ keys.length * Math.random() << 0];
 
 							//random track
-							rand_track_id=Math.floor(Math.random() * tracks["maps"][rand_map_id-1]["tracks"].length)+1;
+							rand_track_id=Math.floor(Math.random() * tracksArray[rand_map_id].length);
+							rand_track_id = tracksArray[rand_map_id][rand_track_id]
 							
 							//create name for track
 							var track_name = document.getElementById("track_name");
 							var name = tracks["maps"][rand_map_id-1]["mapname"] + " ";
 							name += tracks["maps"][rand_map_id-1]["tracks"][rand_track_id-1]["trackname"];
 							track_name.innerHTML = name;
+
+							var track_level = document.getElementById("track_level");
+							track_level.innerText = tracks["maps"][rand_map_id-1]["tracks"][rand_track_id-1]["hardness"];
+							track_level.setAttribute("style","background: "+color[tracks["maps"][rand_map_id-1]["tracks"][rand_track_id-1]["hardness"]-1]+";color:black;");
 
 							//update hidden input
 							var hidden = document.getElementById("mapid");
@@ -59,6 +94,7 @@
 
 					</script>
 					<p id="track_name"></p>
+					<p id="track_level"></p>
 					<select id="drone_selection"></select>
 				</div>
 
@@ -249,12 +285,13 @@
 
 				</div>
 
-				<script>
-					showRandomTrack()
-				</script>
+
 				
 			</center>
 		</div>
 		{% include "footer.html" %}
+		<script>
+			updateResults()
+		</script>
 	</body>
 </html>
