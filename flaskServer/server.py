@@ -89,42 +89,29 @@ def create_result():
     response = request.form
     mapid = int(response["mapid"])
     trackid = int(response["trackid"])
-    userid = int(response["userid"])
     droneid = int(response["droneid"])
-    resulttimestamp = response["resulttimestamp"]
 
     success = 1
-    maps = db.get_maps()
-    if not (len(maps) >= mapid and 0 < mapid):
-        success = 0
-
-    tracks = db.get_tracks()
-    if not (len(tracks["maps"][mapid-1]["tracks"]) >= trackid and 0 < trackid):
-        success = 0
-
     users = db.get_users()
-    if not (len(users) >= int(userid) and 0 < userid):
-        success = 0
+    for user in users:
+        userid = user[0]
     
-    drones = db.get_drones()
-    if not (len(drones) >= droneid and 0 < droneid):
-        success = 0
+        resulttimestamp = request.form[str(userid)]
 
+        if resulttimestamp != None and resulttimestamp != '':
 
-    matched = re.match("[0-9]{2}:[0-9]{2}:[0-9]{3}", resulttimestamp)
-    if not bool(matched):
-        success = 0
+            matched = re.match("[0-9]{2}:[0-9]{2}:[0-9]{3}", resulttimestamp)
+            if not bool(matched):
+                success = 0
+
+            if success == 1:
+                db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp)
     
-    #==>
-    #print("insert", file=sys.stderr)
-    if success == 1:
-        try:
-            db.add_new_result(mapid, trackid, userid, droneid, resulttimestamp)
-        except:
-           # print("result error whil insertion", file=sys.stderr)
-            success = 0
 
     results = db.get_results()
+    drones = db.get_drones()
+    maps = db.get_maps()
+    tracks = db.get_tracks()
     return render_template('result.html', active="results", results=results, users=users, drones=drones, maps=maps, tracks=tracks, success=success)
 
 #todo:

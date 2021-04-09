@@ -89,16 +89,6 @@
 								</td>
 							</tr>
 							<tr>
-								<td>User</td>
-								<td>
-									<select  id="userid" name="userid" required>
-										{% for user in users %}
-											<option value="{{ user[0] }}" style="background: {{ user[2] }};">{{ user[1] }}</option>
-										{% endfor %}
-									</select>
-								</td>
-							</tr>
-							<tr>
 								<td>Drone</td>
 								<td>
 									<select  id="droneid" name="droneid" required>
@@ -108,10 +98,14 @@
 									</select>
 								</td>
 							</tr>
-							<tr>
-								<td>Time</td>
-								<td><input type="text" id="resulttimestamp" name="resulttimestamp"  pattern="[0-9]{2}:[0-9]{2}:[0-9]{3}" placeholder="00:00:000" required></td>
-							</tr>
+							{% for user in users %}
+								<tr>
+									<td style="background: {{ user[2] }};">{{ user[1] }}</td>
+									<td>
+										<input type="text" id="{{ user[0] }}" name="{{ user[0] }}"  pattern="[0-9]{2}:[0-9]{2}:[0-9]{3}" placeholder="00:00:000">
+									</td>
+								</tr>
+							{% endfor %}
 							<tr>
 								<td colspan="2"><button type="submit">Add Result</button></td>
 							</tr>
