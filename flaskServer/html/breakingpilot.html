@@ -10,6 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='footer.css') }}">
 		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tabel.css') }}">-->
 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<body>
@@ -66,7 +67,12 @@
 							</tr>
 							<tr>
 								<td colspan="2">
-									<textarea id="description" name="description" rows="4" cols="50" maxlength="1000"></textarea>
+									<textarea id="description" name="description" rows="4" cols="50" maxlength="1000" style="width: 100%;"></textarea>
+								
+									<div id="count">
+										<span id="current_count">0</span>
+										<span id="maximum_count">/ 1000</span>
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -160,3 +166,12 @@
 		{% include "footer.html" %}
 	</body>
 </html>
+<script type="text/javascript">
+	$('textarea').keyup(function() {    
+		var characterCount = $(this).val().length,
+			current_count = $('#current_count'),
+			maximum_count = $('#maximum_count'),
+			count = $('#count');    
+			current_count.text(characterCount);        
+	});
+</script>
