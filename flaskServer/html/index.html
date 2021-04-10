@@ -248,6 +248,7 @@
 
 						})
 
+						var winrate = []
 						var z1 =  document.createElement('tr');
 						var s1 =  document.createElement('td');
 						s1.innerHTML = "Winns";
@@ -257,8 +258,8 @@
 						win_count.forEach(function (wins, index) {
 							var s1 =  document.createElement('td');
 
-							percentage = wins*(race_count[index]/100)
-							s1.innerHTML = wins + "("+(percentage.toFixed(2))+"%)";
+							winrate[index]=wins*(100/race_count[index])
+							s1.innerHTML = wins;
 							if(index == users.length-1){
 								s1.setAttribute("class","first_class last_class end_tabel")
 							}else{
@@ -267,8 +268,45 @@
 							
 							if(wins == most_win){
 								s1.setAttribute("style","color:green;")
-								s1.innerHTML = wins + "("+(percentage.toFixed(2))+"%)"+  " 👑";
+								s1.innerHTML = wins + " 👑";
 							}else if(wins == leas_win){
+								s1.setAttribute("style","color:red;")
+							}
+							z1.appendChild(s1);
+						});
+						best.appendChild(z1);
+
+
+						//create entry fro winnrate
+						//calculate best and worst
+						var most_winrate = 0;
+						var leas_winnrate= 99999;
+						winrate.forEach (function (wins, index) {
+							if(wins < leas_winnrate ){leas_winnrate = wins}
+							if(wins > most_winrate ){most_winrate = wins}
+
+						})
+						
+						var z1 =  document.createElement('tr');
+						var s1 =  document.createElement('td');
+						s1.innerHTML = "Winn rate";
+						s1.setAttribute("colspan",3)
+						s1.setAttribute("class","exc end_tabel")
+						z1.appendChild(s1);
+						winrate.forEach(function (wins, index) {
+							var s1 =  document.createElement('td');
+
+							s1.innerHTML = wins.toFixed(2);
+							if(index == users.length-1){
+								s1.setAttribute("class","first_class last_class end_tabel")
+							}else{
+								s1.setAttribute("class","first_class last_class")
+							}
+							
+							if(wins == most_winrate){
+								s1.setAttribute("style","color:green;")
+								s1.innerHTML = wins.toFixed(2) + " 👑";
+							}else if(wins == leas_winnrate){
 								s1.setAttribute("style","color:red;")
 							}
 							z1.appendChild(s1);
@@ -284,7 +322,8 @@
 							if(wins > most_looses ){most_looses = wins}
 
 						})
-
+						
+						looserate = []
 						var z1 =  document.createElement('tr');
 						var s1 =  document.createElement('td');
 						s1.innerHTML = "Looses";
@@ -294,8 +333,8 @@
 						loos_count.forEach(function (looses, index) {
 							var s1 =  document.createElement('td');
 
-							percent = looses*(race_count[index]/100);
-							s1.innerHTML = looses + "("+(percent.toFixed(2))+"%)";
+							looserate[index] = looses*(100/race_count[index]);
+							s1.innerHTML = looses ;
 
 							if(index == users.length-1){
 								s1.setAttribute("class","first_class last_class end_tabel")
@@ -307,7 +346,43 @@
 								s1.setAttribute("style","color:green;")
 							}else if(looses == most_looses){
 								s1.setAttribute("style","color:red;")
-								s1.innerHTML = looses+ "("+(percentage.toFixed(2))+"%)"+  " 😭";
+								s1.innerHTML = looses+  " 😭";
+							}
+							z1.appendChild(s1);
+						});
+						best.appendChild(z1);
+
+						//create entry for looses rate
+						//calculate best and worst
+						var most_looserate = "0";
+						var leas_looserate= "99999";
+						looserate.forEach (function (wins, index) {
+							if(wins < leas_looserate ){leas_looserate = wins}
+							if(wins > most_looserate){most_looserate= wins}
+
+						})
+						
+						var z1 =  document.createElement('tr');
+						var s1 =  document.createElement('td');
+						s1.innerHTML = "Loos Rate";
+						s1.setAttribute("colspan",3)
+						s1.setAttribute("class","exc end_tabel")
+						z1.appendChild(s1);
+						looserate.forEach(function (looses, index) {
+							var s1 =  document.createElement('td');
+							s1.innerHTML = looses.toFixed(2);
+
+							if(index == users.length-1){
+								s1.setAttribute("class","first_class last_class end_tabel")
+							}else{
+								s1.setAttribute("class","first_class last_class")
+							}
+							
+							if(looses == leas_looserate){
+								s1.setAttribute("style","color:green;")
+							}else if(looses == most_looserate){
+								s1.setAttribute("style","color:red;")
+								s1.innerHTML = looses.toFixed(2)+  " 😭";
 							}
 							z1.appendChild(s1);
 						});
