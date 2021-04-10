@@ -10,3 +10,4 @@ Todo:
 	settings set color for user
 	add descritpion to breaking pilot page
 	add part ranking to breaking pilot page an evaluate braking pilor per day ( not last one)
+	remove value / update value

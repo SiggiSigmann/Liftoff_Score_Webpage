@@ -41,14 +41,25 @@ body{
 	border-bottom: 1px solid white;
 }
 
-#fancy_tabel .most_right{
+/*#fancy_tabel .most_right{
+	border-right: 1px solid white;
+}*/
+
+#fancy_tabel tr:last-child{
 	border-right: 1px solid white;
 }
+
+#fancy_tabel th:last-child{
+	border-right: 1px solid white;
+}
+
 
 tr, th{
 	margin: 0;
 	padding: 0;
 	border: 0;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 table {

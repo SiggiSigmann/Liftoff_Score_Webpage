@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='footer.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tabel.css') }}">
+		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tabel.css') }}">-->
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
@@ -70,7 +70,7 @@
 				</div>
 				<br>
 				<br>
-				<table id="tabelbreakingpilot">
+				<table id="fancy_tabel">
 					<tr>
 						<th>UserID</th>
 						<th>Time</th>
@@ -85,10 +85,10 @@
 					var label = document.getElementById("current");
 					label.innerText = "Current Breaking Pilot is "+users[breaking[breaking.length-1][0]-1][1]+" ("+ (breaking[breaking.length-1][2] === 'e' ? 'Ehrenhalber' : 'Verdientermaßen') + ")";
 				
-					var tabel = document.getElementById("tabelbreakingpilot");
+					var tabel = document.getElementById("fancy_tabel");
 					breaking.forEach(element => {
 						var z1 =  document.createElement('tr');
-						var s1 =  document.createElement('th');
+						var s1 =  document.createElement('tr');
 						s1.innerText = users[element[0]-1][1]
 						z1.appendChild(s1)
 						var s1 =  document.createElement('th');

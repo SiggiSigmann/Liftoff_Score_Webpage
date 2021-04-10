@@ -3,9 +3,10 @@
 	<head>
 		<title>Liftoff Scores</title>
 		<link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpg') }}" type="image/x-icon">
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+		
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='menu.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='footer.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 		<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tabel.css') }}">
 		<link rel="manifest" href="manifest.webmanifest">-->
 	</head>
@@ -84,7 +85,7 @@
 						z1.appendChild(s1);
 						var s1 =  document.createElement('td');
 						s1.innerHTML = user[2];
-						s1.setAttribute("style","background: "+user[2]+";color: "+invertColor(user[2])+";");
+						s1.setAttribute("style","background: "+user[2]+";color: "+invertColor(user[2])+";text-align: center;");
 							
 						z1.appendChild(s1);
 						best.appendChild(z1);
