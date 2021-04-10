@@ -45,7 +45,7 @@ body{
 	border-right: 1px solid white;
 }*/
 
-#fancy_tabel tr:last-child{
+#fancy_tabel td:last-child{
 	border-right: 1px solid white;
 }
 
@@ -54,7 +54,7 @@ body{
 }
 
 
-tr, th{
+tr, th, td{
 	margin: 0;
 	padding: 0;
 	border: 0;

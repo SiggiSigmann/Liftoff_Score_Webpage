@@ -88,13 +88,13 @@
 					var tabel = document.getElementById("fancy_tabel");
 					breaking.forEach(element => {
 						var z1 =  document.createElement('tr');
-						var s1 =  document.createElement('tr');
+						var s1 =  document.createElement('td');
 						s1.innerText = users[element[0]-1][1]
 						z1.appendChild(s1)
-						var s1 =  document.createElement('th');
+						var s1 =  document.createElement('td');
 						s1.innerText = element[1];
 						z1.appendChild(s1)
-						var s1 =  document.createElement('th');
+						var s1 =  document.createElement('td');
 						s1.innerText = (element[2] === 'e' ? 'Ehrenhalber' : 'Verdientermaßen')
 						z1.appendChild(s1)
 						tabel.appendChild(z1)

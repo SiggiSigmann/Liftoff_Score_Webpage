@@ -1,5 +1,4 @@
 Todo:
-	fromat tale padding
 	fromat tabel on breaking pilot page
 	create pages for each user
 	create diagrams for track and user
