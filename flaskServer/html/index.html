@@ -256,7 +256,9 @@
 						z1.appendChild(s1);
 						win_count.forEach(function (wins, index) {
 							var s1 =  document.createElement('td');
-							s1.innerHTML = wins;
+
+							percentage = wins*(race_count[index]/100)
+							s1.innerHTML = wins + "("+(percentage.toFixed(2))+"%)";
 							if(index == users.length-1){
 								s1.setAttribute("class","first_class last_class end_tabel")
 							}else{
@@ -265,7 +267,7 @@
 							
 							if(wins == most_win){
 								s1.setAttribute("style","color:green;")
-								s1.innerHTML = wins+  " 👑";
+								s1.innerHTML = wins + "("+(percentage.toFixed(2))+"%)"+  " 👑";
 							}else if(wins == leas_win){
 								s1.setAttribute("style","color:red;")
 							}
@@ -291,7 +293,10 @@
 						z1.appendChild(s1);
 						loos_count.forEach(function (looses, index) {
 							var s1 =  document.createElement('td');
-							s1.innerHTML = looses;
+
+							percent = looses*(race_count[index]/100);
+							s1.innerHTML = looses + "("+(percent.toFixed(2))+"%)";
+
 							if(index == users.length-1){
 								s1.setAttribute("class","first_class last_class end_tabel")
 							}else{
@@ -302,7 +307,7 @@
 								s1.setAttribute("style","color:green;")
 							}else if(looses == most_looses){
 								s1.setAttribute("style","color:red;")
-								s1.innerHTML = looses+  " 😭";
+								s1.innerHTML = looses+ "("+(percentage.toFixed(2))+"%)"+  " 😭";
 							}
 							z1.appendChild(s1);
 						});
@@ -317,8 +322,6 @@
 							if(races > most_races ){most_races = races}
 
 						})
-						console.log(most_races)
-						console.log(leas_races)
 
 						var z1 =  document.createElement('tr');
 						var s1 =  document.createElement('td');

@@ -1,9 +1,7 @@
 Todo:
-	fromat tabel on breaking pilot page
 	create pages for each user
 	create diagrams for track and user
-	create mean and standartabwechung
-	show win /loos win/race loos/race
+	create mean and standartabwechung ( only if time format changes)
 	export
 	save selected item and restor ofter submit   ord mayby reload
 	settings set color for user
