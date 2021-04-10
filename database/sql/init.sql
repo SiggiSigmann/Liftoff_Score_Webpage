@@ -47,15 +47,24 @@ CREATE TABLE RESULTS(
 );
 ALTER TABLE RESULTS AUTO_INCREMENT=0;
 
+CREATE TABLE DRONEPARTS(
+    partid int PRIMARY KEY Not Null AUTO_INCREMENT,
+    partname varchar(25) NOT NULL,
+    weights int NOT NULL
+);
+ALTER TABLE DRONEPARTS AUTO_INCREMENT=0;
+
 CREATE TABLE BREAKINPILOT(
     brakingid int PRIMARY KEY Not Null AUTO_INCREMENT,
     userid int NOT NULL,
     brakingtime DATETIME NOT NULL,
     mode char,
-    FOREIGN KEY userref (userid) REFERENCES USERS(userid)
+    brokenpart int,
+    description varchar(1000),
+    FOREIGN KEY userref (userid) REFERENCES USERS(userid),
+    FOREIGN KEY partref (brokenpart) REFERENCES DRONEPARTS(partid)
 );
 ALTER TABLE BREAKINPILOT AUTO_INCREMENT=0;
-
 
 INSERT INTO MAPS 
     (mapname) 
@@ -206,3 +215,23 @@ INSERT INTO TRACKS
     (mapid, trackid, trackname, hardness)
 VALUES
     (15, 1, "1", 6);
+
+INSERT INTO DRONEPARTS
+    (partname, weights)
+VALUES
+    ("Props", 1),
+    ("Antenna", 2),
+    ("Arms", 3),
+    ("Frame", 4),
+    ("LED", 5),
+    ("GPS", 6),
+    ("Bluetoo1h", 7),
+    ("VTX", 8),
+    ("ESC", 9),
+    ("Battery", 10),
+    ("FC", 11),
+    ("Motor", 12),
+    ("VTX", 13),
+    ("Cammera", 14),
+    ("Receiver", 15),
+    ("GoPro", 16);

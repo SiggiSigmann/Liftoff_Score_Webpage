@@ -218,18 +218,24 @@ def random_add():
 def breakingpilot_get():
     breaking = db.get_breaking()
     users = db.get_users()
-    return render_template('breakingpilot.html', active="breakingpilot", breaking=breaking, users=users, success=-1)
+    parts = db.get_parts()
+    return render_template('breakingpilot.html', active="breakingpilot", breaking=breaking, users=users, success=-1, parts=parts)
 
 @app.route("/breakingpilot", methods=["POST"])
 def breakingpilot_post():
     userid = request.form["userid"]
     mode = request.form["mode"]
+    partid = request.form["partid"]
+    description = ""
+    if "description" in request.form:
+        description = request.form["description"]
 
-    db.add_breaking(userid, mode)
+    db.add_breaking(userid, mode, partid, description)
 
     breaking = db.get_breaking()
     users = db.get_users()
-    return render_template('breakingpilot.html', active="breakingpilot", breaking=breaking, users=users, success=1)
+    parts = db.get_parts()
+    return render_template('breakingpilot.html', active="breakingpilot", breaking=breaking, users=users, success=1, parts=parts)
 
 
 ### / ##########################################

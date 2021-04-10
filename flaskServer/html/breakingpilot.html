@@ -55,6 +55,21 @@
 								</td>
 							</tr>
 							<tr>
+								<td></td>
+								<td>
+									<select  id="partid" name="partid" required>
+										{% for part in parts%}
+											<option value="{{ part[0] }}">{{ part[1] }}:{{ part[2] }}</option>
+										{% endfor %}
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<textarea id="description" name="description" rows="4" cols="50" maxlength="1000"></textarea>
+								</td>
+							</tr>
+							<tr>
 								<td colspan="2"><button type="submit">Add Breaking Pilot</button></td>
 							</tr>
 						</table>
@@ -75,12 +90,16 @@
 						<th>UserID</th>
 						<th>Time</th>
 						<th>Mode</th>
+						<th>Proken Part</th>
+						<th>Points</th>
+						<th>Description</th>
 					</tr>
 
 				</table>
 				<script>
 					var breaking = JSON.parse('{{ breaking | tojson | safe}}');
 					var users = JSON.parse('{{ users | tojson | safe}}');
+					var parts = JSON.parse('{{ parts | tojson | safe}}');
 
 					var label = document.getElementById("current");
 					label.innerText = "Current Breaking Pilot is "+users[breaking[breaking.length-1][0]-1][1]+" ("+ (breaking[breaking.length-1][2] === 'e' ? 'Ehrenhalber' : 'Verdientermaßen') + ")";
@@ -98,6 +117,16 @@
 						s1.innerText = (element[2] === 'e' ? 'Ehrenhalber' : 'Verdientermaßen')
 						z1.appendChild(s1)
 						tabel.appendChild(z1)
+						var s1 =  document.createElement('td');
+						console.log(element[3]);
+						s1.innerText = (element[2] === 'e' ? '-' : parts[element[3]-1][1])
+						z1.appendChild(s1)
+						var s1 =  document.createElement('td');
+						s1.innerText = (element[2] === 'e' ? '0' : parts[element[3]-1][2])
+						z1.appendChild(s1)
+						var s1 =  document.createElement('td');
+						s1.innerText = element[4];
+						z1.appendChild(s1)
 					});
 
 					var inARowCount = Array(users.length+1).fill(0)

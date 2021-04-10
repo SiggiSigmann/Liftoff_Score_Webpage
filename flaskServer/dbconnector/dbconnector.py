@@ -216,14 +216,14 @@ class DBconnector:
         self._connect()
         
         with self.db.cursor() as cur:
-            cur.execute('SELECT userid, brakingtime, mode From BREAKINPILOT;')
+            cur.execute('SELECT userid, brakingtime, mode, brokenpart, description From BREAKINPILOT;')
             tracks =  cur.fetchall()
 
         self._dissconect()
         self.lock.release()
         return tracks
 
-    def add_breaking(self, userid, mode):
+    def add_breaking(self, userid, mode, brokenpart, description):
         self.lock.acquire()
         self._connect()
         
@@ -232,9 +232,25 @@ class DBconnector:
         dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
 
         with self.db.cursor() as cur:
-            cur.execute('INSERT INTO BREAKINPILOT ( userid, brakingtime, mode) '+\
-                        'VALUES ( "'+str(userid)+'", "'+dt_string+'", "'+str(mode)+'");')
+            if mode == "e":
+                cur.execute('INSERT INTO BREAKINPILOT ( userid, brakingtime, mode, brokenpart, description) '+\
+                        'VALUES ( "'+str(userid)+'", "'+dt_string+'", "'+str(mode)+'", '+brokenpart+', "'+description+'");')
+            else:
+                cur.execute('INSERT INTO BREAKINPILOT ( userid, brakingtime, mode,  description) '+\
+                        'VALUES ( "'+str(userid)+'", "'+dt_string+'", "'+str(mode)+'", "'+description+'");')
 
         self.db.commit()
         self._dissconect()
         self.lock.release()
+
+    def get_parts(self):
+        self.lock.acquire()
+        self._connect()
+        
+        with self.db.cursor() as cur:
+            cur.execute('SELECT partid, partname, weights From DRONEPARTS;')
+            tracks =  cur.fetchall()
+
+        self._dissconect()
+        self.lock.release()
+        return tracks

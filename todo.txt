@@ -1,10 +1,11 @@
 Todo:
-	create pages for each user
-	create diagrams for track and user
-	create mean and standartabwechung ( only if time format changes)
-	export
-	save selected item and restor ofter submit   ord mayby reload
-	settings set color for user
-	add descritpion to breaking pilot page
-	add part ranking to breaking pilot page an evaluate braking pilor per day ( not last one)
-	remove value / update value
+	Pages:
+		create pages for each user
+		create diagrams for track and user
+
+	Functions:
+		export
+		save selected item and restor ofter submit   ord mayby reload
+		settings set color for user
+		add part ranking to breaking pilot page an evaluate braking pilor per day ( not last one)
+		remove value / update value
