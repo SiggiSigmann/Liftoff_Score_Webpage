@@ -106,9 +106,6 @@
 					var breaking = JSON.parse('{{ breaking | tojson | safe}}');
 					var users = JSON.parse('{{ users | tojson | safe}}');
 					var parts = JSON.parse('{{ parts | tojson | safe}}');
-
-					var label = document.getElementById("current");
-					label.innerText = "Current Breaking Pilot is "+users[breaking[breaking.length-1][0]-1][1]+" ("+ (breaking[breaking.length-1][2] === 'e' ? 'Ehrenhalber' : 'Verdientermaßen') + ")";
 				
 					var tabel = document.getElementById("fancy_tabel");
 					breaking.forEach(element => {
@@ -155,10 +152,45 @@
 
 					var most = inARowCount.indexOf(Math.max(...inARowCount));
 
+					test = [];
+					breaking.forEach(function (looses, index) {
+						date = new Date(looses[1])
+						test.push([looses[0], new Date(date.getFullYear(), date.getMonth(), date.getDate()),looses[2],looses[3],looses[4]])
+					});
+						
+					var groupBy = function(xs, key) {
+						return xs.reduce(function(rv, x) {
+							(rv[x[key]] = rv[x[key]] || []).push(x);
+							return rv;
+						}, {});
+					};
+
+					grouped = groupBy(test, 1);
+					lastThings = grouped[Object.keys(grouped)[Object.keys(grouped).length-1]]
+
+					function compare( a, b ) {
+						first = a[3]
+						if(first === null) first = 0;
+						second = b[3]
+						if(second === null) second = 0;
+
+						if ( first > second ){
+							return -1;
+						}
+						if ( first < second){
+							return 1;
+						}
+						return 0;
+					}
+					
+					lastThings.sort(compare)
+					console.log(lastThings)
+
+					var label = document.getElementById("current");
+					label.innerText = "Current Breaking Pilot is "+users[lastThings[0][0]-1][1]+" ("+ (lastThings[0][2] === 'e' ? 'Ehrenhalber' : 'Verdientermaßen') + ")";
+
 					var mostInRow = document.getElementById("inARow");
 					mostInRow.innerText = "Most in a row: " + users[most][1] + " " + inARowCount[most] + " times";
-
-
 				
 				</script>
 			</center>

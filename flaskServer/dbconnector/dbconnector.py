@@ -231,13 +231,15 @@ class DBconnector:
         now = datetime.datetime.now()
         dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
 
+        if description != None:
+            des = '"'+description+'"' 
+        else:
+            des = '"NULL"'
+
         with self.db.cursor() as cur:
-            if mode == "e":
-                cur.execute('INSERT INTO BREAKINPILOT ( userid, brakingtime, mode, brokenpart, description) '+\
-                        'VALUES ( "'+str(userid)+'", "'+dt_string+'", "'+str(mode)+'", '+brokenpart+', "'+description+'");')
-            else:
-                cur.execute('INSERT INTO BREAKINPILOT ( userid, brakingtime, mode,  description) '+\
-                        'VALUES ( "'+str(userid)+'", "'+dt_string+'", "'+str(mode)+'", "'+description+'");')
+            cur.execute('INSERT INTO BREAKINPILOT ( userid, brakingtime, mode, brokenpart, description) '+\
+                    'VALUES ( "'+str(userid)+'", "'+dt_string+'", "'+str(mode)+'", '+brokenpart+', '+ des+');')
+
 
         self.db.commit()
         self._dissconect()

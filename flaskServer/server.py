@@ -226,9 +226,11 @@ def breakingpilot_post():
     userid = request.form["userid"]
     mode = request.form["mode"]
     partid = request.form["partid"]
-    description = ""
+    description = "NULL"
     if "description" in request.form:
         description = request.form["description"]
+    if mode == "e" or mode == 'e':
+        partid = "NULL"
 
     db.add_breaking(userid, mode, partid, description)
 
