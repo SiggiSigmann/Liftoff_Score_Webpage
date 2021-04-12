@@ -7,5 +7,4 @@ Todo:
 		export
 		save selected item and restor ofter submit   ord mayby reload
 		settings set color for user
-		add part ranking to breaking pilot page an evaluate braking pilor per day ( not last one)
 		remove value / update value
