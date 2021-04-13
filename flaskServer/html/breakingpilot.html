@@ -102,7 +102,8 @@
 					</tr>
 
 				</table>
-
+				<br>
+				<br>
 				<table id="points_table">
 					<tr>
 						<th>Username</th>
@@ -205,7 +206,7 @@
 					var mostInRow = document.getElementById("inARow");
 					mostInRow.innerText = "Most in a row: " + users[most][1] + " " + inARowCount[most] + " times";
 				
-					var points = Array(users.length+1).fill(0)
+					var points = Array(users.length-1).fill(0)
 					latestarray.forEach(element => {
 						points[element[0]-1] += element[3]
 					});
@@ -215,14 +216,43 @@
 						var z1 =  document.createElement('tr');
 						var s1 =  document.createElement('td');
 						s1.innerText = users[index][1]
-						s1.setAttribute("style","background: "+users[index][2]+";")
+						s1.setAttribute("style","background: "+users[index][2]+";color: "+invertColor(users[index][2])+";")
 						z1.appendChild(s1)
 						var s1 =  document.createElement('td');
 						s1.innerText = x
+						if(x == Math.max(...points)){
+							s1.setAttribute("style","color: red;")
+						}else if(x == Math.min(...points)){
+							s1.setAttribute("style","color: green;")
+						}
 						z1.appendChild(s1)
 						points_table.appendChild(z1)
 					});
+					//inverte color
+					function invertColor(hex) {
+						if (hex.indexOf('#') === 0) {
+							hex = hex.slice(1);
+						}
+						// convert 3-digit hex to 6-digits.
+						if (hex.length === 3) {
+							hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+						}
+						if (hex.length !== 6) {
+							throw new Error('Invalid HEX color.');
+						}
+						// invert color components
+						var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
+							g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
+							b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+						// pad each with zeros and return
+						return '#' + padZero(r) + padZero(g) + padZero(b);
+					}
 
+					function padZero(str, len) {
+						len = len || 2;
+						var zeros = new Array(len).join('0');
+						return (zeros + str).slice(-len);
+					}
 				</script>
 			</center>
 		</div>
