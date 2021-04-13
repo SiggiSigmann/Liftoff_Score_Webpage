@@ -206,7 +206,7 @@
 					var mostInRow = document.getElementById("inARow");
 					mostInRow.innerText = "Most in a row: " + users[most][1] + " " + inARowCount[most] + " times";
 				
-					var points = Array(users.length-1).fill(0)
+					var points = Array(users.length).fill(0)
 					latestarray.forEach(element => {
 						points[element[0]-1] += element[3]
 					});
