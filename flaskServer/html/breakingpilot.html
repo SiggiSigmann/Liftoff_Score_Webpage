@@ -102,6 +102,13 @@
 					</tr>
 
 				</table>
+
+				<table id="points_table">
+					<tr>
+						<th>Username</th>
+						<th>Points</th>
+					</tr>
+				</table>
 				<script>
 					var breaking = JSON.parse('{{ breaking | tojson | safe}}');
 					var users = JSON.parse('{{ users | tojson | safe}}');
@@ -198,6 +205,24 @@
 					var mostInRow = document.getElementById("inARow");
 					mostInRow.innerText = "Most in a row: " + users[most][1] + " " + inARowCount[most] + " times";
 				
+					var points = Array(users.length+1).fill(0)
+					latestarray.forEach(element => {
+						points[element[0]-1] += element[3]
+					});
+
+					var points_table = document.getElementById("points_table");
+					points.forEach(function (x, index) {
+						var z1 =  document.createElement('tr');
+						var s1 =  document.createElement('td');
+						s1.innerText = users[index][1]
+						s1.setAttribute("style","background: "+users[index][2]+";")
+						z1.appendChild(s1)
+						var s1 =  document.createElement('td');
+						s1.innerText = x
+						z1.appendChild(s1)
+						points_table.appendChild(z1)
+					});
+
 				</script>
 			</center>
 		</div>
