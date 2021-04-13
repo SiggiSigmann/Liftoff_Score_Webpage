@@ -8,3 +8,7 @@ Todo:
 		save selected item and restor ofter submit   ord mayby reload
 		settings set color for user
 		remove value / update value
+		refactor pages by optimicing jsons from flask
+		refactor css by usinge the ::last class
+		refactor css by change all syling of a tabel to one css file
+		add breaking pilot score ( sum all points of the breking pilot per day)
