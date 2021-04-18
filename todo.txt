@@ -11,3 +11,4 @@ Todo:
 		refactor pages by optimicing jsons from flask
 		refactor css by usinge the ::last class
 		refactor css by change all syling of a tabel to one css file
+		combine with other project
