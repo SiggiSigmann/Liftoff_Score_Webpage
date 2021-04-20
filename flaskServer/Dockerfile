@@ -8,6 +8,7 @@ COPY dbconnector/* dbconnector/
 COPY html/* html/
 COPY static/* static/
 COPY temp/ temp/
+copy creator.py .
 
 EXPOSE 80
 

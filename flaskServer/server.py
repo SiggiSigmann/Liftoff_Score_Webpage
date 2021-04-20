@@ -14,13 +14,17 @@ import io
 import json
 import datetime
 import re
+import io
 from werkzeug.utils import secure_filename
+from werkzeug.wsgi import FileWrapper
+from openpyxl.writer.excel import save_virtual_workbook
 
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from flask_weasyprint import HTML, render_pdf
 
 from excleLoader import ExcelLoader
+from creator import Creator
 
 import dbconnector.dbconnector as dbcon
 
@@ -29,6 +33,7 @@ import dbconnector.dbconnector as dbcon
 db = dbcon.DBconnector(socket.gethostbyname('liftoff_db'),"LIFTOFF_DATA", "test", "1234567")
 
 loader = ExcelLoader(db)
+downloader = Creator(db)
 
 ## Flask ##########################################################
 #create flask server
@@ -176,6 +181,18 @@ def upload_file():
         return render_template('imex.html', active="imex", error=success)
 
     return render_template('imex.html', active="imex", error=105)
+
+@app.route('/download', methods=['GET'])
+def download():
+
+    file = save_virtual_workbook(downloader.createFile())
+
+    resp = make_response(file)
+    resp.headers["Content-Disposition"] = 'attachment; filename=export.xlsx'
+    resp.headers['Content-Type'] = 'application/x-xlsx'
+
+    return resp
+
 
 @app.route("/random", methods=["GET"])
 def random_get():
