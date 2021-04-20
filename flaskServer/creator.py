@@ -24,6 +24,8 @@ class Creator():
 	def createFile(self):
 		wb = Workbook()
 
+		maps_track = self.db.get_tracks()
+
 		ws = wb.active
 		for drone in self.drone_list:
 	
@@ -42,6 +44,16 @@ class Creator():
 				ws.cell(row=1, column=col).fill = PatternFill(start_color=user[2][1:], end_color=user[2][1:], fill_type = "solid")
 				
 				col += 1
+
+			row = 2
+			for maps in maps_track["maps"]:
+				for track in maps["tracks"]:
+					ws.cell(row=row, column=1, value = maps["mapname"])
+					ws.cell(row=row, column=2, value = track["trackname"])
+					ws.cell(row=row, column=3, value = track["hardness"])
+
+
+					row += 1
 
 			if self.drone_list[-1] != drone:
 				ws = wb.create_sheet()
