@@ -4,7 +4,6 @@ Todo:
 		create diagrams for track and user
 
 	Functions:
-		export
 		save selected item and restor ofter submit   ord mayby reload
 		settings set color for user
 		remove value / update value
