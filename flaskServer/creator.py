@@ -33,7 +33,7 @@ class Creator():
 			ws.title = drone[1]
 
 
-			ws.cell(row=1, column=1, value = "MAPS")
+			ws.cell(row=1, column=1, value = "MAP")
 			ws.cell(row=1, column=2, value = "Track")
 			ws.cell(row=1, column=3, value = "Race")
 			ws.cell(row=1, column=4, value = "Level")
