@@ -6,8 +6,6 @@ Todo:
 	Functions:
 		settingsfor user color
 		remove value / update value
-		filter random and check if there are already times enterded.
-		filter random tryck by uses
 
 	Improvements:
 		refactor pages by optimicing jsons from flask
