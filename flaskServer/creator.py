@@ -51,6 +51,7 @@ class Creator():
 				for track in maps["tracks"]:
 					ws.cell(row=row, column=1, value = maps["mapname"])
 					ws.cell(row=row, column=2, value = track["trackname"])
+					ws.cell(row=row, column=3, value = track["trackname"])
 					ws.cell(row=row, column=4, value = track["hardness"])
 
 					col = 5
