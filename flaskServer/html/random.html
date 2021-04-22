@@ -31,8 +31,8 @@
 					<button class="other" onclick="showRandomTrack()">New Random Track</button>
 					<table id="filtering">
 						<tr>
-							<th>Filter by hardness: </th>
-							<th>New for User: </th>
+							<th>Include Levels: </th>
+							<th>Never played by User before: </th>
 						</tr>
 						<script>
 							var users = JSON.parse('{{ users | tojson | safe}}');
@@ -47,13 +47,13 @@
 								tr = document.createElement("tr")
 								td = document.createElement("td")
 								if(index < 9){
-									td.innerHTML = '<input type="checkbox" id="'+(index+1)+'" name="'+(index+1)+'" checked><label for="'+(index+1)+'">'+(index+1)+'</label>';
+									td.innerHTML = '<input type="checkbox" id="'+(index+1)+'" name="'+(index+1)+'" style="width: 20px;"checked><label for="'+(index+1)+'">'+(index+1)+'</label>';
 								}
 								tr.appendChild(td)
 
 								td = document.createElement("td")
 								if(index < users.length){
-									td.innerHTML = '<input type="checkbox" id="u'+element[0]+'" name="'+element[0]+'"><label for="'+element[0]+'">'+element[1]+'</label>';
+									td.innerHTML = '<input type="checkbox" id="u'+element[0]+'" name="'+element[0]+'" style="width: 20px;"><label for="'+element[0]+'">'+element[1]+'</label>';
 								}
 								tr.appendChild(td)
 
